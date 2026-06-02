@@ -1,0 +1,28 @@
+\subsection{Exercises}
+
+\begin{exercise}\label{exercise:finite_infinite:dedekind_characterization_pigeonhole}
+    Prove the \enquote{$\Rightarrow$} direction of the Dedekind Characterization (theorem \ref{theorem:finite_infinite:dedekind_characterization}) without using the Cantor-Schröder-Bernstein theorem but the Pigeonhole Principle (theorem \ref{theorem:finite_infinite:pigeonhole_principle}) instead.
+\end{exercise}
+\begin{solution}
+    Let $X$ be finite. Assume, that there exists a proper subset $S\subset X$, so that there is an injection $f\colon X\to S$. Because $X$ is finite, there exists a bijection $g\colon X\to\setN_m$ for $m=|X|$. From theorem \ref{theorem:finite_infinite:subsets_finite} it follows that $S$ is also finite with $n=|S|<|X|=m$. So there exists also a bijection $h\colon S\to\setN_n$. Hence, the composition $h\circ f\circ g^{-1}\colon \setN_m\to\setN_n$ is an injection as a composition of injective mappings. But this contradicts the Pigeonhole Principle (theorem \ref{theorem:finite_infinite:pigeonhole_principle}) due to $m>n$.
+\end{solution}
+
+\begin{exercise}\label{exercise:finite_infinite:pigeonhole_principle}
+    Give a proof of the Pingeonhole Principle without the Bernstein-Cantor-Schröder theorem. Hint: Use the induction axiom and consider the cases $f(\setN_m)\subseteq\setN_n$ and $f(\setN_m)\nsubseteq\setN_n$ for an injection $f\colon\setN_m\to\setN_n$ to produce a contradiction.
+\end{exercise}
+
+\begin{solution}
+    We proceed by induction on $n$:
+
+    \proofstep{Base Case: $n=0$} For the base case $n=0$, let $m > 0$. Then $\setN_m \neq \emptyset$, whereas $\setN_0 = \emptyset$. Since there exists no mapping from a non-empty set to the empty set, there can be no injection $f \colon \setN_m \to \setN_0$.
+    
+    \proofstep{Inductive Step: $n \Rightarrow n+1$} Let $n \in \setN$ and assume the inductive hypothesis: for all $m > n$, there exists no injection from $\setN_m$ to $\setN_n$. Now, let $m \in \setN$ such that $m > n+1$. To reach a contradiction, assume there exists an injection $f \colon \setN_m \to \setN_{n+1}$.
+    
+    \proofstep{Case 1: $f(\setN_m) \subseteq \setN_n$}If the image of $f$ is contained within $\setN_n$, then the restricted mapping $f' \colon \setN_m \to \setN_n, b \mapsto f(b)$, is a well-defined injection. However, this directly contradicts the inductive hypothesis, as $m > n$.
+    
+    \proofstep{Case 2: $f(\setN_m) \not\subseteq \setN_n$} In this case, there must exist an element $a \in \setN_m$ such that $f(a) \notin \setN_n$. Since the codomain is $\setN_{n+1}$, it follows that $f(a) \in \setN_{n+1} \setminus \setN_n = \{n+1\}$, so $f(a) = n+1$. Furthermore, because $f$ is injective, $a$ is the unique element for which $f(a) = n+1$. Consequently, $f(b) \in \setN_n$ for all $b \in \setN_m \setminus \{a\}$.
+    
+    We now define the auxiliary mapping: \begin{align}g \colon \setN_{m-1} \rightarrow \setN_m, \qquad b \mapsto \begin{cases} b, & b < a \\ b+1, & b \geq a \end{cases}\end{align} Note that $g$ is injective and its image is $\setN_m \setminus \{a\}$. Thus, $f \circ g \colon \setN_{m-1} \to \setN_{n+1}$ is an injection, as the composition of two injective mappings is itself injective (see exercise \ref{exercise:mappings:composition_injections}). Since $a \notin g(\setN_{m-1})$ and $a$ is the only element in $\setN_n$ with $f(a)=n+1$, it follows that $(f \circ g)(\setN_{m-1}) \subseteq \setN_n$. Therefore, the restricted mapping \begin{align}h \colon \setN_{m-1} \rightarrow \setN_n,\qquad b \mapsto (f \circ g)(b),\end{align} is a well-defined injection. However, since $m > n+1$ implies $m-1 > n$, the existence of $h$ contradicts the inductive hypothesis.
+    
+    Having reached a contradiction in both cases, we conclude that no injection exists from $\setN_m$ to $\setN_{n+1}$ for $m > n+1$.
+\end{solution}

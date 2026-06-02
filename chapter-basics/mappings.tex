@@ -1,0 +1,1056 @@
+\section{Mappings}
+
+Mappings are among the most important concepts in mathematics. They allow us to formulate connections, operations, and relations between objects, as well as to formalize important mathematical structures. Mappings can be used to transport information from one structure to another and to \emph{identify} two structures with similar behavior but seemingly different appearances -- a concept known as \emph{isomorphism}. For example, so-called bijective mappings can be used to formally and precisely define whether two sets are of the same size.
+
+Conceptually, a mapping is a rule that assigns to every element of a so-called domain a uniquely determined object from the codomain, which depends on the choice of the element. Therefore, a mapping is a special kind of relation from one set to another.
+
+In this section, we will provide a strictly formal definition of a mapping, discuss prominent examples in detail, and prove important properties and theorems regarding them. We will build upon many theorems and properties already known from the theory of relations. When introducing mappings, we continue to follow the axiomatic method and deductive reasoning, using the notion of sets as our sole foundation.
+
+In the last few subsection we introduce more advanced concepts of mappings, such as idempotent mappings, fixed-points, monotone set mappings and the closure operator. Those advanced concepts will be used for an elegant proof of the Cantor-Bernstein-Schröder theorem, which gives a sufficient condition for the existence of a bijection between two sets. In the next section we will construct the natural numbers using the concept of closure operators.
+
+\subsection{Mappings}
+
+\begin{definition}[Mappings]
+    Let $X$ and $Y$ be sets. A relation $f=(\Gamma(f),X,Y)$ from $X$ to $Y$ is called a \emph{mapping from $X$ to $Y$}, shortly \begin{align}f\colon X\rightarrow Y,\end{align} if and only if $f$ is left total and right unique.
+    
+    In that case, for every $x\in X$ there exists exactly one element $y\in Y$ with $(x,y)\in\Gamma(f)$. For each $x\in X$ we write $f(x)$, read as \enquote{$f$ of $x$}, for the unique element $y\in Y$ with $(x,y)\in\Gamma(f)$ and call it the \emph{image of $x$ under $f$}.
+    
+    Furthermore we still call $X$ the \emph{domain of $f$}, $Y$ the \emph{codomain of $f$} and $\Gamma(f)$ the \emph{graph of $f$}. We denote with $\mapset X Y$ the set of all mappings form $X$ to $Y$.
+\end{definition}
+
+Per definition, a mapping $f$ from $X$ to $Y$ assings every element $x\in X$ to an uniquely determined element $f(x)\in Y$. We can compare $f$ to an automaton that gives for every input $x\in X$ an unique output $f(x)\in Y$.
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick,element/.style={circle,inner sep=0pt,fill=white},connection/.style={-Latex,shorten >=10pt,shorten <=10pt},set/.style={rounded corners=10pt,pattern=dots,pattern color=gray}]
+        \begin{scope}[shift={(0,0)}]
+            \foreach \y in {0,1,...,3}{
+                \coordinate (a-\y) at (0,\y);
+            }
+            \draw (-.5,-.5) [set] rectangle (.5,3.5);
+            \node (label-a) at (0,-.8) {$\strut X$};
+        \end{scope}
+        \node at (1,4) {$\strut f$};
+        \begin{scope}[shift={(2,0)}]
+            \foreach \y in {0,1,...,4}{
+                \coordinate (b-\y) at (0,\y);
+            }
+            \draw (-.5,-.5) [set] rectangle (.5,4.5);
+            \node (label-b) at (0,-.8) {$\strut Y$};
+        \end{scope}
+
+        \node[element] at (a-0) {$\strut a$};
+        \node[element] at (a-1) {$\strut b$};
+        \node[element] at (a-2) {$\strut c$};
+        \node[element] at (a-3) {$\strut d$};
+
+        \node[element] at (b-0) {$\strut u$};
+        \node[element] at (b-1) {$\strut v$};
+        \node[element] at (b-2) {$\strut w$};
+        \node[element] at (b-3) {$\strut x$};
+        \node[element] at (b-4) {$\strut y$};
+
+        \draw[connection] (a-0) -- (b-0);
+        \draw[connection] (a-1) -- (b-0);
+        \draw[connection] (a-2) -- (b-2);
+        \draw[connection] (a-3) -- (b-4);
+
+    \end{tikzpicture}
+    \caption{Arrow diagram of a mapping $f\colon X\rightarrow Y$ with $f(a)=f(b)=u$, $f(c)=w$ and $f(d)=y$. For $f$ to be a mapping means that for every element $x\in X$ exactly one arrow points to an element of $Y$. Elements of the codomain $Y$ do not have to be the image of an element $x\in X$ under $f$.}\label{figure:mappings:arrow_diagram}
+\end{figure}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Formally, a relation $f$ from $X$ to $Y$ is a mapping from $X$ to $Y$ if and only if the following condition holds:
+        \begin{align}\forall x\in X\, \exists y\in Y\, \forall y'\in Y\colon (x,y)\in\Gamma(f)\land ((x,y')\in\Gamma(f)\Rightarrow y=y').\end{align}
+        We can also use the \enquote{there exists exactly one} quanitfier \enquote{$\exists!$} for an equivalent condition:
+        \begin{align}\forall x\in X\, \exists! y\in Y\colon (x,y)\in\Gamma(f).\end{align}
+
+        \item Two mappings $f\colon X\rightarrow Y$ and $g\colon V\rightarrow W$ are \emph{identical} or \emph{equal}, shortly $f=g$, if and only if $X=V$, $Y=W$, and $f(x)=g(x)$ hold for all $x\in X$.
+        
+        \item Let $f\colon X\rightarrow Y$ be a mapping, then the graph $\Gamma(f)$ is a subset of $X\times Y$ and it holds that
+        \begin{align}\Gamma(f)=\setdef{(x,f(x))\given x\in X}.\end{align}
+
+        \item Let $X$ and $Y$ be sets, then the set $\mapset X Y$ of all mappings form $X$ to $Y$ exists by the axiom of specification using the definition \begin{align}\mapset X Y\coloneq\setdef{f\in\powerset(X\times Y)\times (\{X\}\times\{Y\})\given f\colon X\rightarrow Y}.\end{align}
+        
+        \item Let $X$ and $Y$ be sets and $f\colon X\rightarrow Y$ a mapping, then the corresponding inverse relation $f^{-1}$ from $Y$ to $X$ is in general not a mapping (see example \ref{example:mappings:constant_mapping}).
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item For every set $X$, then the identity relation $\idmap_X$ is a mapping from $X$ to $X$ with the property $f(x)=x$ for all $x\in X$.
+        \begin{miniproof}
+            The identity relation $\idmap_X$ is total and unique by example \ref{example:relations:identity_relation_unique_total}. So $\idmap_X$ is especially left total and right unique and therefore a mapping. From $x\,\idmap_X x$ follows $\idmap_X(x)=x$ for all $x\in X$.
+        \end{miniproof}
+        \item\label{example:mappings:projection_mappings} Let $X$ and $Y$ be a sets, then the relation $\pi_X$ from $X\times Y$ to $X$ defined by
+        \begin{align}\Gamma(\pi_X)=\setdef{(x,y)\in (X\times Y)\times X\given \exists (a,b)\in X\times Y\colon x=(a,b)\land y=a}\end{align}
+        is a mapping, the \emph{projection mapping to the first component}. We shortly wirte $\pi_X((x,y))=\pi_X(x,y)$ for all $(x,y)\in X\times Y$ and it holds that $\pi_X(x,y)=x$ for all $(x,y)\in X\times Y$. Similarly the relation $\pi_Y$ from $X\times Y$ to $Y$ defined by the graph
+        \begin{align}\Gamma(\pi_Y)=\setdef{(x,y)\in (X\times Y)\times Y\given \exists (a,b)\in X\times Y\colon x=(a,b)\land y=b}\end{align}
+        is a mapping, the \emph{projection mapping to the second component}. For the projection $\pi_Y$ holds that $\pi_Y(x,y)=y$ for all $(x,y)\in X\times Y$.
+        \begin{miniproof}
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Well-Definedness}
+
+\begin{theorem}\label{theorem:mappings:well_defined_codomain}
+    Let $A$ and $B$ as well as $X$ and $Y$ be sets with $X\subseteq A$ and $\psi(x)$ a term, then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item There exists a mapping $f\colon X\rightarrow Y$ with $f(x)=\psi(x)$ for all $x\in X$.
+        \item\textbf{Codomain Check:} $\psi(x)\in Y$ for all $x\in X$.
+    \end{intheoremenumerate}
+    In this case the mapping $f$ is uniquely determined. For this uniquely determined mapping we shortly write the \emph{definition by the expression $\psi(x)$}
+    \begin{align}f\colon X\rightarrow Y,\qquad x\mapsto \psi(x).\label{eq:mappings:notation}\end{align}
+    and call $f$ \emph{well-defined} by \eqref{eq:mappings:notation}. We read \eqref{eq:mappings:notation} as \enquote{$f$ from $X$ to $Y$ maps $x$ to $\psi(x)$}.
+\end{theorem}
+\begin{proof}
+    \proofcase{i}{ii} Assume there exists a mapping $f\colon X\rightarrow Y$ with $f(x)=\psi(x)$ for all $x\in X$. Let $x\in X$, then $f(x)\in Y$ holds by definition of a mapping. Therefore $\psi(x)\in Y$ holds.
+
+    \proofcase{ii}{i} Assume $\psi(x)\in Y$ for all $x\in X$. We define a a relation $f$ from $X$ to $Y$ by the graph \begin{align}\Gamma(f)=\setdef{(x,y)\in X\times Y\given y=\psi(x)}.\end{align}
+    Let $x\in X$, then $(x,\psi(x))\in\Gamma(f)$ holds by definition of $\Gamma(f)$. Therefore $f$ is left total. Now let $y\in Y$ with $(x,y)\in\Gamma(f)$, then $y=\psi(x)$ follows by definition of $\Gamma(f)$. Hence $f$ is right unique and therefore a mapping from $X$ to $Y$.
+
+    \proofstep{Uniqueness} Let $g\colon X\rightarrow Y$ be a mapping with $g(x)=\psi(x)$ for all $x\in X$. Then we have $g(x)=\psi(x)=f(x)$ for all $x\in X$. Thus $f=g$ must hold.
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:mappings:constant_mapping} Let $X$ and $Y$ be sets and $a\in Y$, then
+        \begin{align}f_a\colon X\rightarrow Y,\qquad x\mapsto a\end{align}
+        is a well-defined mapping and called a \emph{constant mapping}. Every element $x\in X$ gets maped to $a\in Y$, i.e. $f_a(x)=a$. If $X$ or $Y$ consists of at least two elements, then the inverse relation $f_a^{-1}$ is not a mapping.
+        \item Let $Y$ be a set and $X\subseteq Y$, then \begin{align}i_{X,Y}\colon X\rightarrow Y,\qquad x\mapsto x\end{align} denotes the well-defined \emph{inclusion mapping} or \emph{natural/canonical embedding} of $X$ into $Y$. Here, $i_{X,Y}=\idmap_X$ holds if and only if $X=Y$.
+        \begin{miniproof}
+            Set $\psi(x)=x$, then $\psi(x)\in Y$ holds for all $x\in X$. Therefore $i_{X,Y}$ is well-defined by theorem \ref{theorem:mappings:well_defined_codomain}.
+        \end{miniproof}
+        \item\label{example:mappings:restriction} Let $f\colon X\rightarrow Y$ be a mapping and $A\subseteq X$, then \begin{align}f\vert_A\colon A\rightarrow Y,\qquad x\mapsto f(x)\end{align} denotes the well-defined \emph{restriction of $f$ to $A$}. For example, the inclusion mapping $i\colon X\rightarrow Y$ for $X\subseteq Y$ is the restriction of the identity $\idmap_Y$ to $X$, i.e., $i_{X,Y}=\idmap_Y\vert_X$.
+        \item\label{example:mappings:complement_mapping} Let $X$ be a set, then
+        \begin{align}C_X\colon \powerset(X)\rightarrow\powerset(X),\qquad A\mapsto X\setminus A\end{align}
+        is a well-defined mapping, we call it the \emph{complement mapping}. So the complement mapping maps every subset of $X$ to its complement with respect to $X$. For example, $C_X(\emptyset)=X$ and $C_X(X)=\emptyset$ apply.
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}\label{theorem:mappings:well_defined_relation}
+    Let $A$ and $B$ as well as $X$ and $Y$ be sets with $X\subseteq A$, $\psi\colon A\rightarrow Y$ a mapping and $\sim$ an equivalence relation on $X$, then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item There exists a mapping $f\colon \quoset X \sim \rightarrow Y$ such that $f([x]_\sim)=\psi(x)$ for all $x\in X$.
+        \item\textbf{Independence of Representatives:} $x\sim x'$ implies $\psi(x)=\psi(x')$ for all $x,x'\in X$.
+    \end{intheoremenumerate}
+    In this case the mapping $f$ is uniquely determined. For this uniquely determined mapping we shortly write the \emph{definition by representatives}
+    \begin{align}f\colon \quoset X \sim \rightarrow Y,\qquad [x]_\sim\mapsto \psi(x).\label{eq:mappings:notation_relation}\end{align}
+    and call $f$ \emph{well-defined} by \eqref{eq:mappings:notation_relation}.
+\end{theorem}
+
+\begin{proof}
+    \proofcase{i}{ii} Assume there exists a mapping $f\colon \quoset X \sim \rightarrow Y$ with $f([x]_\sim)=\psi(x)$ for all $x\in X$. Let $x\in X$, then $f([x]_\sim)\in Y$ holds. Now let $x'\in X$ with $x\sim x'$, then $[x]_\sim=[x']_\sim$ follows. Thus we have $f([x]_\sim)=f([x']_\sim)$, which implies $\psi(x)=\psi(x')$.
+
+    \proofcase{ii}{i} Assume $x\sim x'$ implies $\psi(x)=\psi(x')$ for all $x,x'\in X$. We define a relation $f$ from $\quoset X \sim$ to $Y$ by the graph \begin{align}\Gamma(f)=\setdef{(Q,y)\in \quoset X \sim \times Y \given \forall z\in Q\colon y=\psi(z)}.\end{align}
+    Let $Q\in \quoset X \sim$, then there exists an $x\in Q$ with $Q=[x]_\sim$. Let $z\in Q$, then $z\sim x$ holds, which implies $\psi(z)=\psi(x)$. Therefore $(Q,\psi(x))\in\Gamma(f)$ follows by definition of $\Gamma(f)$. Thus $f$ is left total. Now let $y\in Y$ with $(Q,y)\in\Gamma(f)$, then $y=\psi(x)$ follows from $x\in Q$ and by definition of $\Gamma(f)$. Hence $f$ is right unique and therefore a mapping from $\quoset X \sim$ to $Y$. We have already shown that $([x]_\sim,\psi(x))=(Q,\psi(x))\in\Gamma(f)$ holds, which means $f([x]_\sim)=\psi(x)$ for all $x\in X$.
+
+    \proofstep{Uniqueness} Let $g\colon \quoset X \sim \rightarrow Y$ be a mapping with $g([x]_\sim)=\psi(x)$ for all $x\in X$. Let $Q\in\quoset X \sim$, then there exists an $x\in X$ with $Q=[x]_\sim$. Then we get $g(Q)=g([x]_\sim)=\psi(x)=f([x]_\sim)=f(Q)$. Thus $f=g$ must hold.
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ and $Y$ be sets and let $\sim$ be the equivalence relation on $X\times Y$ from example \ref{example:relations:projection_equivalence_relation} defined by $(x,y)\sim(u,v)\iff x=u$ for all $(x,y),(u,v)\in X\times Y$. Then
+        \begin{align}f_X\colon \quoset{(X\times Y)}{\sim} \rightarrow X,\qquad [(x,y)]_\sim\mapsto x\end{align}
+        is a well-defined mapping.
+        \begin{miniproof}
+            Set $\psi=\pi_X$, where $\pi_X\colon X\times Y \to X$ is the projection mapping to the first component from example \ref{example:mappings:projection_mappings}. Let $(x,y),(u,v)\in X\times Y$ with $(x,y)\sim (u,v)$. Then $x=u$ follows by definition of $\sim$. Thus we conclude $\psi(x,y)=\pi_X(x,y)=x=u=\pi_X(u,v)=\psi(u,v)$ and thus $f_X$ is well-defined by theorem \ref{theorem:mappings:well_defined_relation}.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}\label{theorem:mappings:well_defined_cases}
+    Let $X$ and $Y$ as well as $A$ and $B$ be sets with $A\cup B=X$. Furthermore let $a\colon A\rightarrow Y$ and $b\colon B\rightarrow Y$ be mappings. Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item There exists a mapping $f\colon X\rightarrow Y$ with $f(x)=a(x)$ for all $x\in A$ and $f(x)=b(x)$ for all $x\in B$.
+        \item\textbf{Overlap Check:} For all $x\in A\cap B$ holds $a(x)=b(x)$.
+    \end{intheoremenumerate}
+    In this case the mapping $f$ is uniquely determined. For this uniquely determined mapping we shortly write the \emph{definition by cases}
+    \begin{align}f\colon X\rightarrow Y,\qquad x\mapsto \begin{cases}a(x),& x\in A,\\ b(x),& x\in B.\end{cases}\label{eq:mappings:notation_cases}\end{align}
+    and call $f$ \emph{well-defined} by \eqref{eq:mappings:notation_cases}.
+\end{theorem}
+\begin{proof}
+    \proofcase{i}{ii} Let $f\colon X\to Y$ be a mapping with $f(x)=a(x)$ for all $x\in A$ and $f(x)=b(x)$ for all $x\in B$. Let $x\in A\cap B$, which means $x\in A$ and $x\in B$, then $f(x)=a(x)$ and $f(x)=b(x)$ follows. Therefore $a(x)=b(x)$ for all $x\in A\cap B$.
+
+    \proofcase{ii}{i} We define a relation $f$ from $X$ to $Y$ by the graph \begin{align}\Gamma(f)=\Gamma(a)\cup\Gamma(b).\end{align}
+    Now let $x\in X$. Because of $A\cup B=X$ we have $x\in A$ or $x\in B$. For $x\in A$ we conclude $(x,a(x))\in\Gamma(a)$ and hence $(x,a(x))\in\Gamma(f)$. Similarly, $(x,b(x))\in\Gamma(f)$ follows for $x\in B$. Hence $f$ is left total. Now let $y\in Y$ with $(x,y)\in\Gamma(f)$. For $x\notin A\cap B$ we already conclude $y=a(x)$ if $x\in A$ and $y=b(x)$ if $x\in B$, because $a$ and $b$ are right unique. For $x\in A\cap B$ we conclude that $y=a(x)$ or $y=b(x)$. By assumption, $y=a(x)=b(x)$ holds. So $f$ is right unique and therefore a mapping. We have already shown that $f(x)=a(x)$ for all $x\in A$ and $f(x)=b(x)$ for all $x\in B$.
+
+    \proofstep{Uniqueness} Let $g\colon X\rightarrow Y$ be a mapping with $g(x)=a(x)$ for all $x\in A$ and $g(x)=b(x)$ for all $x\in B$. Let $x\in X$, then $x\in A$ or $x\in B$ holds beacause of $A\cup B=X$. For $x\in A$ we conclude $g(x)=a(x)=f(x)$ and for $x\in B$ we get $g(x)=b(x)=f(x)$. Thus $g=f$.
+\end{proof}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item\label{remark:mappings:well_defined_cases_disjoint} Let $X$, $Y$, $A$ and $B$ be sets with $A\cup B=X$ and $a\colon A\to B$, $b\colon B\to Y$ mappings. If $A$ and $B$ are disjoint, i.e. $A\cap B=\emptyset$, then the mapping defined by \ref{eq:mappings:notation_cases} is well-defined.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be a set, $A\subseteq X$ and we define the notations $0\coloneq\emptyset$ as well as $1\coloneq\{\emptyset\}\neq 0$, then \begin{align}\charmap_A\colon X\rightarrow \{0,1\},\qquad x\mapsto\begin{cases}1,& \text{if } x\in A,\\ 0,& \text{if } x\in A^\complement\end{cases}\end{align}
+        is the well-defined \emph{indicator mapping} of $A$ or the \emph{characteristic mapping} of $A$. Thus, for every $x\in X$, $\charmap_A(x)=1$ holds if and only if $x$ is an element of $A$. For two sets $A,B\subseteq X$, $\charmap_A=\charmap_B$ holds if and only if $A=B$. For $A=X$ the characteristic mapping coincides with the constant mapping $f_1\colon X\rightarrow\{0,1\},x\mapsto 1$.
+        \begin{miniproof}
+            Set $f=f_1$ and $g=f_0$, where $f_1$ and $f_0$ are the constant mappings from $X$ to $\{0,1\}$. From $A\cup A^\complement=X$ and $A\cap A^\complement=\emptyset$ follows, that $\charmap_A$ is indeed well-defined by theorem \ref{theorem:mappings:well_defined_cases}.
+        \end{miniproof}
+
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Image and Preimage Sets}
+
+\begin{definition}
+    Let $f\colon X\rightarrow Y$ be a mapping, then for $A\subseteq X$ let
+    \begin{align}f(A)\coloneq\{f(x) \mid x\in A\}\coloneq\setdef{y\in Y\given \exists x\in A\colon f(x)=y}\subseteq Y\end{align}
+    denote the \emph{image of $A$ under $f$}. Furthermore, for $B\subseteq Y$ let
+    \begin{align}f^{-1}(B)\coloneq\{x\in X \mid f(x)\in B\}\subseteq X\end{align}
+    denote the \emph{preimage of $B$ under $f$}. Specifically, for singleton sets $\{y\}\subseteq Y$, $f^{-1}(\{y\})$ is called the \emph{fiber of $y$ under $f$}.
+\end{definition}
+
+The previous definition extends the notion $f(x)$ to sets $A\subseteq X$ by denoting $f(A)$ for the set of all images $f(x)$ under $f$ for $x\in A$. The preimage $f^{-1}(B)$ is the set of all elements $x\in X$ that map to an element in $B$.
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick,element/.style={circle,inner sep=0pt,fill=white},connection/.style={-Latex,shorten >=11pt,shorten <=11pt},set/.style={rounded corners=10pt,pattern=dots,pattern color=gray},outer set/.style={rounded corners=10pt}]
+
+    \begin{scope}[shift={(0,0)}]
+        \foreach \y in {0,1,...,3}{
+            \coordinate (a-\y) at (0,\y);
+        }
+        \draw (-1,-.75) [outer set] rectangle (1,3.75);
+        \draw (-.5,0.5) [set] rectangle (.5,3.5);
+        \node[element] at (-1,2) {$\strut A$};
+        \node at (0,-1.1) {$\strut X$};
+    \end{scope}
+    \node at (1.5,3.5) {$\strut f$};
+    \begin{scope}[shift={(3,0)}]
+        \foreach \y in {0,1,...,3}{
+            \coordinate (b-\y) at (0,\y);
+        }
+        \draw (-1,-.75) [outer set] rectangle (1,3.75);
+        \draw (-.5,1.5) [set] rectangle (.5,3.5);
+        \node[element] at (1.2,2.5) {$\strut f(A)$};
+        \node at (0,-1.1) {$\strut Y$};
+    \end{scope}
+
+    \node[element] at (a-0) {$\strut a$};
+    \node[element] at (a-1) {$\strut b$};
+    \node[element] at (a-2) {$\strut c$};
+    \node[element] at (a-3) {$\strut d$};
+
+    \node[element] at (b-0) {$\strut v$};
+    \node[element] at (b-1) {$\strut w$};
+    \node[element] at (b-2) {$\strut x$};
+    \node[element] at (b-3) {$\strut y$};
+
+    \draw[connection] (a-0) -- (b-1);
+    \draw[connection] (a-1) -- (b-2);
+    \draw[connection] (a-2) -- (b-2);
+    \draw[connection] (a-3) -- (b-3);
+
+    \begin{scope}[shift={(7,0)}]
+        \begin{scope}[shift={(0,0)}]
+            \foreach \y in {0,1,...,3}{
+                \coordinate (c-\y) at (0,\y);
+            }
+            \draw (-1,-.75) [outer set] rectangle (1,3.75);
+            \draw (-.5,-.5) [set] rectangle (.5,2.5);
+            \node[element] at (-1.3,1) {$\strut f^{-1}(B)$};
+            \node at (0,-1.1) {$\strut X$};
+        \end{scope}
+        \node at (1.5,3.5) {$\strut f$};
+        \begin{scope}[shift={(3,0)}]
+            \foreach \y in {0,1,...,3}{
+                \coordinate (d-\y) at (0,\y);
+            }
+            \draw (-1,-.75) [outer set] rectangle (1,3.75);
+            \draw (-.5,-.5) [set] rectangle (.5,2.5);
+            \node[element] at (1,1) {$\strut B$};
+            \node at (0,-1.1) {$\strut Y$};
+        \end{scope}
+    \end{scope}
+
+    \node[element] at (c-0) {$\strut a$};
+    \node[element] at (c-1) {$\strut b$};
+    \node[element] at (c-2) {$\strut c$};
+    \node[element] at (c-3) {$\strut d$};
+
+    \node[element] at (d-0) {$\strut v$};
+    \node[element] at (d-1) {$\strut w$};
+    \node[element] at (d-2) {$\strut x$};
+    \node[element] at (d-3) {$\strut y$};
+
+    \draw[connection] (c-0) -- (d-1);
+    \draw[connection] (c-1) -- (d-2);
+    \draw[connection] (c-2) -- (d-2);
+    \draw[connection] (c-3) -- (d-3);
+
+    \end{tikzpicture}
+    \caption{Arrow diagram showing the image $f(A)$ and the preimage $f^{-1}(B)$ of the sets $A\subseteq X$ and $B\subseteq Y$ under a mapping $f\colon X\rightarrow Y$.}
+\end{figure}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item In general, $f(X)=Y$ does not hold, i.e., the image of the domain $X$ under $f$ does not generally coincide with the codomain $Y$.
+        \begin{miniproof} Let $X=\{a,b\}$ with $a\neq b$ and consider the constant mapping $f_a\colon X\rightarrow X,x\mapsto a$, then $f_a(X)=\{a\}\neq X$.
+        \end{miniproof}
+        \item\label{remark:mappings:image_non_empty} For a mapping $f\colon X\rightarrow Y$ and a subset $A\subseteq X$ holds that $f(A)=\emptyset$ if and only if $A=\emptyset$.
+        \begin{miniproof}
+            By definition, $f(\emptyset)=\emptyset$. If $A\subseteq X$ is non-empty, then $f(A)$ contains at least $f(x)$ for an $x\in A$.
+        \end{miniproof}
+        \item Let $X$ and $Y$ be sets, $f\colon X\to Y$ a mapping and $a\in X$, then $f(\{a\})=\{f(a)\}$ and $f^{-1}(\{f(a)\})\supseteq\{a\}$ hold. In general, $f^{-1}(\{f(a)\})$ does not coincide with $\{a\}$.
+        \begin{miniproof}
+            By definition, $f(\{a\})=\{f(a)\}$ holds. We have $a\in f^{-1}(\{f(a)\})$, because $f(a)\in\{f(a)\}$, hence $f^{-1}(\{f(a)\})\supseteq\{a\}$. Let $x\in f^{-1}(\{f(a)\})$, then $f(x)\in\{f(a)\}$ holds, and thus $f(x)=f(a)$ follows. In general, this does not imply $x=a$. For example, let $X=\{a,b\}$ with $a\neq b$ and $Y=\{c\}$, then the constant mapping $f_c\colon X\rightarrow Y,x\mapsto c$ satisfies $f^{-1}(\{c\})=X=\{a,b\}\supset \{a\}$.
+        \end{miniproof}
+        \item Let $X$ and $Y$ be sets, $\mathcal F\subseteq\powerset(X)$ be a family of subsets of $X$, $\mathcal G\subseteq\powerset(Y)$ be a family of subsets of $Y$ and $f\colon X\rightarrow Y$ a mapping. Then the following sets exist by the axiom of specification:
+        \begin{align}\begin{split}
+        \setdef{f(F)\given F\in\mathcal F}&\coloneq \setdef{B\subseteq Y\given \exists F\in\mathcal F\colon B=f(F)}\\
+        \text{and}\qquad\setdef{f^{-1}(G)\given G\in\mathcal G}&\coloneq \setdef{A\subseteq X\given \exists G\in\mathcal G\colon A=f^{-1}(G)}.
+        \end{split}\end{align}
+        Furthermore we introduce the following notations for unions and intersections over images and preimages:
+        \begin{align}\begin{split}
+        \bigcup_{F\in\mathcal F}f(F)&\coloneq \bigcup\setdef{f(F)\given F\in\mathcal F},\\
+        \bigcap_{F\in\mathcal F}f(F)&\coloneq \bigcap\setdef{f(F)\given F\in\mathcal F},\\
+        \bigcup_{G\in\mathcal G}f^{-1}(G)&\coloneq \bigcup\setdef{f^{-1}(G)\given G\in\mathcal G}\\
+        \text{and}\qquad\bigcap_{G\in\mathcal G}f^{-1}(G)&\coloneq \bigcap\setdef{f^{-1}(G)\given G\in\mathcal G}. 
+        \end{split}\end{align}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be a set, then $\idmap_X(A)=A$ and $\idmap_X^{-1}(A)=A$ hold for every subset $A\subseteq X$.
+        \item Let $X$ and $Y$ be non-empty sets, $a\in Y$ and $f_a\colon X\rightarrow Y,x\mapsto a$ the constant mapping, then $f(A)=\{a\}$ for every non-empty subset $A\subseteq X$, $f^{-1}(\{a\})=X$ and $f^{-1}(\{b\})=\emptyset$ for all $b\in Y$ with $b\neq a$.
+        \item Let $X$ and $Y$ be non-empty sets and $\pi_X\colon X\times Y\rightarrow X, (x,y)\mapsto x$ the projection mapping. Furthermore let $x'\in X$, then the following holds for the fiber $\pi_X^{-1}(x')$:
+        \begin{align}\pi_X^{-1}(x')=\{x'\}\times Y=\setdef{(x,y)\in X\times Y\given x=x'}.\end{align}
+        \item Let $X$ be a set and $A\subseteq X$, then for every subset $B\subseteq A$, $\charmap_A(B)=\{1\}$ holds if and only if $B\subseteq A$. Correspondingly, $\charmap_A(B)=\{0\}$ holds if and only if $B\subseteq A^\complement$. Finally, $\charmap_A(B)=\{0,1\}$ holds if and only if $A\cap B\neq\emptyset$ and $A^\complement\cap B\neq\emptyset$.
+    \end{exampleenumerate}
+\end{examples}
+
+The image under $f$ satisfies the following properties:
+\begin{theorem}\label{theorem:mappings:image_properties}
+    Let $f\colon X\rightarrow Y$ be a mapping, $A\subseteq X$, $B\subseteq A$, and $\mathcal F\subseteq\powerset(X)$ be a family of subsets of $X$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $f(B)\subseteq f(A)$
+        \item $f(\bigcup_{F\in \mathcal F} F)=\bigcup_{F\in \mathcal F}f(F)$
+        \item $f(\bigcap_{F\in \mathcal F} F)\subseteq \bigcap_{F\in\mathcal F}f(F)$
+        \item $f(A)\setminus f(B)\subseteq f(B^\complement)$
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $y\in f(B)$, then there exists an $x\in B$ with $f(x)=y$. Because of $B\subseteq A$ we also have $x\in A$. Hence $y\in f(A)$ and therefore $f(B)\subseteq f(A)$.
+         
+        \item \proofsubset Let $y\in f(\bigcup_{F\in\mathcal F}F)$, then there exists an $x\in\bigcup_{F\in\mathcal F}F$ with $f(x)=y$, furthermore there exists a $F\in\mathcal F$ with $x\in F$. That means $y\in f(F)$ and hence $y\in\bigcup_{F\in\mathcal F}f(F)$.
+        
+        \proofsupset Let $y\in\bigcup_{F\in\mathcal F}f(F)$, then there exists an $F\in\mathcal F$ with $y\in f(F)$, which means there exists an $x\in F$ with $f(x)=y$. Then we have $x\in\bigcup_{F\in\mathcal F}F$ and therefore $y\in f(\bigcup_{F\in\mathcal F}F)$.
+
+        In summary we have shown $f(\bigcup_{F\in \mathcal F} F)=\bigcup_{F\in \mathcal F}f(F)$.
+
+        \item Let $y\in f(\bigcap_{F\in\mathcal F}F)$, then there exists an $x\in\bigcap_{F\in\mathcal F}F$ with $f(x)=y$, furthermore $x\in F$ holds for all $F\in\mathcal F$. That menas $y\in f(F)$ for every $F\in\mathcal F$, which implies $y\in\bigcap_{F\in\mathcal F}f(F)$. Hence  $f(\bigcap_{F\in \mathcal F} F)\subseteq \bigcap_{F\in\mathcal F}f(F)$.
+        
+        \item Let $y\in f(A)\setminus f(B)$, then $y\in f(A)$ and $y\notin f(B)$ holds. That means there exists an $x\in A$ with $f(x)=y$, but $x\notin B$, because otherwise we would conclude $y\in f(B)$. Thus $a\in B^\complement$ and therefore $y\in f(B^\complement)$. Hence $f(A)\setminus f(B)\subseteq f(B^\complement)$.
+    \end{proofenumerate}
+\end{proof}
+
+The preimage under $f$ satisfies the following properties:
+\begin{theorem}\label{theorem:mappings:preimage_properties}
+    Let $f\colon X\rightarrow Y$ be a mapping, $A\subseteq Y$, $B\subseteq A$ andf $\mathcal F\subseteq\powerset(Y)$ be a family of subsets of $Y$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $f^{-1}(B)\subseteq f^{-1}(A)$
+        \item $f^{-1}(\bigcup_{F\in\mathcal F}F)=\bigcup_{F\in\mathcal F}f^{-1}(F)$
+        \item $f^{-1}(\bigcap_{F\in\mathcal F}F)=\bigcap_{F\in\mathcal F}f^{-1}(F)$
+        \item $f^{-1}(A)\setminus f^{-1}(B)=f^{-1}(B^\complement)$
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $x \in f^{-1}(B)$, then $f(x) \in B$ holds by definition of the preimage. Because of $B \subseteq A$, we also have $f(x) \in A$. Hence $x \in f^{-1}(A)$ and therefore $f^{-1}(B) \subseteq f^{-1}(A)$.
+         
+        \item \proofsubset Let $x \in f^{-1}(\bigcup_{F\in\mathcal F}F)$, then $f(x) \in \bigcup_{F\in\mathcal F}F$. By definition of the union, there exists an $F \in \mathcal F$ such that $f(x) \in F$. This means $x \in f^{-1}(F)$, and hence $x \in \bigcup_{F\in\mathcal F}f^{-1}(F)$.
+        
+        \proofsupset Let $x \in \bigcup_{F\in\mathcal F}f^{-1}(F)$, then there exists an $F \in \mathcal F$ such that $x \in f^{-1}(F)$. By definition of the preimage, this means $f(x) \in F$. Thus we have $f(x) \in \bigcup_{F\in\mathcal F}F$ and therefore $x \in f^{-1}(\bigcup_{F\in\mathcal F}F)$.
+
+        In summary we have shown $f^{-1}(\bigcup_{F\in \mathcal F} F)=\bigcup_{F\in \mathcal F}f^{-1}(F)$.
+
+        \item \proofsubset Let $x \in f^{-1}(\bigcap_{F\in\mathcal F}F)$, then $f(x) \in \bigcap_{F\in\mathcal F}F$. By definition of the intersection, $f(x) \in F$ holds for all $F \in \mathcal F$. This means $x \in f^{-1}(F)$ for every $F \in \mathcal F$, which implies $x \in \bigcap_{F\in\mathcal F}f^{-1}(F)$.
+        
+        \proofsupset Let $x \in \bigcap_{F\in\mathcal F}f^{-1}(F)$, then $x \in f^{-1}(F)$ holds for all $F \in \mathcal F$. This implies $f(x) \in F$ for every $F \in \mathcal F$, which means $f(x) \in \bigcap_{F\in\mathcal F}F$. Thus we conclude $x \in f^{-1}(\bigcap_{F\in\mathcal F}F)$.
+
+        In summary we have shown $f^{-1}(\bigcap_{F\in \mathcal F} F)=\bigcap_{F\in \mathcal F}f^{-1}(F)$.
+        
+        \item \proofsubset Let $x \in f^{-1}(A) \setminus f^{-1}(B)$, then $x \in f^{-1}(A)$ and $x \notin f^{-1}(B)$ holds. This means $f(x) \in A$ and $f(x) \notin B$, which implies $f(x) \in B^\complement$. Hence $x \in f^{-1}(B^\complement)$ and therefore $f^{-1}(A) \setminus f^{-1}(B) \subseteq f^{-1}(B^\complement)$.
+        
+        \proofsupset Let $x \in f^{-1}(B^\complement)$, then $f(x) \in B^\complement$ holds, i.e. $f(x)\in A\setminus B$. So $x\in f^{-1}(A)$ holds but not $x\in f^{-1}(B)$. Hence $x\in f^{-1}(A)\setminus f^{-1}(B)$.
+
+        In summary we have shown $f^{-1}(A)\setminus f^{-1}(B)=f^{-1}(B^\complement)$.
+    \end{proofenumerate}
+\end{proof}
+
+%\begin{theorem}\label{theorem:mappings:inclusions}
+%    Let $f\colon X\rightarrow Y$ be a mapping and $A\subseteq X$ as well as $B\subseteq Y$, then:
+%    \begin{intheoremenumerate}
+%        \item $A\subseteq f^{-1}(f(A))$
+%        \item $f(f^{-1}(B))\subseteq B$
+%    \end{intheoremenumerate}
+%    In general, equality does not hold for either inclusion.
+%\end{theorem}
+%\begin{proof}
+%    \begin{proofenumerate}
+%        \item Let $x\in A$, then $f(x)\in f(A)$ holds by definition of $f(A)$. That means $x\in f^{-1}(f(A))$. Therefore $A\subseteq f^{-1}(f(A))$ follows.
+%        \item Let $y\in f(f^{-1}(B))$. Then there exists an $x\in f^{-1}(B)$ such that $f(x)=y$. Here, $y=f(x)\in B$ by definition of $f^{-1}(B)$, and thus $f(f^{-1}(B))\subseteq B$.
+%    \end{proofenumerate}
+%\end{proof}
+
+\subsection{Surjectivity, Injectivity, and Bijectivity}
+
+\begin{definition}
+    Let $f\colon X\rightarrow Y$ be a mapping. Then $f$ is called \dots
+    \begin{definitionenumerate}
+        \item \dots \emph{surjective} if and only if $f$ is right total.
+        \item \dots \emph{injective} if and only if $f$ is left unique.
+        \item \dots \emph{bijective} if and only if $f$ is both surjective and injective.
+    \end{definitionenumerate}
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item\label{remark:mappings:surjective_property} Let $f\colon X\rightarrow Y$ be a mapping, then $f$ is surjective if and only if
+        \begin{align}\forall y\in Y\, \exists x\in X\colon f(x)=y.\end{align}
+        That means that every element of the codomain $Y$ has at least one preimage in $X$. To show that a mapping $f$ is surjective, we usually let $y\in Y$ be arbitary and find an $x\in X$, which generally depends on $y$, with $f(x)=y$.
+        \item\label{remark:mappings:injective_property}  Let $f\colon X\rightarrow Y$ be a mapping, then $f$ is injective if and only if
+        \begin{align}\forall x,x'\in X\colon f(x)=f(x')\Rightarrow x=x'.\end{align}
+        That means that every element in the codomain $Y$ has at most one preimage in $X$. To show that $f$ is injective, we usually let $x,x'\in X$ be arbitrary and assume that $f(x)=f(x')$ holds. Then we try to conclude that $x=x'$ holds. We could also use the contrapositive: Assume that $x\neq x'$ and show that $f(x)\neq f(x')$.
+        \item\label{remark:mappings:bijective_property} Let $f\colon X\rightarrow Y$ be a mapping, then $f$ is bijective if and only every element in the codomain $Y$ has exactly one preimage in $X$.
+        \begin{miniproof}
+            This follows directly from remark \ref{remark:mappings:surjective_property} and \ref{remark:mappings:injective_property}.
+        \end{miniproof}
+        \item\label{remark:mappings:bijective_total_unique} Let $f\colon X\rightarrow Y$ be a mapping, then $f$ is bijective if and only if $f$ is both total and unique as a relation from $X$ to $Y$.
+        \begin{miniproof}
+            By definition $f$ is left total and right unique as a mapping. So $f$ is total if and only if $f$ is right total and $f$ is unique if and only if $f$ is left unique. Therefore $f$ is bijective if and only if $f$ is both total and unique.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:mappings:every_map_surjective} If $f\colon X\rightarrow Y$ is any mapping, then the restricted mapping \begin{align}\tilde f\colon X\rightarrow f(X),\qquad x\mapsto f(x)\end{align} is well-defined and surjective; i.e., every mapping can be made surjective by restricting its codomain to the image $f(X)$.
+        \begin{miniproof}
+        The mapping $f^*$ is well-defined, because $f(x)\in f(X)$ for every $x\in X$. Let $y\in f(X)$, then by definition there exists an $x\in X$ such that $f(x)=y$, and so $\tilde f(x)=y$ follows. Thus, $\tilde f$ is surjective.
+        \end{miniproof}
+        \item\label{example:mappings:restriction_injective} Is $f\colon X\rightarrow Y$ any mapping and $A\subseteq X$, then $f\vert_A$ is injective if $f$ is injective. The corresponding statement does not hold if $f$ is surjective.
+        \begin{miniproof}
+            Is $f$ injective, then obviously $f\vert_A$ is injective by the definition of injectivity. However, let $f\colon \{0,1\}\rightarrow \{0,1\}$ with $f(0)=0$ and $f(1)=1$, then $f$ is surjective, but $f\vert_{\{1\}}\colon \{1\}\rightarrow \{0,1\}$ is not surjective.
+        \end{miniproof}
+        \item\label{example:mappings:identity_bijective} For every set $X$, the identity $\idmap_X\colon X\rightarrow X$ is bijective.
+        \begin{miniproof}
+            Surjectivity follows directly from $\idmap_X(x)=x$ for all $x\in X$. For $x,y\in X$ with $\idmap_X(x)=\idmap_X(y)$, $x=y$ already holds, and so $\idmap_X$ is both injective and surjective.
+        \end{miniproof}
+        \item\label{example:mappings:inclusion_mapping_injective} Let $X\subseteq Y$, then the inclusion mapping $i_{X,Y}\colon X\rightarrow Y$ is injective.
+        \begin{miniproof}
+            We know $i_{X,Y}=\idmap_X\vert_Y$ from example \ref{example:mappings:restriction}. Then the injectivity of $i_{X,Y}$ follows from example \ref{example:mappings:identity_bijective} and \ref{example:mappings:restriction_injective}.
+        \end{miniproof}
+        \item For every set $X$ and every subset $A\subseteq X$, the indicator mapping $\charmap_A\colon X\rightarrow \{0,1\}$ is surjective if and only if $A$ is a non-empty proper subset of $X$.
+        \item The mapping
+        \begin{align}\Gamma\colon \mapset X Y\rightarrow \powerset(X\times Y),\qquad f\mapsto \Gamma(f),\end{align}
+        which assigns to each mapping $f\colon X\rightarrow Y$ its graph $\Gamma(f)$, is injective.
+        \begin{miniproof}
+        Let $f,g\in \mapset X Y$ with $\Gamma(f)=\Gamma(g)$. Let $x\in X$, then $(x,f(x))\in\Gamma(f)$ and thus also $(x,f(x))\in\Gamma(g)$, i.e., $(x,f(x))=(x,g(x))$ holds. From this, $f(x)=g(x)$ follows. Since this is valid for all $x\in X$, $f=g$ follows. Thus, $\Gamma$ is injective.
+        \end{miniproof}
+        \item\label{example:mappings:powerset_characteristic_bijective} Let $X$ be any set. The mapping \begin{align}\charmap\colon \mathcal{P}(X)\rightarrow\mapset X {\{0,1\}},\qquad A\mapsto\charmap_A\end{align}
+        is bijective, where $\charmap_A\colon X\rightarrow\{0,1\}$ is the characteristic mapping for $A\subseteq X$.
+        \begin{miniproof}
+        Let $A,B\in\mathcal{P}(X)$ with $\charmap(A)=\charmap(B)$, then $\charmap_A=\charmap_B$ holds. From this, $A=\charmap_A^{-1}(\{1\})=\charmap_B^{-1}(\{1\})=B$ follows, making $\charmap$ injective. Now let $f\in\{0,1\}^X$, then set $C=f^{-1}(\{1\})$. With this setting, $f(C)=\{1\}$ and $f(C^\complement)=\{0\}$ hold, and so overall $f=\charmap_C=\charmap(C)$, making $\charmap$ surjective.
+        \end{miniproof}
+        \item\label{example:mappings:surjection_quotient} Let $X$ be a set and $R$ be a equivalence relation on $X$. Then the mapping \begin{align}\pi_R\colon X\rightarrow X/R,\qquad x\mapsto[x]_R\end{align}
+        is surjective. Furthermore the mapping $\pi_R$ has the property that $\pi_R(x)=\pi_R(y)$ if and only if $xRy$ for $x,y\in X$.
+        \begin{miniproof}
+            Let $A\in X/R$, then there exists an $x\in X$ such that $A=[x]_R$, therefore $\pi_R(x)=A$. So $\pi_R$ is surjective. Now let $x,y\in X$, then $xRy$ holds if and only if $[x]_R=[y]_R$, which is equivalent to $\pi_R(x)=\pi_R(y)$.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}\label{theorem:mappings:bijective_union}
+    Let $X$, $Y$, $A$ and $B$ be sets and $f\colon A\rightarrow Y$ as well as $g\colon B\rightarrow Y$ mappings with $A\cup B=X$. Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item The mapping
+        \begin{align}h\colon X\rightarrow Y,\qquad x\mapsto \begin{cases}f(x),& x\in A,\\ g(x),& x\in B.\end{cases}\label{eq:mappings:bijective_union}\end{align}
+        is well-defined and bijective.
+        \item The mappings $f$ and $g$ are injective, $f(A)\cup g(B)=Y$, $f^{-1}(Y)\cap g^{-1}(Y)=\emptyset$ and $f(x)=g(x)$ holds for all $x\in A\cup B$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \proofcase{i}{ii} Let $h\colon X\rightarrow Y$ be well-defined by \eqref{eq:mappings:bijective_union} and bijective. By the well-definedness already follows that $f(x)=g(x)$ for all $x\in A\cup B$ (see theorem \ref{theorem:mappings:well_defined_cases}).
+
+        Let $x,x'\in A$ with $f(x)=f(x')$. Then also $h(x)=f(x)=f(x')=h(x')$ holds. By the injectivity of $h$ follows $x=x'$. Therefore $f$ is injective. Similarly $g$ is also injective.
+
+        By definition, $f(A)\cup f(B)\subseteq Y$ holds. Let $y\in Y$. By the surjectivity of $h$ there exists an $x\in X$ with $h(x)=y$. From $A\cup B=X$ follows that $x\in A$ or $x\in B$. For the case $x\in A$ we conclude $h(x)=f(x)=y$ and hence $y\in f(A)$. For the case $x\in B$ we conclude $h(x)=g(x)=y$ and hence $y\in g(B)$. Thus $y\in f(A)\cup g(B)$. So we have $Y\subseteq f(A)\cup g(B)\subseteq Y$ and therefore $f(A)\cup g(B)=Y$.
+
+        \proofcase{ii}{i} Let $f$ and $g$ be injective with $f(A)\cup g(B)=Y$ and $f(x)=g(x)$ for all $x\in A\cup B$. The last assumption implies the well-definedness of $h$ by \eqref{eq:mappings:bijective_union} (see theorem \ref{theorem:mappings:well_defined_cases}). We now show that $h$ is bijective.
+
+        Let $y\in Y$. Then $y\in f(A)$ or $y\in g(B)$ holds. For the case $y\in f(A)$ there exists an $x\in A$ with $f(x)=y$. Thus $h(x)=f(x)=y$. For the case $y\in g(B)$, there exists an $x\in B$ with $g(x)=y$ and so $h(x)=g(x)=y$. Hence $h$ is surjective.
+
+        Let $x,x'\in X$ with $h(x)=h(x')$.
+        
+        \proofstep{Case $x,x'\in A$} Then $f(x)=h(x)=h(x')=f(x')$ holds and thus $x=x'$ by the injectivity of $f$.
+        
+        \proofstep{Case $x,x'\in B$} Then $g(x)=h(x)=h(x')=g(x')$ holds and thus $x=x'$ by the injectivity of $g$.
+        
+        \proofstep{Case $x\in A$ and $x'\in B$} Then $f(x)=h(x)=h(x')=g(x')$ holds. That means $x,x'\in f^{-1}(Y)\cap g^{-1}(Y)=\emptyset$, which is not possible.
+
+        \proofstep{Case $x\in B$ and $x'\in A$} This case is also not possible by the same argumentation as in the previous case.
+
+        Hence $x=x'$ follows for every possible case, so $h$ is injective and therefore bijective.
+    \end{proofenumerate}
+\end{proof}
+
+\begin{corollary}\label{corollary:mappings:bijective_union}
+    Let $X$, $Y$, $A$ and $B$ be sets and $f\colon A\rightarrow Y$ and $g\colon B\rightarrow Y$ mappings with $A\cup B=X$ and $A\cap B=\emptyset$. Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item The mapping $h\colon X\rightarrow Y$ is well-defined by \eqref{eq:mappings:bijective_union} and bijective.
+        \item The mappings $f$ and $g$ are injective and $f(A)\cup g(B)=Y$.
+    \end{intheoremenumerate}
+\end{corollary}
+
+%\begin{theorem}\label{theorem:mappings:surjective_equivalent_properties}
+%    Let $f\colon X\rightarrow Y$ be a mapping, then the following statements are equivalent:
+%    \begin{intheoremenumerate}
+%        \item $f$ is surjective. 
+%        \item $f(X)=Y$. 
+%        \item For all $B\subseteq Y$, $f(f^{-1}(B))=B$ holds. 
+%        \item For all $y\in Y$, the fiber $f^{-1}(\{y\})$ is non-empty. 
+%    \end{intheoremenumerate}
+%\end{theorem}
+%\begin{proof}
+%    \begin{proofenumerate}
+%        \proofcase{i}{ii} Let $f$ be surjective. Because $f(X)\subseteq Y$, only $Y\subseteq f(X)$ remains to be shown. So let $y\in Y$. Since $f$ is surjective, there exists an $x\in X$ such that $f(x)=y$. By definition of the image $f(X)$, this means that $y\in f(X)$. Thus $Y\subseteq f(X)$ holds, and so $f(X)=Y$.
+%        \proofcase{ii}{iii} Let $f(X)=Y$ hold. Let $B\subseteq Y$. According to Theorem \ref{theorem:mappings:inclusions}, $f(f^{-1}(B))\subseteq B$ holds. We therefore only show $B\subseteq f(f^{-1}(B))$. Let $y\in B$. Since $f(X)=Y$, $y\in f(X)$ also holds, i.e., there exists an $x\in X$ such that $f(x)=y$. Because $\{y\}\subseteq B$ and Remark \ref{theorem:mappings:image_properties}, $x\in f^{-1}(\{y\})\subseteq f^{-1}(B)$ holds and consequently $y\in f(f^{-1}(B))$. From this, $B\subseteq f(f^{-1}(Y))$ and finally $f(f^{-1}(B))=B$ follow.
+%
+%        \proofcase{iii}{iv} By assumption, $f(f^{-1}(\{y\}))=\{y\}$ holds. Because of Remark \ref{remark:Abbildungen:BildNichtleer}, $f^{-1}(\{y\})$ is non-empty.
+%        \proofcase{iv}{i} Let $y\in Y$, then by assumption there exists an $x\in f^{-1}(\{y\})$. From this, $f(x)=y$ follows, and so $f$ is surjective.
+%    \end{proofenumerate}
+%\end{proof}
+
+%\begin{theorem}\label{theorem:mappings:injective_equivalent_properties}
+%    Let $f\colon X\rightarrow Y$ be a mapping, then the following statements are equivalent:
+%    \begin{intheoremenumerate}
+%        \item $f$ is injective. 
+%        \item For all $A\subseteq X$, $f^{-1}(f(A))=A$ holds. 
+%        \item For all $y\in Y$, the fiber $f^{-1}(\{y\})$ is empty or singleton. 
+%        \item For all $A,B\subseteq X$, $f(A\cap B)=f(A)\cap f(B)$ holds. 
+%    \end{intheoremenumerate}
+%\end{theorem}
+%\begin{proof}
+%    \proofcase{i}{ii} Let $f$ be injective and $A\subseteq X$. Because of Theorem \ref{theorem:mappings:inclusions}, only $f^{-1}(f(A))\subseteq A$ remains to be shown. Let $x\in f^{-1}(f(A))$. Then there exists a $z\in f(A)$ such that $f(x)=z$. Furthermore, there exists a $y\in A$ such that $f(y)=z$. Overall, $f(x)=f(y)$ holds, and due to injectivity $x=y$. Thus $x\in A$ is also true.
+%
+%    \proofcase{ii}{iii} Let $y\in Y$. Suppose $f^{-1}(\{y\})$ is non-empty. Then there exists an $x\in f^{-1}(\{y\})$ such that $f(x)=y$. From the assumption, it follows that $f^{-1}(\{y\})=f^{-1}(\{f(x)\})=f^{-1}(f(\{x\}))=\{x\}$. Thus $f^{-1}(\{y\})$ is either empty or singleton.
+%
+%    \proofcase{iii}{iv} Let $A,B\subseteq X$. According to Theorem \ref{theorem:mappings:image_properties}, only $f(A)\cap f(B)\subseteq f(A\cap B)$ remains to be shown for all $A,B\subseteq X$. Let $y\in f(A)\cap f(B)$. Then there exist $a\in A$ and $b\in B$ such that $f(a)=y=f(b)$. Consequently, $\{a,b\}\subseteq f^{-1}(\{y\})$. By assumption, $\{a,b\}$ must be singleton since $f^{-1}(\{y\})$ is singleton. Thus $a=b$ follows, i.e., $a,b\in A\cap B$ and so $y\in f(A\cap B)$.
+%
+%    \proofcase{iv}{i} Let $x,y\in X$ with $f(x)=f(y)$, then by assumption $f(\{x\}\cap\{y\})=f(\{x\})\cap f(\{y\})=\{f(x),f(y)\}\neq\emptyset$ holds. Thus $f(\{x\}\cap\{y\})$ is non-empty and therefore by Remark \ref{remark:Abbildungen:BildNichtleer} $\{x\}\cap\{y\}\neq\emptyset$ also holds, meaning $x=y$ must be the case. Thus $f$ is injective.
+%\end{proof}
+
+\subsection{Kernel Relations}
+
+\begin{theorem}
+    Let $X$ and $Y$ be sets and $f\colon X\rightarrow Y$ a mapping. Also let $\sim_f$ be a relation on $X$ defined by \begin{align}\forall x,x'\in X\colon x\sim_f x'\Leftrightarrow f(x)=f(x').\end{align} Then $\sim_f$ is an equivalence relation on $X$, the \emph{kernel relation of $f$}.
+\end{theorem}
+\begin{proof}
+    For every $a\in X$, $f(a)=f(a)$ holds, thus $a\sim_f a$ follows. For $a,b\in X$ clearly $a\sim_f b$ implies $b\sim_f a$ because $f(a)=f(b)$ is equivalent to $f(b)=f(a)$. Let $a,b,c\in X$ with $a\sim_f b$ and $b\sim_f c$, then $f(a)=f(b)=f(c)$ follows and therefore $f(a)=f(c)$, which means $a\sim_f c$. Thus $\sim_f$ is an equivalence relation on $X$.
+\end{proof}
+
+\begin{theorem}
+    Let $X$ and $Y$ be sets and $f\colon X\rightarrow Y$ a mapping. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item For every $x\in X$ holds $[x]_{\sim_f}=f^{-1}(\{f(x)\})$.
+        \item For the quotient $X/\sim_f$ holds the equality
+        \begin{align}X/{\sim_f}=\setdef{A\subseteq X\given \exists y\in Y\colon A=f^{-1}(\{y\})\land A\neq\emptyset},\end{align} i.e. the set of all non-empty fibers of $f$ form a partition of $X$.
+        \item The mapping \emph{kernel mapping} \begin{align}\kappa_f\colon X/{\sim_f} \rightarrow Y,\qquad [x]_{\sim_f}\mapsto f(x)\end{align} is well-defined and injective.
+        \item The mapping $\kappa_f$ is bijective if and only if $f$ is surjective.
+    \end{intheoremenumerate}
+\end{theorem}
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $x'\in X$. Then we have the following chain of equivalences:
+        \begin{align}\begin{split}
+        x'\in [x]_{\sim_f}&\iff x'\sim_f x\\
+        &\iff f(x')=f(x)\iff x'\in f^{-1}(\{f(x)\})
+        \end{split}\end{align}
+        Therefore $[x]_{\sim_f}=f^{-1}(\{f(x)\})$ holds.
+        \item \proofsubset Let $A\in X/{\sim_f}$, then there exists an $x\in X$ such that $A=[x]_{\sim_f}$. By (i) follows $A=f^{-1}(\{f(x)\})$. Because of $x\in A$ we have $A\neq\emptyset$. Thus $A\in\setdef{A\subseteq X\given \exists y\in Y\colon A=f^{-1}(\{y\})\land A\neq\emptyset}$ follows.
+        
+        \proofsupset Let $A\subseteq X$ with $A\neq\emptyset$ and $A=f^{-1}(\{y\})$ for some $y\in Y$. Because $A$ is non-empty, there exists an $x\in A$. Hence $x\in f^{-1}(\{y\})$, which means $f(x)=y$ and therefore $A=f^{-1}(\{f(x)\})$, which concludes $A=[x]_{\sim_f}$ by (i). Thus $A\in X/{\sim_f}$ follows.
+        
+        \item We have to check, that $\kappa_f$ is independent of representatives (see theorem \ref{theorem:mappings:well_defined_relation}). Let $[x]_{\sim_f}=[x']_{\sim_f}$ for $x,x'\in X$, then $x\sim_f x'$ follows and therefore $f(x)=f(x')$. Thus $\kappa_f$ is a well-defined mapping by theorem \ref{theorem:mappings:well_defined_relation}.
+        
+        Let $[x]_{\sim_f},[x']_{\sim_f}\in X/{\sim_f}$ with $\kappa([x]_{\sim_f})=\kappa([x']_{\sim_f})$, then $f(x)=f(x')$ follows by definition of $\kappa_f$. Thus $\kappa_f$ is injective.
+
+        \item \proofright Let $\kappa_f$ be bijective and especially surjective. Let $y\in Y$. By the surjectivity of $\kappa_f$ there exists an $x\in X$ with $\kappa_f([x]_{\sim_f})=y$. This means $f(x)=y$ by definition of $\kappa_f$. Thus $f$ is surjective.
+        
+        \proofleft Let $f$ be surjective. Let $y\in Y$, then there exists an $x\in X$ with $f(x)=y$ by the surjectivity of $f$. Therefore $\kappa_f([x]_{\sim_f})=y$ holds. So $\kappa_f$ is surjective and by (iii) also injective, hence bijective.
+    \end{proofenumerate}
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick,element/.style={rectangle,inner sep=1pt,fill=white},connection/.style={-Latex,shorten >=11pt,shorten <=11pt},set/.style={rounded corners=10pt,pattern=dots,pattern color=gray},outer set/.style={rounded corners=10pt}]
+
+    \begin{scope}[shift={(0,0)}]
+        \foreach \y in {0,1,...,4}{
+            \coordinate (a-\y) at (0,\y);
+        }
+        \draw (-1,-.75) [outer set] rectangle (1,4.75);
+        \node at (0,-1.1) {$\strut X$};
+    \end{scope}
+    \node at (1.5,4.25) {$\strut f$};
+    \begin{scope}[shift={(3,0)}]
+        \foreach \y in {0,1,...,3}{
+            \coordinate (b-\y) at (0,\y);
+        }
+        \draw (-1,-.75) [outer set] rectangle (1,3.75);
+        \node at (0,-1.1) {$\strut Y$};
+    \end{scope}
+
+    \node[element] at (a-0) {$\strut a$};
+    \node[element] at (a-1) {$\strut b$};
+    \node[element] at (a-2) {$\strut c$};
+    \node[element] at (a-3) {$\strut d$};
+    \node[element] at (a-4) {$\strut e$};
+
+    \node[element] at (b-0) {$\strut v$};
+    \node[element] at (b-1) {$\strut w$};
+    \node[element] at (b-2) {$\strut x$};
+    \node[element] at (b-3) {$\strut y$};
+
+    \draw[connection] (a-0) -- (b-1);
+    \draw[connection] (a-1) -- (b-1);
+    \draw[connection] (a-2) -- (b-1);
+    \draw[connection] (a-3) -- (b-2);
+    \draw[connection] (a-4) -- (b-2);
+
+    \begin{scope}[shift={(7,0)}]
+        \begin{scope}[shift={(0,0)}]
+            \foreach \y in {0,1,...,4}{
+                \coordinate (c-\y) at (0,\y);
+            }
+            \draw (-1,-.75) [outer set] rectangle (1,4.75);
+            \draw (-.5,-.5) [set] rectangle (.5,2.5);
+            \draw (-.5,2.5) [set] rectangle (.5,4.5);
+            \node[element] at (-1.4,1) {$\strut f^{-1}(\{w\})$};
+            \node[element] at (-1.4,3.5) {$\strut f^{-1}(\{x\})$};
+            \node at (0,-1.1) {$\strut X/{\sim_f}$};
+
+            \coordinate (ec-0) at (0.25,1);
+            \coordinate (ec-1) at (0.25,3.5);
+        \end{scope}
+        \node at (1.5,4.25) {$\strut \kappa_f$};
+        \begin{scope}[shift={(3,0)}]
+            \foreach \y in {0,1,...,3}{
+                \coordinate (d-\y) at (0,\y);
+            }
+            \draw (-1,-.75) [outer set] rectangle (1,3.75);
+            \draw (-.5,.5) [set] rectangle (.5,2.5);
+            \node[element] at (1.2,1.5) {$\strut f(X)$};
+            \node at (0,-1.1) {$\strut Y$};
+        \end{scope}
+    \end{scope}
+
+    \node[element] at (c-0) {$\strut a$};
+    \node[element] at (c-1) {$\strut b$};
+    \node[element] at (c-2) {$\strut c$};
+    \node[element] at (c-3) {$\strut d$};
+    \node[element] at (c-4) {$\strut e$};
+
+    \node[element] at (d-0) {$\strut v$};
+    \node[element] at (d-1) {$\strut w$};
+    \node[element] at (d-2) {$\strut x$};
+    \node[element] at (d-3) {$\strut y$};
+
+    \draw[connection] (ec-0) -- (d-1);
+    \draw[connection] (ec-1) -- (d-2);
+
+    \end{tikzpicture}
+    \caption{Arrow diagram showing a mapping $f\colon X\rightarrow Y$ and the kernel mapping $\kappa_f\colon X/{\sim_f}\rightarrow Y$. The set of all non-empty fibers slices the domain $X$ into disjoint equivalence classes that are mapped to the corresponding images in $f(X)$ they share.}
+\end{figure}
+
+The interesting consequence of the previous theorem is, that every surjective mapping $f\colon X\rightarrow Y$ induces a bijection $\kappa_f\colon X/{\sim_f}\rightarrow Y$. Recall that a non-surjective mapping $f\colon X\rightarrow Y$ can be made surjective by restricting its codomain to the image $f(X)$ to define the corresponding surjection $\tilde f\colon X\rightarrow f(X)$ (see example \ref{example:mappings:every_map_surjective}). Therefore every mapping induces a bijection $\tilde \kappa\colon X/{\sim_f}\rightarrow f(X)$.
+
+This observation can also be phrased in other words: if one replaces the domain $X$ with the quotient $X/{\sim_f}$, then all elements of $X$ that share a common image under f are grouped together into equivalence classes. This gives rise to an injective mapping, since two distinct equivalence classes map to distinct elements in $Y$. If one then removes all elements of $Y$ that are not an image under f, the result is ultimately a bijective mapping from $X/{\sim_f}$ to $f(Y)$.
+
+\subsection{Compositions}
+
+\begin{definition}[Compositions]~\\
+    Let $A$, $B$ and $C$ be sets and $f\colon A\rightarrow B$, $g\colon B\rightarrow C$ mappings, then the mapping
+    \begin{align}g\circ f\colon A\rightarrow C,\qquad x\mapsto g(f(x))\end{align}
+    is well-defined and called the \emph{composition of $g$ after $f$}.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item The composition of two mappings $f\colon A\rightarrow B$ and $g\colon C\rightarrow D$ is by definition only defined if the codomain $B$ of $f$ matches the domain $C$ of $g$. However, the definition can be generalized by requiring only $f(B)\subseteq C$. In this case, the mapping
+        \begin{align}g\circ f\colon A\rightarrow D,\qquad x\mapsto g(f(x))\end{align}
+        is also well-defined
+        \item Let $A$, $B$ and $C$ be sets and $f\colon A\rightarrow B$, $g\colon B\rightarrow C$ mappings, then the composition $g\circ f$ coincides with the composition of relations.
+        \item\label{remark:mappings:composition_associative} Let $A$, $B$, $C$ and $D$ be sets and $f\colon A\rightarrow B$, $g\colon B\rightarrow C$ and $h\colon C\rightarrow D$ mappings, then the composition is associative, i.e. $(h\circ g)\circ f=h\circ (g\circ f)$ holds.
+        \begin{miniproof}
+            Let $x\in A$, then
+            \begin{align}\begin{split}((h\circ g)\circ f)(x)&=(h\circ g)(f(x))\\&=h(g(f(x)))=h((g\circ f)(x))=(h\circ (g\circ f))(x)\end{split}\end{align}
+            Thus $(h\circ g)\circ f=h\circ (g\circ f)$ holds.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:mappings:identity_compositions} Let $f\colon X\rightarrow Y$ be a mapping, then $f\circ\idmap_X=f$ and $\idmap_Y\circ f=f$ hold, i.e., the identities on the sets $X$ and $Y$ behave neutrally in compositions.
+        \item Let $i_{X,Y}\colon X\rightarrow Y$ be the inclusion mapping and $f\colon U\rightarrow V$ with $Y\subseteq U$ a mapping, then $f\vert_Y=f\circ i_{X,Y}$ holds.
+    \end{exampleenumerate}
+\end{examples}
+
+An important and often used property of compositions is that they preserve the injectivity, surjectivity and bijectivity of the mappings they are composed with:
+
+\begin{theorem}\label{theorem:mappings:composition_preserving} Let $X$, $Y$ and $Z$ be sets and $f\colon X\rightarrow Y$ and $g\colon Y\rightarrow Z$ be mappings. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item If $f$ and $g$ are injective, then $g\circ f$ is injective.
+        \item If $f$ and $g$ are surjective, then $g\circ f$ is surjective.
+        \item If $f$ and $g$ are bijective, then $g\circ f$ is bijective 
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $f$ and $g$ be injective. Furthermore let $x,x'\in X$ with $(g\circ f)(x)=(g\circ f)(x')$. Then $g(f(x))=g(f(x'))$ and $f(x)=f(x')$ follows by the injectivity of $g$. So $x=x'$ follows by the injectivity of $f$. Thus $g\circ f$ is injective.
+        
+        \item Let $f$ and $g$ be surjective. Furthermore let $z\in Z$. By the surjectivity of $g$ there exists an $y\in Y$ with $g(y)=z$ and by the surjectivity of $f$ there exists an $x\in X$ with $f(x)=y$. Then $(g\circ f)(x)=z$ follows, so $g\circ f$ is surjective.
+        
+        \item This statement follows directly from the previous two.
+    \end{proofenumerate}
+\end{proof}
+
+In future proofs we will often refer to this theorem by saying that a mapping is injective (surjective or bijective) because it is a composition of injective (surjective or bijective) mappings.
+
+\subsection{Inverse Mappings}
+
+\begin{theorem}\label{theorem:mappings:bijectivity_composition}
+    Let $f\colon X\rightarrow Y$ be a mapping, then $f$ is bijective if and only if there exists a mapping $g\colon Y\rightarrow X$ such that \begin{align}f\circ g=\idmap_Y\qquad\text{and}\qquad g\circ f=\idmap_X\label{eq:mappings:bijectivity_composition_property}.\end{align}
+    In this case, the mapping $g$ is uniquely determined by \eqref{eq:mappings:bijectivity_composition_property} and also bijective.
+\end{theorem}
+
+\begin{proof}
+    \proofright Let $f$ be bijective. By remark \ref{remark:mappings:bijective_total_unique} $f$ is both total and unique as a relation from $X$ to $Y$. That means the inverse relation $f^{-1}$ is also total and unique and especially left total and right unique. So $f^{-1}$ is a mapping from $Y$ to $X$. Set $g=f^{-1}$, then \eqref{eq:mappings:bijectivity_composition_property} follows directly from theorem \ref{theorem:relations:total_and_unique}.
+
+    \proofleft Assume there exists a mapping $g\colon Y\rightarrow X$ with \eqref{eq:mappings:bijectivity_composition_property}. \proofstep{Surjectivity of $f$} Let $y\in Y$, then $f(g(y))=y$ holds because of $f\circ g=\idmap_Y$. That means $f(x)=y$ for $x=g(y)$. Hence $g$ is surjective. \proofstep{Injectivity of $f$} Let $x,x'\in X$ with $f(x)=f(x')$, then applying $g$ on both sides yields $g(f(x))=g(f(x'))$ and thus $x=x'$ because of $g\circ f=\idmap_X$. Therefore $f$ is injective and in particular bijective.
+
+    \proofstep{Uniqueness of $g$} Let $g\colon Y\rightarrow X$ be a mapping with \eqref{eq:mappings:bijectivity_composition_property}. Assume there exists another mapping $h\colon Y\rightarrow X$ with $f\circ h=\idmap_Y$ and $h\circ f=\idmap_X$. Then we get with the associativity of compositions and example \ref{example:mappings:identity_compositions}:
+    \begin{align}h=h\circ\idmap_Y=h\circ (f\circ g)=(h\circ f)\circ g=\idmap_X\circ g=g,\end{align}
+    thus $g=h$, which shows that $g$ is uniquely determined by \eqref{eq:mappings:bijectivity_composition_property}. It follows directly from the theorem just shown that $g$ is bijective (swap the roles of $f$ and $g$ as well as $X$ and $Y$ in \ref{eq:mappings:bijectivity_composition_property}).
+\end{proof}
+
+A direct consequence of the previous theorem is the following statement:
+
+\begin{theorem}\label{theorem:mappings:bijective_inverse}
+    Let $X$ and $Y$ be sets and $f\colon X\rightarrow Y$ be a mapping. Then $f$ is bijective if and only if
+    \begin{align}f\circ f^{-1}=\idmap_Y\qquad\text{and}\qquad f^{-1}\circ f=\idmap_X.\label{eq:mappings:bijective_inverse}\end{align}
+    In this case, the mapping $f^{-1}$ is called the \emph{inverse mapping of $f$} or shortly the \emph{inverse of $f$}. If any only if $f$ is bijective, the inverse of $f$ is also bijective and the only mapping from $Y$ to $X$ fulfilling \eqref{eq:mappings:bijective_inverse}.
+\end{theorem}
+\begin{proof}
+    The equivalence of both statements follows directly from theorem \ref{theorem:relations:total_and_unique} and remark \ref{remark:mappings:bijective_total_unique}. The uniqueness of $f^{-1}$ with the property \eqref{eq:mappings:bijective_inverse} follows from theorem \ref{theorem:mappings:bijectivity_composition}.
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item For every set $X$, the identity $\idmap_X$ is bijective and $\idmap_X^{-1}=\idmap_X$ holds. The next example shows that the identity mapping is not the only mapping that is its own inverse mapping.
+        \item Let $X$ be a set and $C_X\colon \powerset(X)\rightarrow\powerset(X),A\mapsto X\setminus A$ the complement mapping from example \ref{example:mappings:complement_mapping}, then $C_X$ is bijective and $C_X^{-1}=C_X$.
+        \begin{miniproof}
+            For every $A\subseteq X$ we have \begin{align}(C_X\circ C_X)(A)=C_X(C_X(A))=C_X(X\setminus A)=X\setminus(X\setminus A)=A=\idmap_{\powerset(X)}(A).\end{align}
+            Hence $C_X$ is bijective by theorem \ref{theorem:mappings:bijectivity_composition} and its own inverse mapping.
+        \end{miniproof}
+        \item If $f\colon X\rightarrow Y$ is bijective, then $f^{-1}\colon Y\rightarrow X$ is also bijective by theorem \ref{theorem:mappings:bijectivity_composition}. Moreover the inverse of the inverse is $f$ itself, i.e. $(f^{-1})^{-1}=f$.
+        \item\label{example:mappings:cross_product_bijective} Let $X,Y$ be non-empty sets and consider the mapping \begin{align}f\colon X\times Y\rightarrow Y\times X,\qquad (x,y)\mapsto (y,x).\end{align}
+        Then $f$ is bijective with it's inverse mapping $f^{-1}\colon Y\times X\rightarrow X\times Y, (y,x)\mapsto (x,y)$.
+        \begin{miniproof}
+            For every $x\in X$ and $y\in Y$ holds
+            \begin{align}\begin{split}(f^{-1}\circ f)(x,y)&=f^{-1}(f(x,y))=f^{-1}(y,x)=(x,y)=\idmap_{X\times Y}(x,y)\\ \text{and}\qquad (f\circ f^{-1})(y,x)&=f(f^{-1}(y,x))=f(x,y)=(y,x)=\idmap_{Y\times X}(y,x)\end{split}\end{align}
+            Hence $f$ is bijective by theorem \ref{theorem:mappings:bijectivity_composition} and $f^{-1}$ indeed it's inverse mapping.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}\label{theorem:mappings:composition_inverse}
+    Let $X,Y,Z$ be sets and $f\colon X\rightarrow Y$ and $g\colon Y\rightarrow Z$ be bijective mappings, then $g\circ f$ is also bijective and
+    \begin{align}(g\circ f)^{-1}=f^{-1}\circ g^{-1}.\end{align}
+\end{theorem}
+\begin{proof}
+    Let $h=f^{-1}\circ g^{-1}$, then we have
+    \begin{align}
+        (g\circ f)\circ h&= g\circ f\circ f^{-1}\circ g^{-1}=g\circ \idmap_X\circ g^{-1}=g\circ g^{-1}=\idmap_Y\\
+        \text{and}\qquad h\circ (g\circ f)&=f^{-1}\circ g^{-1}\circ g\circ f=f^{-1}\circ\idmap_Y\circ f=f^{-1}\circ f=\idmap_X.
+    \end{align}
+    Thus $g\circ f$ is bijective by theorem \ref{theorem:mappings:bijectivity_composition} and $h=f^{-1}\circ g^{-1}$ is the inverse mapping of $g\circ f$, i.e. $(g\circ f)^{-1}=f^{-1}\circ g^{-1}$.
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:mappings:bijection_equivalence_relation} Let $X$ be a set, then the relation $\sim$ on $\powerset(X)$ defined $A\sim B$ if and only if there exists a bijection $f\colon A\rightarrow B$ is an equivalence relation on $\powerset(X)$.
+        \begin{miniproof}
+            Let $A\in\powerset(X)$, then $A\sim A$ holds, because $\idmap_A\colon A\rightarrow A$ is a bijection. Let $B\in\powerset(X)$ with $A\sim B$, then there exists a bijection $f\colon A\rightarrow B$. By theorem \ref{theorem:mappings:bijective_inverse}, the inverse mapping $f^{-1}\colon B\rightarrow A$ is also a bijection, hence $B\sim A$ follows. Now let $C\in\powerset(X)$, so that $A\sim B$ and $B\sim C$ hold. Then there exist bijections $f\colon A\rightarrow B$ and $g\colon B\rightarrow C$. By theorem \ref{theorem:mappings:composition_inverse}, $g\circ f\colon A\rightarrow C$ is a bijection, hence $C\sim A$ follows. In summary, $\sim$ is an equivalence relation on $\powerset(X)$.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Fixed-Points and Idempotent Mappings}
+
+\begin{definition}
+    Let $X$ be a non-empty set and $f\colon X\rightarrow X$ be a mapping. An element $x\in X$ is called a \emph{fixed-point of $f$} if and only if $f(x)=x$. We denote with
+    \begin{align}\fixset(f)\coloneq\setdef{x\in X\given f(x)=x}\end{align} the set of all fixed-points of $f$.
+    
+    Furthermore a mapping $f\colon X\rightarrow X$ is called \emph{idempotent} or a \emph{projection} if and only if the composition of $f$ with itself is the $f$ again, i.e. \begin{align}f\circ f=f\label{eq:mappings:idempotence}\end{align}
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item The condition \ref{eq:mappings:idempotence} is equivalent to $f(f(x))=f(x)$ for all $x\in X$.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $Y$ be non-empty set and $a\in Y$. The mappings \begin{align}& g\colon Y\times Y\rightarrow Y\times Y,\qquad (x,y)\mapsto (x,x)\\\text{and}\qquad& h\colon Y\times Y\rightarrow Y\times Y,\qquad (x,y)\mapsto (a,y)\end{align} are both idempotent.
+        \begin{miniproof}
+            Let $(x,y)\in Y\times Y$, then
+            \begin{align}
+                g(g(x,y))&=g(x,x)=(x,x)=g(x,y)\\
+                \text{and}\qquad
+                h(h(x,y))&=h(a,y)=(a,y)=h(x,y).
+            \end{align}
+            Hence both $g$ und $h$ are idempotent.
+        \end{miniproof}
+        \item For every non-empty set $X$ the identity mapping $\idmap_X$ is idempotent.
+        \begin{miniproof}
+            This follows directly from example \ref{example:mappings:identity_compositions}.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}\label{theorem:mappings:idempotent_fixed_points}
+    Let $X$ be a set and $f\colon X\rightarrow X$ a mapping. Then $f$ is idempotent if and only if $f(X)=\fixset(f)$.
+\end{theorem}
+\begin{proof}
+    \proofright Let $f$ be idempotent. Furthermore let $y\in f(X)$, then there exists an $x\in X$ with $f(x)=y$. Applying $f$ to both sides yields $f(f(x))=f(y)$. Because $f$ is idempotent, we conclude \begin{align}f(y)=f(f(x))=f(x)=y.\end{align} That means $f(y)=y$, so every element of $f(X)$ is a fixed-point of $f$. Now let $x\in X$ be a fixed-point of $f$, then $f(x)=x$ and $f(x)\in f(X)$ hold, therefore $x\in f(X)$ follows. Thus $f(X)$ is the set of all fixed-points of $f$.
+
+    \proofleft Let $f(X)$ be equal with the set of all fixed-points of $f$. Furthermore let $x\in X$. Because of $f(x)\in f(X)$ we conclude from the assumption that $f(x)$ is a fixed-point of $f$. That means $f(f(x))=f(x)$. Therefore $f\circ f=f$ holds and thus $f$ is idempotent.
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick,element/.style={rectangle,inner sep=1pt,fill=white},connection/.style={-Latex,shorten >=11pt,shorten <=11pt},set/.style={rounded corners=10pt,pattern=dots,pattern color=gray},outer set/.style={rounded corners=10pt}]
+
+    \begin{scope}[shift={(0,0)}]
+        \foreach \y in {0,1,...,3}{
+            \coordinate (a-\y) at (0,\y);
+        }
+        \draw (-1,-.75) [outer set] rectangle (1,3.75);
+        \draw (-.5,.5) [set] rectangle (.5,2.5);
+        \node at (0,-1.1) {$\strut X$};
+        \node[element] at (-1.2,1.5) {$\strut \fixset(f)$};
+    \end{scope}
+    \node at (1.5,3.5) {$\strut f$};
+    \begin{scope}[shift={(3,0)}]
+        \foreach \y in {0,1,...,3}{
+            \coordinate (b-\y) at (0,\y);
+        }
+        \draw (-1,-.75) [outer set] rectangle (1,3.75);
+        \draw (-.5,.5) [set] rectangle (.5,2.5);
+        \node[element] at (1.2,1.5) {$\strut f(X)$};
+        \node at (0,-1.1) {$\strut X$};
+    \end{scope}
+
+    \node[element] at (a-0) {$\strut a$};
+    \node[element] at (a-1) {$\strut b$};
+    \node[element] at (a-2) {$\strut c$};
+    \node[element] at (a-3) {$\strut d$};
+
+    \node[element] at (b-0) {$\strut a$};
+    \node[element] at (b-1) {$\strut b$};
+    \node[element] at (b-2) {$\strut c$};
+    \node[element] at (b-3) {$\strut d$};
+
+    \draw[connection] (a-0) -- (b-1);
+    \draw[connection] (a-1) -- (b-1);
+    \draw[connection] (a-2) -- (b-2);
+    \draw[connection] (a-3) -- (b-2);
+
+    \end{tikzpicture}
+    
+    \caption{Arrow diagram of an idempotent mapping $f\colon X\rightarrow X$. The set of all fixed-points $\fixset(f)$ coincides with the image $f(X)$.}\label{figure:mappings:idempotent_mapping}
+\end{figure}
+
+\subsection{Set Mappings and Closure Operators}
+
+\begin{definition}
+    Let $X$ be a set. We call a mapping $f\colon \powerset(X)\rightarrow\powerset(X)$ a \emph{set mapping of $X$}. Furthermore $f$ is called \dots
+    \begin{definitionenumerate}
+        \item \dots \emph{extensive} if and only if $A\subseteq f(A)$ for all $A\subseteq X$.
+        \item \dots \emph{monotone} if and only if $A\subseteq B$ implies $f(A)\subseteq f(B)$ for all $A,B\subseteq X$.
+    \end{definitionenumerate}
+\end{definition}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item The identity map $\idmap_{\powerset(X)}$ is a monotone and extensive set mapping of $X$.
+        \item\label{example:mappings:union_monotone_extensive} Let $X$ be a set and $A\subseteq X$ non-empty, then the mapping
+        \begin{align}F\colon \powerset(X)\rightarrow\powerset(X),&\qquad B\mapsto A\cup B\end{align}
+        is a monotone and extensive set mapping of $X$.
+        \begin{miniproof}
+            Let $B,C\in\powerset(X)$ with $B\subseteq C$, then $F(B)=A\cup B\subseteq A\cup C=F(C)$ holds. Thus $F$ is monotone. Furthermore we have $B\subseteq A\cup B=F(B)$. Hence $F$ is also extensive.
+        \end{miniproof}
+        \item Let $X$ be a set and $f\colon X\rightarrow X$ from $X$ into itself, then
+        \begin{align}\mathcal F\colon \powerset(X)\rightarrow\powerset(X),&\qquad A\mapsto f(A)\\\text{and}\qquad\mathcal G\colon \powerset(X)\rightarrow\powerset(X),&\qquad A\mapsto f^{-1}(A).\end{align}
+        define monotone set mappings of $X$.
+        \item\label{example:mappings:cantor_mapping}\marginnote{The mapping $H_{f,g}$ is used to prove the Cantor-Schröder-Bernstein theorem.} Let $A$ and $B$ be sets and $f\colon A\rightarrow B,g\colon B\rightarrow A$ mappings, then
+        \begin{align}H_{f,g}\colon \powerset(A)\rightarrow\powerset(A),\qquad A\mapsto A\setminus g(B\setminus f(A))\end{align}
+        defines a monotone set mapping.
+        \begin{miniproof}
+            Let $X,Y\subseteq A$ with $X\subseteq Y$. We show that $H_{f,g}(X)\subseteq H_{f,g}(Y)$. From theorem \ref{theorem:mappings:image_properties} follows $f(X)\subseteq f(Y)$ and hence $B\setminus f(X)\supseteq B\setminus f(Y)$. Thus $g(B\setminus f(X))\supseteq g(B\setminus f(Y))$ from theorem \ref{theorem:mappings:image_properties} again. Therefore $A\setminus g(B\setminus f(X))\subseteq A\setminus g(B\setminus f(Y))$, thus $H_{f,g}$ is monotone.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{definition}
+    Let $X$ be a set. A set mapping $\clop\colon\powerset(X)\rightarrow\powerset(X)$ on $X$ is called a \emph{closure operator on $X$} if and only if $\clop$ is idempotent, monotone and extensive.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $X$ be a set, then a set mapping $\clop\colon\powerset(X)\rightarrow\powerset(X)$ on $X$ is a closure operator on $X$ if and only if for all $A,B\subseteq X$ the following conditions hold:
+        \begin{align}\begin{split}
+            &A\subseteq \clop(A)\\
+            &A\subseteq B\Rightarrow \clop(A)\subseteq \clop(B)\\
+            \text{and}\qquad&\clop(\clop(A))=\clop(A).
+        \end{split}\end{align}
+        \item Let $X$ be a set and $\clop\colon\powerset(X)\rightarrow\powerset(X)$ a closure operator on $X$. Then $\clop(A)$ is a fixed-point of $\clop$ for every $A\subseteq X$ (see theorem \ref{theorem:mappings:idempotent_fixed_points}). We call a set $A\in\powerset(X)$ a \emph{closed set under $\clop$} if and only if $A\in\fixset(\clop)$.
+        \item Let $X$ be a set and $\clop\colon\powerset(X)\rightarrow\powerset(X)$ a closure operator on $X$, then $X$ is always a closed set under $\clop$.
+        \begin{miniproof}
+            Because $\powerset(X)$ is the codomain of $\clop$, $\clop(X)\subseteq X$ holds. But $\clop$ is also extensive, hence also $X\subseteq\clop(X)$ holds. Therefore $X=\clop(X)$ follows, so $X$ is a closed set under $\clop$.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{theorem}\label{theorem:mappings:closure_operator}
+    Let $X$ be a set. Furtheremore let $\varphi(x)$ be a property that is closed under intersections in $X$ so that $\varphi(X)$ is fulfilled. We define the set mapping $\clop\colon\powerset(X)\rightarrow\powerset(X)$ by
+    \begin{align}\clop(A)=\bigcap\setdef{B\subseteq X\given A\subseteq B\land \varphi(B)}.\end{align}
+    Then $\clop$ is a closure operator on $X$ and $\clop(A)$ is the smallest set that contains $A$ as a subset and fulfills the property $\varphi$.
+\end{theorem}
+\begin{proof}
+    For every set $A\subseteq X$ holds that $\clop(A)=\langle A\rangle_\varphi$ and $X\in\mathcal F_\varphi(A)$ because of $\varphi(X)$ (see definition \ref{definition:relations:closure}). Then the statement follows directly from theorem \ref{theorem:relations:closure_properties}. The last statement follows from the closure theorem \ref{theorem:relations:closure_minimal}.
+\end{proof}
+
+\newcommand\chainset{\mathcal C}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:mappings:chain_closure} Let $X$ be a set and $Y\subseteq X$, furthermore let $f\colon X\rightarrow Y$ be a mapping. A set $U\subseteq X$ is called a \emph{chain of $f$} if and only if \begin{align}f(U)\subseteq U.\end{align}
+        Then the set mapping $\chainset_f(A)\colon \powerset(X)\rightarrow\powerset(X)$ defined by
+        \begin{align}\chainset_f(A)=\bigcap\setdef{B\subseteq X\given A\subseteq B\land f(B)\subseteq B}\end{align}
+        is a closure operator on $X$.
+        \begin{miniproof}
+            We check that the property $\varphi(x)\equiv f(x)\subseteq x$ is closed under intersections in $X$. Let $\mathcal F\subseteq\powerset(X)$ be a family of subsets of $X$ with $f(U)\subseteq U$ for every $U\in\mathcal F$, then we get with theorem \ref{theorem:mappings:image_properties} that
+            \begin{align}f(\bigcap\mathcal F)=f(\bigcap_{A\in\mathcal F}A)\subseteq \bigcap_{A\in\mathcal F}f(A)\subseteq \bigcap_{A\in\mathcal F} A=\bigcap\mathcal F.\end{align}
+            Hence $\bigcap\mathcal F$ is also a chain of $f$, so $\varphi$ is closed under intersections in $X$. Furthermore we have $f(X)\subseteq Y\subseteq X$ by definition of $f$, so $\varphi(X)$ holds. Then $\chainset_f$ is a closure operator on $X$ by theorem \ref{theorem:mappings:closure_operator}.
+        \end{miniproof}
+        By the closure theorem \ref{theorem:relations:closure_minimal}, $\chainset_f(A)$ is the smallest chain of $f$ that contains $A$ for every $A\subseteq X$. We will use this fact in the next section to construct the natural numbers.
+
+        \item\label{example:mappings:set_mapping_chain_closure} Let $X$ be a set and $F\colon \powerset(X)\rightarrow\powerset(X)$ a monotone set mapping on $X$. Analogously we call a set $U\in\powerset(X)$ a \emph{chain of $F$} if and only if $F(U)\subseteq U$. Then the set mapping $\chainset^*_{F}(A)\colon \powerset(X)\rightarrow\powerset(X)$ defined by
+        \begin{align}\chainset^*_{F}(A)=\bigcap\setdef{B\subseteq X\given A\subseteq B\land F(B)\subseteq B}\end{align}
+        is a closure operator on $X$.
+        \begin{miniproof}
+            We show that the property $\varphi(x)\equiv F(x)\subseteq x$ is closed under intersections in $\powerset(X)$. Let $\mathcal F\subseteq\powerset(\powerset(X))$ be a family of subsets of $\powerset(X)$ with $F(U)\subseteq U$ for every $U\in\mathcal F$. Note that $\bigcap\mathcal F\subseteq U$ holds for every $U\in\mathcal F$ (see remark \ref{remark:sets:intersection_subset}). Because $F$ is monotone by assumption, we conclude
+            \begin{align}F(\bigcap\mathcal F)\subseteq F(U)\subseteq U\end{align}
+            Therefore $F(\bigcap\mathcal F)\subseteq U$ holds for every set $U\in\mathcal F$. Hence $F(\bigcap\mathcal F)\subseteq \bigcap\mathcal F$. So $\varphi(x)$ is closed under intersections in $\powerset(X)$. Because $\powerset(X)$ is the codomain of $F$, we have $F(X)\subseteq X$, so $\varphi(X)$ is fulfilled. Then $\chainset^*_{F}(A)$ is a closure operator on $X$ by theorem \ref{theorem:mappings:closure_operator}.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+
+\subsection{Cantor-Schröder-Bernstein Theorem}
+
+We are now able to show the so called Weak Knaster-Tarski theorem, which states that every monotone set mapping on $X$ has a fixed-point, which will be usefull to ensure an elegant proof of the so called Cantor-Schröder-Bernstein theorem. The closure operator introduced in example \ref{example:mappings:set_mapping_chain_closure} is the key to construct a fixed-point of a monotone set mapping.
+
+\begin{theorem}[Weak Knaster-Tarski theorem]\label{theorem:mappings:weak_knaster_tarski}
+    Let $X$ be a set. Furthermore let $F\colon\powerset(X)\rightarrow\powerset(X)$ be a monotone set mapping. Then $\mathcal C^*_F(\emptyset)$ is a fixed-point of $F$.
+\end{theorem}
+
+\begin{proof}
+    We set $C=\chainset^*_F(\emptyset)$. First, note that $C=\bigcap\setdef{U\subseteq X\given F(U)\subseteq U}$ holds. Furthermore $C$ is by example \ref{example:mappings:set_mapping_chain_closure} and theorem \ref{theorem:mappings:closure_operator} the smallest chain of $F$. So we conclude $F(C)\subseteq C$.
+
+    Now we show $C\subseteq F(C)$. We already know that $F(C)\subseteq C$ holds. Applying $F$ on both sides yiels with the monotony of $F$:
+    \begin{align}F(F(C))\subseteq F(C).\end{align}
+    Thus $F(C)$ is also a chain of $F$, but $C$ is the smallest chain of $F$, hence $C\subseteq F(C)$ holds. Hence $F(C)=C$, so $\chainset^*_F(\emptyset)=C$ is a fixed-point of $F$.
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be a set and $A\subseteq X$ non-empty. The mapping $F\colon\powerset(X)\rightarrow\powerset(X),B\mapsto A\cup B$ is monotone by example \ref{example:mappings:union_monotone_extensive}. Then $A=\chainset^*_F(\emptyset)$ holds, moreover $A$ is a fixed-point of $F$, i.e. $F(A)=A$.
+        \begin{miniproof}
+            By definition of $F$ holds that $F(A)=A\cup A=A$. Thus $A$ is a fixed-point of $F$ an also a chain of $F$. Let $U\in\powerset(X)$ be another chain of $F$. Then $A\subseteq A\cup U=F(U)$ holds. Thus $A$ is the smallest chain of $F$, that means $A=\chainset^*_F(\emptyset)$.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+One of the most prominent applications of the weak Knaster-Tarski theorem is the proof of the following theorem, which states that if there exist injections between two sets in both directions, then there also exists a bijection between these sets.
+
+This allows us in the future to easily show that two sets have the same cardinality by just showing the existence of injections in both directions, without having to explicitly construct a bijection.
+
+\begin{theorem}[Cantor-Schröder-Bernstein theorem]\label{theorem:mappings:cantor_schroeder_bernstein}%\marginnote{This theorem will be used to easily prove the Dedekind characterization of finite sets (theorem \ref{theorem:finite_infinite:dedekind_characterization}).}
+    ~\\Let $A$ and $B$ be sets and $f\colon A\rightarrow B,g\colon B\rightarrow A$ injections, then there exists a bijection $h\colon A\rightarrow B$.
+\end{theorem}
+\begin{proof}
+    We know that the mapping $H_{f,g}\colon\powerset(A)\rightarrow\powerset(A)$ from example \ref{example:mappings:cantor_mapping} is monotone. By theorem \ref{theorem:mappings:weak_knaster_tarski} we conclude, that there exists a fixed-point $C\subseteq A$ of $H_{f,g}$, i.e. $H_{f,g}(C)=C$. From that follows $C=A\setminus g(B\setminus f(C))$.  Applying the complement on both sides with respect to $A$ yields
+    \begin{align}A\setminus C=g(B\setminus f(C)).\label{eq:mappings:proof:cantor_schroeder_bernstein}\end{align}
+    From equation \eqref{eq:mappings:proof:cantor_schroeder_bernstein} we can draw the conclusion that the restricted mappings \begin{align}\begin{split}\tilde g\colon B\setminus f(C)\rightarrow A\setminus C,&\qquad x\mapsto g(x),\\ \tilde f\colon C\rightarrow f(C),&\qquad x\mapsto f(x)\end{split}\end{align} are bijective, because of the injectivity of $f$ and $g$ and due to example \ref{example:mappings:every_map_surjective}. Hence the mapping
+    \begin{align}h\colon A\rightarrow B,\qquad x\mapsto \begin{cases}\tilde f(x)&\text{if}\ x\in C\\ \tilde g^{-1}(x)&\text{if}\ x\in A\setminus C\end{cases}\end{align}
+    is well-defined and bijective by corollary \ref{corollary:mappings:bijective_union}, because $B=(B\setminus f(C))\cup f(C)$, $A=C\cup(A\setminus C)$, $C\cap (A\setminus C)=\emptyset$ and both $\tilde f$ and $\tilde g^{-1}$ are injective.
+\end{proof}
+
+\subsection{Axiom of Choice}
+
+The axiom of choice states that for every family of non-empty sets, there exists a mapping that assigns to each set in the family an element of that set. This axiom is independent of the other axioms of set theory, which means that it can neither be proven nor disproven from the other axioms. However, it is widely accepted and used in many areas of mathematics. Thorughout the book we will mention the axiom of choice explicitly whenever we use it. We formalize the axiom of choice in the following way:
+
+\begin{axiom}[Axiom of Choice]\label{axiom:mappings:choice}
+    For every set $X$ and every family $\mathcal F\subseteq\powerset(X)$ of non-empty subsets of $X$, there exists a so called \emph{choice mapping} \begin{align}f\colon\mathcal F\to X\end{align}
+    so that $f(F)\in F$ holds for all $F\in\mathcal F$.
+\end{axiom}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Note that the Axiom of Choice is purely non-constructive; it guarantees the existence of a choice function but provides no explicit rule or algorithm for its definition. In the general case, we cannot explicitly determine which specific element $x \in F$ is selected as the image $f(F)$ for each $F \in \mathcal{F}$.
+        \item Let $X$ be a set and $\mathcal{F} \subseteq \powerset(X)$ be a family of non-empty subsets of $X$. In proofs, the Axiom of Choice is typically invoked via the following formulation: \enquote{For every set $F \in \mathcal{F}$, we \emph{choose} an element $f(F) \in F$}. Formally, this selection corresponds to the existence of a choice function $f \colon \mathcal{F} \to X$ such that $f(F) \in F$ for every $F \in \mathcal{F}$.
+    \end{remarkenumerate}
+\end{remarks}
+
+The following theorem demonstrates the use of the axiom of choice in the context of mappings:
+
+\begin{theorem}\label{theorem:mappings:choice_partition}
+    Let $X$ and $Y$ be non-emptysets and $f\colon X\rightarrow Y$ a mapping.
+    Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item $f$ is surjective.
+        \item There exists a mapping $g\colon Y\rightarrow X$ with \begin{align}f\circ g=\idmap_Y.\end{align} In this case, $g$ is injective and a so called \emph{right inverse} of $f$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \proofcase{i}{ii} We define the family \begin{align}\mathcal F=\setdef{f^{-1}(\{y\})\given y\in Y}\subseteq\powerset(X).\end{align}
+        
+        \proofstep{Non-empty Subsets} Because $f$ is surjective, for every $y\in Y$ there exists an $x\in X$ with $f(x)=y$, thus $x\in f^{-1}(\{y\})$. Hence $\mathcal F$ is a family of non-empty subsets of $X$.
+
+        \proofstep{Existence of $g$} By the Axiom of Choice there exists a mapping $g\colon Y\rightarrow X$ with $g(y)\in f^{-1}(\{y\})$ for all $y\in Y$. Then $f(g(y))=y$ holds for all $y\in Y$, hence $f\circ g=\idmap_Y$.
+
+        \proofcase{i}{ii} Let $y\in Y$, then by assumption $f(g(y))=y$ holds. So $f(x)=y$ holds for $x=g(y)\in X$. Therefore $f$ is surjective.
+    \end{proofenumerate}
+\end{proof}

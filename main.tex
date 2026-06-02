@@ -1,0 +1,147 @@
+\documentclass[12pt,twoside]{scrbook}
+\usepackage[utf8]{inputenc}
+
+\title{Advanced Introduction into Mathematical Concepts}
+\subtitle{A foundational approach}
+\author{Josef Sniatecki}
+
+\usepackage[
+    right=2.5cm,
+    left=4.5cm,
+    bottom=2.5cm,
+    top=2.5cm,
+    footskip=2em,
+    marginparwidth=3cm,  % Sets the width of the sidenote box
+    marginparsep=0.5cm,
+]{geometry}
+
+\usepackage[ngerman,english]{babel}
+\input{latex/hypens.tex}
+
+\usepackage[automark]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+%\ohead{\headmark}
+%\ofoot[\pagemark]{\pagemark}
+
+\usepackage{csquotes}
+\usepackage[backend=bibtex,style=authoryear]{biblatex}
+\addbibresource{main}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\usepackage[nopatch=footnote]{microtype}
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage{enumitem}
+
+\usepackage{tcolorbox}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{needspace}
+\usepackage[thmmarks,amsmath]{ntheorem}
+\usepackage{cleveref}
+\usepackage{nicematrix}
+%\usepackage{booktabs}
+
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\footnotesize\itshape\color{gray}}
+\reversemarginpar
+
+% Schriftart:
+\usepackage{libertine}
+\usepackage{libertinust1math}
+
+%\usepackage{newpxtext}
+%\usepackage[varbb]{newpxmath}
+
+%\usepackage{newtxtext}
+%\usepackage[varbb]{newtxmath}
+
+%\usepackage{tabu}
+
+\usepackage[font=footnotesize,labelfont=bf,format=plain,figurename=Fig.]{caption}
+
+\input{latex/tikz.tex}
+\input{latex/commands.tex}
+\input{latex/symbols.tex}
+\input{latex/theorems.tex}
+\input{latex/enums.tex}
+\input{latex/title.tex}
+
+\addtokomafont{section}{\clearpage}
+
+\usepackage{chngcntr}
+\counterwithout{section}{chapter}
+\numberwithin{equation}{section}
+
+\renewcommand{\em}{\bfseries}
+
+\begin{document}
+
+%\input{chapters/titlepage.tex}\newpage
+
+\maketitle
+\tableofcontents
+\newpage
+
+
+\chapter{Basics}
+\input{chapter-basics/logic.tex}
+\input{chapter-basics/sets.tex}
+\input{chapter-basics/relations.tex}
+\input{chapter-basics/mappings.tex}
+\input{chapter-basics/natural_numbers.tex}
+\input{chapter-basics/infinite_finite_sets.tex}
+\input{chapter-basics/groups.tex}
+
+%\chapter{Konvergenz}
+%\input{chapter-konvergenz/zahlenfolgen.tex}
+%\input{chapter-konvergenz/metrische_räume.tex}
+%\input{chapter-konvergenz/folgen.tex}
+%\input{chapter-konvergenz/normierte_vektorräume.tex}
+%\input{chapter-konvergenz/vollständigkeit.tex}
+%\input{chapter-konvergenz/uneigentliche_konvergenz.tex}
+%\input{chapter-konvergenz/reihen.tex}
+%\input{chapter-konvergenz/absolute_konvergenz.tex}
+%\input{chapter-konvergenz/potenzreihen.tex}
+%\input{chapter-konvergenz/topologie_metrischerräume.tex}
+%\input{chapter-konvergenz/reihen.tex}
+%\input{chapter-konvergenz/eulersche-zahl.tex}
+
+
+%\chapter{Funktionentheorie}
+%\input{chapter-funktionentheorie/holomorphe_funktionen.tex}
+
+%\chapter{Grundlagen der Topologie}
+%\input{chapter-topologie/topologien.tex}
+%\input{chapter-topologie/basen_subbasen.tex}
+%\input{chapter-topologie/trennungseigenschaften.tex}
+%\input{chapter-topologie/kompaktheit.tex}
+%\input{chapter-topologie/alexandroff.tex}
+
+
+%\chapter{Filter und Netze}
+%\input{chapter-nichtstandardanalysis/filter.tex}
+%\input{chapter-nichtstandardanalysis/ultrafilter.tex}
+%\input{chapter-nichtstandardanalysis/filterkonvergenz.tex}
+%\input{chapter-nichtstandardanalysis/stonechech.tex}
+
+%\input{chapter-nichtstandardanalysis/hyperreelle_zahle.tex}
+
+
+%\printbibliography[heading=bibintoc]\newpage
+
+\end{document}
+
+%https://www.jku.at/fileadmin/gruppen/194/Lehre/Fraktale_1.pdf
+%https://www.diva-portal.org/smash/get/diva2:22333/FULLTEXT01.pdf
+
+%Funktionalanalysis:
+%https://www3.math.tu-berlin.de/Vorlesungen/SS09/FA1/Doc/Funkana1-SS06-08.06.09.pdf

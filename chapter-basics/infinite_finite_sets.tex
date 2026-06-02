@@ -1,0 +1,443 @@
+\section{Finite and infinite sets}
+
+In this section, we introduce the terms and concepts that allow us to compare and measure the size of sets. The concept of a mapping is useful for this purpose: we will identify two sets as having the same size if and only if there exists a bijection between them. To distinguish between finite and infinite sets, we first define the concept of a finite set and then designate every non-finite set as infinite. To define finite sets, we use specific subsets of the natural numbers that serve as representatives for finite sets with a specific number of elements.
+
+We will first show the so-called Pingeonhole Principle, which shows that two of those representatives of finite sets with specific elements are not of the same size. We present an elegant proof of the Pingeonhole Prinicple via the Bernstein-Cantor-Schröder theorem.
+
+An important main result is the characterization of finite sets via the non-existence of injections onto proper subsets, which is Dedekind's characterization of finite sets. Although the proof of the direction \enquote{there exists no injection onto a proper subset $\Rightarrow$ the set is finite} requires the axiom of choice, Dedekind's characterization of finite sets is elegant in that it uses only the concept of a mapping to identify finite sets. We will also use the Bernstein-Cantor-Schröder theorem to show the other direction of the characterization.
+
+\subsection{Equivalent sets}
+
+\begin{definition}
+    Let $X$ and $Y$ be sets, then $X$ and $Y$ are called \emph{equivalent}, \emph{of the same cardinality} or \emph{equinumerous} if and only if there exists a bijection $f\colon X\rightarrow Y$. In this case we write $X\sim Y$.
+\end{definition}
+
+Indeed, the equivalence of sets behaves like an equivalence relation:
+
+\begin{theorem}\label{satz:finite_infinite:equivalence_relation}
+    For sets $A, B, C$ the following properties are fullfilled:
+    \begin{intheoremenumerate}
+        \item Reflexivity: $A\sim A$
+        \item Symmetry: $A\sim B\Rightarrow B\sim A$
+        \item Transitivity: $A\sim B\land B\sim C\Rightarrow A\sim C$
+    \end{intheoremenumerate}
+\end{theorem}
+\begin{proof}
+    For all sets $A,B,C$ consider $X=\bigcup\{A,B,C\}$ and use example \ref{example:mappings:bijection_equivalence_relation}.
+\end{proof}
+
+Note that it is not possible to describe the equivalence of sets by a mathematical equivalence relation, because there exists no set of all sets to define a graph for a corresponding relation. Still, we can use the reflexivity, symmetry, and transitivity guaranteed by theorem \ref{satz:finite_infinite:equivalence_relation}.
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item The sets $\setN$ and $\setNnn$ are or the same cardinality, i.e. $\setN\sim\setNnn$.
+        \begin{miniproof}
+            Recall that $(\setN,\sigma,0)$ is a Peano model with the successor mapping $\sigma\colon\setN\rightarrow\setNnn, n\mapsto n+1$. By theorem \ref{theorem:natural_numbers:successor_mapping_bijective} $\sigma$ is bijective.
+        \end{miniproof}
+        \item For all sets $X$ and $Y$ holds $X\times Y\sim Y\times X$.
+        \begin{miniproof}
+            See example \ref{example:mappings:cross_product_bijective}.
+        \end{miniproof}
+        \item For every non-empty set $X$ the sets $\powerset(X)$ and $X$ are not of the same cardinality.
+        \begin{miniproof}
+            By exercise \ref{exercise:mappings:power_set_injection} there does not exist an injection $f\colon \powerset(X)\rightarrow X$, hence also no bijection $f\colon \powerset(X)\rightarrow X$.
+        \end{miniproof}
+        \item For every non-empty set $X$ holds $\powerset(X)\sim\mapset X {\{0,1\}}$.
+        \begin{miniproof}
+            See example \ref{example:mappings:powerset_characteristic_bijective}.
+        \end{miniproof}
+        \item The sets $A=\{0\}$ and $B=\{0,1\}$ are not of the same cardinality.
+        \begin{miniproof}
+            Assume there exists an injection $f\colon B\rightarrow A$, then the only possible mapping from $B$ to $A$ fullfills $f(0)=0=f(1)$. Hence, there does not exist an injection from $B$ to $A$ and therefore no bijection. Thus $A$ and $B$ are not equivalent.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Canonical finite sets}
+
+To define what a finite set is and to determine its element count, we first need to build canonical sets where the number of elements is already known.
+
+By construction, every natural number is defined as a set (see \eqref{eq:natural_numbers:representation}). Specifically, each natural number $n$ is realized as a set containing exactly $n$ elements -- for instance, $3 = \{0, 1, 2\}$. In this framework, every natural number serves as a canonical representative for a finite set of a given size.
+
+However, rather than relying on a specific set-theoretic construction of the natural numbers, we define the canonical sets independetly of the set-theoretic realization of the natural numbers. In this way, the natural numbers can be substituted with any other Peano model.
+
+\begin{definition}\label{definition:finite_infinite:canonical_n_sets}
+    For $n\in\setN$ we define
+    \begin{align}\setN_n=\setdef{m\in\setN\given m<n}\end{align}
+    We call $\setN_n$ the \emph{canonical $n$-element set} for every $n\in\setN$.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item If we refer to the set-theoretical realization of the natural numbers, then $\setN_n$ coincides with $n$ for every $n\in\setN$.
+        \begin{miniproof}
+            We proof by induction: For $n=0$ we have $\setN_0=\emptyset=0$. Assume that $\setN_n=n$. Then we get $\setN_{n+1}=\setN_n\cup\{n\}=n\cup\{n\}=n^+=n+1$. Hence we showed $\setN_n=n$ for all $n\in\setN$.
+        \end{miniproof}
+        However, in this section, we will not utilize the fact that $\setN_n=n$ for $n\in\setN$, since this holds only for a specific realization of the natural numbers and not for all Peano models that are isomorphic to the natural numbers.
+    \end{remarkenumerate}
+\end{remarks}
+
+\subsection{Pigeonhole Principle and Uniqueness Theorem}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[
+        set_annotator/.style={fill=white,inner sep=2pt},
+        set/.style={rounded corners=10pt},
+        element/.style={circle,fill=black,inner sep=1pt,anchor=center},
+        arrow/.style={|-Latex,shorten >=8pt,shorten <=8pt}
+    ]
+    \begin{scope}[shift={(0,0)}]
+        \draw[set] (0,0.5) rectangle (2,5.5);
+        \node[set_annotator] at (1,5.5) {$\setN_m$};
+
+        \node[element,label=left:$0$,name=a] at (1,1) {};
+        \node[element,label=left:$1$,name=b] at (1,2) {};
+        \node[element,label=left:$2$,name=c] at (1,3) {};
+        \node[element,label=left:$3$,name=d] at (1,4) {};
+        \node[element,label=left:$4$,name=e] at (1,5) {};
+    \end{scope}
+    \begin{scope}[shift={(3.5,0)}]
+        \draw[set] (0,0.5) rectangle (2,4.5);
+        \node[set_annotator] at (1,4.5) {$\setN_n$};
+
+        \node[element,label=right:$0$,name=f] at (1,1) {};
+        \node[element,label=right:$1$,name=g] at (1,2) {};
+        \node[element,label=right:$2$,name=h] at (1,3) {};
+        \node[element,label=right:$3$,name=i] at (1,4) {};
+    \end{scope}
+
+    \draw[arrow] (a) to (f);
+    \draw[arrow] (b) to (g);
+    \draw[arrow] (c) to (h);
+    \draw[arrow] (d) to (h);
+    \draw[arrow] (e) to (i);
+
+    \end{tikzpicture}
+    \caption{Illustration of the Pigeonhole Principle: an injection from $\setN_m$ to $\setN_n$ is impossible if $m>n$. At least two elements of $\setN_m$ must be mapped to the same element of $\setN_n$.}
+\end{figure}
+
+The so called \emph{Pigeonhole Principle} is the essential tool for proving that the sets $\setN_n$ are of varying cardinalities. It asserts a simple but profound truth: when mapping a larger set $\setN_m$ onto a smaller one $\setN_n$ (where $m>n$), injectivity is impossible. If you have more items than containers, the \enquote{overflow} is a mathematical certainty -- at least one container must host multiple items.
+
+Even when the Pigeonhole Principle is intuitively clear, its formal proof is not entirely trivial. We will establish it through mathematical induction and using the Bernstein-Cantor-Schröder theorem. It is also possible to give a proof without using the Bernstein-Cantor-Schröder theorem (see exercise \ref{exercise:finite_infinite:pigeonhole_principle}). First, we show the following lemma:
+
+\begin{lemma}\label{lemma:finite_infinite:pigeonhole_principle} For $m\in\setNnn$ and $a\in\setN_m$ holds $\setN_{m-1}\sim\setN_m\setminus\{a\}$.\end{lemma}
+
+\begin{proof}
+    Let $m\in\setNnn$ and $a\in\setN_m$. Then the mapping
+    \begin{align}
+        f\colon \setN_{m-1}\to\setN_m\setminus\{a\}\colon n\mapsto\begin{cases}n,& n<a\\ n+1,&n\geq a\end{cases}
+    \end{align}
+    is well-defined and bijective. Therefore $\setN_{m-1}\sim\setN_m\setminus\{a\}$ holds.
+\end{proof}
+
+\begin{theorem}[Pigeonhole Principle]\label{theorem:finite_infinite:pigeonhole_principle}~\\
+    Let $m,n\in\setN$ with $m>n$, then there does not exist an injection $f\colon \setN_m\rightarrow\setN_n$.
+\end{theorem}
+
+\begin{proof}
+    We proceed by induction and consider the set
+    \begin{align}S=\setdef{n\in\setN\given \forall m\in\setN\colon m>n\Rightarrow \text{There exists no injection $f\colon\setN_m\to\setN_n$}}\end{align}
+    
+    \proofstep{$0\in S$} Let $m>0$, then $\setN_m\neq\emptyset$ but $\setN_0=\emptyset$. Since there exists no mapping from a non-empty set to an empty set, there can not be any injection from $\setN_m$ to $\setN_0$. Hence $0\in S$.
+
+    \proofstep{$n\in S\Rightarrow n+1\in S$} Let $n\in S$ and $m\in\setN$ with $m>n+1$. Assume there exists an injection $f\colon \setN_m\to\setN_{n+1}$. Note that $g\colon\setN_{n+1}\to\setN_m, n\mapsto\setN_m$ is also an injection. Therefore, by the Bernstein-Cantro-Schröder theorem \ref{theorem:mappings:cantor_schroeder_bernstein} there exists a bijection $h\colon\setN_m\to\setN_{n+1}$. Let $b=n+1\in\setN_{n+1}$ and $a=h^{-1}(b)\in\setN_m$, then the restricted mapping \begin{align}h'\colon\setN_m\setminus\{a\}\to\setN_{n+1}\setminus\{b\}, n\mapsto h(n)\end{align}
+    is still a bijection, that means $\setN_m\setminus\{a\}\sim\setN_{n+1}\setminus\{b\}$. By lemma \ref{lemma:finite_infinite:pigeonhole_principle} we conclude $\setN_{m-1}\sim\setN_m\setminus\{a\}$ and $\setN_n\sim\setN_{n+1}\setminus\{b\}$. But then by the transitivity and symmetry of the equivalence of sets follows $\setN_{m-1}\sim\setN_n$, that means there exists a bijection (and also an injection) from $\setN_{m-1}$ to $\setN_n$, which is a contradiction because of $m-1>n$ and $n\in S$. Therefore there exists no injection from $\setN_m$ to $\setN_{n+1}$, i.e. $n+1\in S$.
+
+    In summary, we have shown $S=\setN$ by the induction axiom, hence the statement holds.
+\end{proof}
+
+An immediate consequence of the Pigeonhole Principle is the Uniqueness Theorem:
+
+\begin{theorem}[Uniqueness Theorem]\label{theorem:finite_infinite:uniqueness}
+    Let $m,n\in\setN$, then $\setN_m\sim\setN_n$ iff $m=n$.
+\end{theorem}
+\begin{proof}
+    For the case $m = n$, the relation $\setN_m \sim \setN_n$ follows immediately from the reflexivity of set equivalence. Otherwise, if $m \neq n$, we may assume without loss of generality that $m > n$. By the Pigeonhole Principle (theorem \ref{theorem:finite_infinite:pigeonhole_principle}), there exists no injection $f\colon \setN_m \to \setN_n$. Since a bijection must be injective, it follows that no bijection exists; thus, $\setN_m \not\sim \setN_n$.
+\end{proof}
+
+The Uniqueness Theorem states, that the canonical $n$-element sets $\setN_n$ are of different cardinality for different $n$. We can use this fact to uniquely define the count of elements for other sets:
+
+\subsection{Finite Sets}
+
+\begin{definition}[Finite and Infinite Sets]~\\
+    Let $X$ be a set. $X$ is called \emph{finite} if and only if there exists an $n\in\setN$, so that $X\sim\setN_n$. In this case $n$ is uniquely determined by the uniqueness theorem \ref{theorem:finite_infinite:uniqueness}. Therefore we write \begin{align}|X|=n,\end{align}
+    where $|X|$ denotes the \emph{number of elements in $X$} or the \emph{cardinality of $X$}. Finally $X$ is called \emph{infinite} if and only if $X$ is not finite.
+\end{definition}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item The set $\{2,4,6\}$ is finite with $|\{2,4,6\}|=3$.
+        \begin{miniproof}
+            The mapping $f\colon \{2,4,6\}\to\setN_3$, defined by $f(2)=0$, $f(4)=1$ and $f(6)=2$, is a bijection.
+        \end{miniproof}
+        \item The canonical $n$-element sets $\setN_n$ are themselves finite with $|\setN_n|=n$.
+        \begin{miniproof}
+            This follows directly from the reflexivity of the set equivalence and the definition of the cardinality $|\cdot|$.
+        \end{miniproof}
+        \item\label{example:finite_infinite:empty_set} The empty set $\emptyset$ is the only finite set with $|\emptyset|=0$.
+        \begin{miniproof}
+            Let $A$ be a set with $|A|=0$, i.e. $A\sim\setN_0=\emptyset$, then there exists a bijection $f\colon A\rightarrow\emptyset$. For $f$ to be left total, this is only possible for $A=\emptyset$.
+        \end{miniproof}
+        \item Every singleton set $\{a\}$ for an arbitary set $a$ is finite with $|\{a\}|=1$.
+        \begin{miniproof}
+            The mapping $f\colon \{a\}\to\setN_1,x\mapsto 0$ is bijective.
+        \end{miniproof}
+        \item The set of natural numbers $\setN$ is infinite.
+        \begin{miniproof}
+            Assume $\setN$ is finite, then there exists a bijection $f\colon\setN\to\setN_n$ with $n=|\setN|$. Choose an arbitrary $m\in\setN$ with $m>n$, then the restriction $f\vert_{\setN_m}\colon\setN_m\to\setN_n$ is an injection (because $f$ is also an injection), which contradicts the Pigeonhole Principle (see theorem \ref{theorem:finite_infinite:pigeonhole_principle}).
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}[Size Comparison]\label{theorem:finite_infinite:size_comparison}
+    Let $X$ and $Y$ be finite sets. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item\label{theorem:finite_infinite:size_comparison:injection} $|X|\leq |Y|$ holds if and only if there exists an injection $f\colon X\to Y$.
+        \item\label{theorem:finite_infinite:size_comparison:bijection} $|X|=|Y|$ if and only if there exists a bijection $h\colon X\to Y$.
+    \end{intheoremenumerate} 
+\end{theorem}
+\begin{proof}
+    \begin{proofenumerate}
+        \item \proofright Let $|X|\leq |Y|$. We set $m=|X|$ and $n=|Y|$. Then there exist bijections $f\colon X\to\setN_m$ and $g\colon \setN_n\to Y$. From $m\leq n$ follows $\setN_m\subseteq\setN_n$ and therefore $g\circ f\colon X\to Y$ is a well-defined injection as a composition of injective mappings.
+
+        \proofleft Assume there exists an injection $f\colon Y\to X$. Because $X$ and $Y$ are finite, there exist bijections $g\colon X\to \setN_m$ and $h\colon \setN_n\to Y$ with $m=|X|$ and $n=|Y|$. Then $g\circ f\circ h\colon\setN_m\to\setN_n$ is an injection as a composition of injective mappings. By the Pigeonhole Principle (see theorem \ref{theorem:finite_infinite:pigeonhole_principle}) it follows that $m\leq n$ must hold, so $|X|\leq |Y|$.
+
+        \item Because $X$ and $Y$ are finite, there exist bijections $f\colon X\to\setN_m$ and $g\colon \setN_n\to Y$ with $m=|X|$ and $n=|Y|$.
+        
+        \proofright Let $|X|=|Y|$, then $\setN_m=\setN_n$ holds and therefore $g\circ f\colon X\to Y$ is a well-defined bijection as a composition of bijective mappings.
+        
+        \proofleft Assume there exists a bijection $h\colon X\to Y$. Then $g^{-1}\circ h\circ f^{-1}\colon\setN_m\to\setN_n$ is also a bijection as a composition of bijective mappings. Thus $\setN_m\sim\setN_n$ holds, so $m=n$ and thus $|X|=|Y|$ follow by the uniqueness theorem \ref{theorem:finite_infinite:uniqueness}.
+    \end{proofenumerate}
+\end{proof}
+
+\begin{theorem}
+    Let $X$ be a finite set and $a\notin X$, then $X\cup\{a\}$ is also finite with \begin{align}|X\cup\{a\}|=|X|+1.\end{align}
+        %\item\label{theorem:finite_infinite:less_one} Let $X$ be a finite set and $a\in X$, then $X\setminus\{a\}$ is also finite with \begin{align}|X\setminus\{a\}|=|X|-1.\end{align}
+\end{theorem}
+\begin{proof}
+        %\item Let $n\in\setNnn$ and $a\in\setN_n$. Note that $a<n$. We define the mapping
+           % \begin{align}f\colon \setN_n\setminus\{a\}\to\setN_{n-1},\qquad b\mapsto \begin%{cases}b, & b<a \\ b-1, & b>a\end{cases}\end{align}
+           % This mapping is well-defined and bijective (see exercise \ref%{exercise:finite_infinite:canonical_n_sets_bijection}), hence $\setN_n\setminus\{a\}%\sim\setN_{n-1}$.
+        %\item Let $X$ be a finite set and $a\in X$. Then there exists a bijection $f\colon X\to\setN_n$ with $n=|X|$. We have $f(a)\in\setN_n$, hence by the first part of this theorem $\setN_n\setminus\{f(a)\}\sim\setN_{n-1}$. The restriction $f'\colon X\setminus\{a\}\to \setN_n\setminus\{f(a)\}$ is a well-defined bijection, because $f$ is also a bijection. Hence $X\setminus\{a\}\sim \setN_n\setminus\{f(a)\}\sim \setN_{n-1}$, which implies that $X\setminus\{a\}$ is finite with $|X\setminus\{a\}|=n-1=|X|-1$.
+    Let $X$ be a finite set and $a\notin X$. Then there exists a bijection $f\colon X\to\setN_n$ with $n=|X|$. We define the mapping
+    \begin{align}g\colon X\cup\{a\}\to\setN_{n+1},\qquad x\mapsto \begin{cases}f(x), & x\in X \\ n, & x=a\end{cases}\end{align}
+    This mapping is well-defined and bijective. Then $X\cup\{a\}\sim\setN_{n+1}$, which implies that $X\cup\{a\}$ is finite with $|X\cup\{a\}|=n+1=|X|+1$.
+\end{proof}
+
+\subsection{Subsets of finite sets}
+
+\begin{theorem}\label{theorem:finite_infinite:subsets_finite}
+    Let $X$ be a finite set and $S\subseteq X$ a subset of $X$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $S$ is finite with $|S|\leq |X|$.
+        \item\label{theorem:finite_infinite:proper_subset} $S\subset X$ iff $|S|<|X|$.
+        \item $S=X$ iff $|S|=|X|$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $X$ be finite. We proof the statement by induction on $n=|X|$.
+        
+        \proofstep{Base Case: $n=0$} For the base case $n=0$, we have $X=\emptyset$ (see example \ref{example:finite_infinite:empty_set}). The only subset of $\emptyset$ is $\emptyset$ itself, which is finite with $|\emptyset|=0\leq 0=|X|$.
+        
+        \proofstep{Inductive Step: $n\Rightarrow n+1$} Let $n\in\setN$ and assume the inductive hypothesis: for every finite set $X$ with $|X|=n$ and every subset $S\subseteq X$ holds that $S$ is finite with $|S|\leq |X|$. Now, let $X$ be a finite set with $|X|=n+1$ and let $S\subseteq X$. For the case $S=X$ the statement obviously holds. Otherwise, there exists an element $a\in X$ with $a\notin S$. By theorem \ref{theorem:finite_infinite:less_one}, $X\setminus\{a\}$ is finite with $|X\setminus\{a\}|=n$. Because $S\subseteq X\setminus\{a\}$, we can apply the inductive hypothesis to conclude that $S$ is finite with $|S|\leq |X\setminus\{a\}|=n< n+1=|X|$.
+
+        \item For the case $|X|=0$ we have $X=\emptyset$ (see example \ref{example:finite_infinite:empty_set}), hence there exists no proper subset $S\subset X$. Thus, the statement holds vacuously.
+
+        Let $|X|>0$. Then $X$ is not empty. Let $S\subset X$. Then there exists an element $a\in X$ with $a\notin S$. By theorem \ref{theorem:finite_infinite:less_one}, $X\setminus\{a\}$ is finite with $|X\setminus\{a\}|=|X|-1$. Because $S\subseteq X\setminus\{a\}$, we can conclude from (i), that $|S|\leq|X\setminus\{a\}|=|X|-1<|X|$. Hence, we have shown that if $S$ is a proper subset of $X$, then $|S|<|X|$. Conversely, if $|S|<|X|$, then $S$ cannot be equal to $X$ (because then we would have $|S|=|X|$), hence $S\subset X$.
+
+        \item This follows directly from (ii).
+    \end{proofenumerate}
+\end{proof}
+
+\begin{theorem}
+    Let $X$ be a finite set and $n\in\setN$ with $n<|X|$, then there exists a subset $S\subset X$ with $|S|=n$.
+\end{theorem}
+\begin{proof}
+    Let $X$ be finite, then there exists a $m\in\setN$ with $|X|=m$, i.e. there exists a bijection $f\colon X\to\setN_m$. Because $n<m$, we have $\setN_n\subset\setN_m$. Hence, the restriction $f'\colon f^{-1}(\setN_n)\to\setN_n, a\mapsto f(a)$ is a well-defined bijection. Thus, $S=f^{-1}(\setN_n)$ is a subset of $X$ with $|S|=n$. It is a proper subset of $X$ because of $|S|=n<m=|X|$ and theorem \ref{theorem:finite_infinite:proper_subset}.
+\end{proof}
+
+\begin{theorem}
+    Let $A$ and $B$ be finite sets, then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $A\cap B$ is finite with $|A\cap B|\leq |A|,|B|$.
+        \item $A\setminus B$ is finite with $|A|+|A\setminus B|=|B|+|B\setminus A|$.
+        \item $A\cup B$ is finite with $|A\cup B|+|A\cap B|= |A|+|B|$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item The statement directly follows from $A\cap B\subseteq A,B$ and theorem \ref{theorem:finite_infinite:subsets_finite}.
+        \item The statement directly follows from $A\setminus B\subseteq A$ and theorem \ref{theorem:finite_infinite:subsets_finite}.
+        \item Let $C=A\setminus B$, then $C$ is finite by (ii) and $\{B,C\}$ is a partition of $A\cup B$, i.e. $B\cup C=A\cup B$ and $B\cap C=\emptyset$. Because $B$ and $C$ are finite, there exist $n,m\in\setN$ with $|B|=n$ and $|C|=m$, hence there exist bijections $f\colon B\to\setN_n$ and $g\colon C\to\setN_m$. The mapping
+        \begin{align}h\colon A\cup B\to\setN_{n+m},\qquad x\mapsto \begin{cases}f(x), & x\in B \\ g(x)+n, & x\in C\end{cases}\end{align}
+        is well-defined and bijective. Hence $A\cup B$ is finite with $|A\cup B|=n+m$.
+    \end{proofenumerate}
+\end{proof}
+
+\subsection{Infinite Sets}
+ 
+The following theorem gives some properties of infinite sets:
+
+\begin{theorem}\label{lemma:finite_infinite:properties_of_infinite_sets}
+    Let $X$ be an infinite set. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item\label{theorem:finite_infinite:infinite_nonempty} $X$ is non-empty.
+        \item\label{theorem:finite_infinite:infinite_setminus} $X\setminus Y$ is infinite for every finite subset $Y\subset X$.
+        \item\label{theorem:finite_infinite:image_nonempty} If $f\colon\setN_n\to X$ is an injection for an $n\in\setN$, then $X\setminus f(\setN_n)\neq\emptyset$.
+    \end{intheoremenumerate}
+\end{theorem}
+\begin{proof}
+    \begin{proofenumerate}
+        \item If $X$ is empty, then $|X|=0$ holds by example \ref{example:finite_infinite:empty_set}, which means $X$ is finite. Therefore $X$ is not empty.
+        
+        \item We consider the set
+        \begin{align}S=\setdef{n\in\setN\given \forall Y\subseteq X\colon |Y|=n\Rightarrow \text{$X\setminus Y$ is infinite}}.\end{align}
+
+        \proofstep{$0\in S$} By example \ref{example:finite_infinite:empty_set}, the empty set $Y=\emptyset$ is the only finite subset of $X$ with $|Y|=0$. Then $X\setminus Y=X$ is infinite. Hence $0\in S$.
+
+        \proofstep{$n\in S\Rightarrow n+1\in S$} Let $n\in S$, which means for every finite subset $Y\subseteq X$ with $|Y|=n$ is $X\setminus Y$ infinite. Now let $Y\subseteq X$ be a finite subset of $X$ with $|Y|=n+1$. That means there exists a bijection $f\colon\setN_{n+1}\to Y$. Assume that $X\setminus Y$ is finite, then there also exists an $m\in\setN$ and a bijection $g\colon \setN_m\to X\setminus Y$. Therefore the mapping
+        \begin{align}h\colon \setN_{n+m}\to X,\qquad x\mapsto \begin{cases}f(x), & x<n \\ g(x-n), & x\geq n\end{cases}\end{align}
+        is a bijection, which means that $X$ is finite, which contradicts the assumption that $X$ is infinite. Hence $X\setminus Y$ must be infinite. So $n+1\in S$.
+
+        In summary, $S=\setN$ follows by the induction axiom, so the statement holds.
+
+        \item Let $n\in\setN$ and $f\colon\setN_n\to X$ an injection. Then $\setN_n\sim f(\setN_n)$ holds, i.e. $f(\setN_n)$ is a finite subset of $X$; therefore $X\setminus f(\setN_n)$ is infinite by (ii) and non-empty by (i).
+    \end{proofenumerate}
+\end{proof}
+
+\begin{theorem}[Characterization of Infinite Sets]\label{theorem:finite_infinite:infinite_iff_injections}
+    Let $X$ be a set. Then $X$ is infinite if and only if for every $n\in\setN$ there exists an injection $f\colon\setN_n\to X$.
+\end{theorem}
+\begin{proof}
+    \proofright Let $X$ be an infinite set. We consider the set
+    \begin{align}S=\setdef{n\in\setN\given \exists f\colon\setN_n\to X\colon \text{$f$ is an injection}}.\end{align}
+    
+    \proofstep{$0\in S$} Because of $\setN_0=\emptyset$, there exists the empty mapping $f\colon\setN_0\to X$ that is injective, because there are no elements $x$ and $x'$ in $\setN_0$ with $f(x)=f(x')$ and $x\neq x'$. Hence $0\in S$.
+
+    \proofstep{$n\in S\Rightarrow n+1\in S$} Let $n\in S$. Then there exists an injection $f\colon\setN_n\to X$. Therefore $f(\setN_n)\sim\setN_n$ holds, i.e. $f(\setN_n)$ is finite. By theorem \ref{theorem:finite_infinite:image_nonempty}, the set $X\setminus f(\setN_n)$ is non-empty. Let $x\in X\setminus f(\setN_n)$, then the mapping
+    \begin{align}g\colon\setN_{n+1}\to X,\qquad m\mapsto \begin{cases}f(m), & m<n \\ x, & m=n\end{cases}\end{align}
+    is an injection. Hence $n+1\in S$.
+
+    \proofleft Assume $X$ is finite, that means there exists an $n\in\setN$ and a bijection $f\colon X\to\setN_n$. By assumption, there also exists an injection $g\colon\setN_{n+1}\to X$. But then $f\circ g$ is an injection from $\setN_{n+1}$ to $\setN_n$ as composition of injective mappings, contradicting the Pigeonhole Principle (see theorem \ref{theorem:finite_infinite:pigeonhole_principle}). Therefore $X$ must be infinite.
+    
+    In summary, $S=\setN$ follows by the induction axiom, so the statement holds.
+\end{proof}
+
+\subsection{Dedekind-Infinite Sets}
+
+\begin{definition}[Dedekind-Infinite]
+    A set $X$ is called \emph{Dedekind-infinite} if and only if there exists an injection onto a proper subset $S\subset X$.
+\end{definition}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item The natural numbers $\setN$ are Dedekind-infinite.
+        \begin{miniproof}
+            The set $\setN\setminus\{0\}$ is a proper subset of $\setN$ and by definition \ref{definition:natural_numbers:natural_numbers}, the successor mapping $\sigma\colon\setN\to\setN\setminus\{0\}, n\mapsto n+1$ is an injection. Hence $\setN$ is Dedekind-infinite.
+        \end{miniproof}
+        \item Let $(N,0,\sigma_N)$ be a Peano model. Then $N$ is Dedekind-infinite.
+        \begin{miniproof}
+            The successor mapping $\sigma_N\colon N\to N\setminus\{0\}$ is a bijection by theorem \ref{theorem:natural_numbers:successor_mapping_bijective} and $N\setminus\{0\}$ is a proper subset of $N$. Therefore $N$ is Dedekind-infinite.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}
+    Every Dedekind-infinite set is infinite.
+\end{theorem}
+\begin{proof}
+    Let $X$ be a Dedekind-infinite set. We assume, that $X$ is finite.
+    By assumption, there exists a proper subset $S\subset X$, so that there is an injection $f\colon X\to S$. By theorem \ref{theorem:finite_infinite:subsets_finite}, $S$ is also finite with $|S|<|X|$. But by the existence of the injection $f\colon X\to S$, also $|X|\leq |S|$ follows from theorem \ref{theorem:finite_infinite:size_comparison:injection}, which is a contradiction. So $X$ must be infinite.
+\end{proof}
+
+For the proof of the following theorem the axiom of choice is needed to construct an injection from $\setN$ to $X$ for an infinite set $X$:
+
+\begin{theorem}
+    Let $X$ be a set. Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item $X$ is infinite.
+        \item There exists an injection $f\colon\setN\to X$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \proofcase{ii}{i} By assumption, there exists an injection $f\colon\setN\to X$. Hence, for every $n\in\setN$ the restricted mapping $f\vert_{\setN_n}\colon\setN_n\to X$ is an injection. So $X$ is infinite by theorem \ref{theorem:finite_infinite:infinite_iff_injections}.
+
+    \proofcase{i}{ii} Let $X$ be infinite. We define the mapping
+    \begin{align}F\colon\setN\to\powerset(\powerset(X)),\qquad n\mapsto \setdef{A\subseteq X\given |A|=n}\subseteq\powerset(X).\end{align}
+    The image $F(\setN)$ is a family of non-empty subsets of $\powerset(X)$, because of theorem \ref{theorem:finite_infinite:infinite_iff_injections} for every $n\in\setN$ there exists an injection $f\colon\setN_n\to X$, so $|f(\setN_n)|=n$ and therefore $f(\setN_n)\in F(n)$.
+
+    \proofcase{i}{ii} Let $X$ be infinite. Because $\powerset(X)\setminus\{\emptyset\}$ is a family of non-empty subsets of $X$, by the Axiom of Choice there exists a choice mapping $\gamma \colon \powerset(X)\setminus\{\emptyset\} \to X$ such that $\gamma(A) \in A$ for every non-empty subset $A \subseteq X$.
+
+    We set $F=\setdef{A\subseteq X\given \text{$A$ is finite}}$ for the set of all finite subsets of $X$. Then the transition mapping
+    \begin{align}\alpha\colon F\to F,\qquad A\mapsto A\cup\{\gamma(X\setminus A)\}\end{align}
+    is well-defined, because $X\setminus A\neq\emptyset$ for every finite subset $A\subseteq X$ by theorem \ref{theorem:finite_infinite:infinite_setminus} and $A\cup\{\gamma(X\setminus A)\}$ is finite as the union of two finite sets.
+    
+    By the recursion theorem \ref{theorem:natural_numbers:recursion_theorem} there exists excatly one mapping $B\colon\setN\to F$ with
+    \begin{align}
+        B(0)=\gamma(X)\qquad\text{and}\qquad B(n+1)=\alpha(B(n)).
+    \end{align}
+
+    We can now define the mapping
+    \begin{align}f\colon \setN\to X,\qquad n\mapsto \gamma(X\setminus B(n)),\end{align}
+    which is also well-defined because of $X\setminus B(n)\neq\emptyset$ by theorem \ref{theorem:finite_infinite:infinite_setminus} and $B(n)\in F$ for every $n\in\setN$.
+    
+    We show that $f$ is indeed an injection by using induction and considering the set
+    \begin{align}S=\setdef{n\in\setN\given \forall m\in\setN\colon m<n\Rightarrow f(m)\neq f(n)}.\end{align}
+
+    \proofstep{$0\in S$} Because there is no $m\in\setN$ with $m<0$, we have $0\in S$.
+
+    \proofstep{$n\in S\Rightarrow n+1\in S$} Let $n\in S$, which means $f(m)\neq f(n)$ for all $m\in\setN$ with $m<n$. We have \begin{align}\begin{split}f(n+1)&=\gamma(X\setminus B(n+1))=\gamma(X\setminus \alpha(B(n)))\\&=\gamma(X\setminus (B(n)\cup\{\gamma(X\setminus B(n))\}))\\
+    &=\gamma(X\setminus (B(n)\cup\{f(n)\})).\end{split}\end{align}
+    Thus $f(n)\notin X\setminus(B(n)\cup\{f(n)\})$ holds and therefore $f(n)\neq \gamma(X\setminus (B(n)\cup\{f(n)\}))=f(n+1)$ follows. So we conclude $f(m)\neq f(n+1)$ for all $m\in\setN$ with $m<n+1$, which means $n+1\in S$.
+
+    In summary, $S=\setN$ follows by the induction axiom. Now let $n,m\in\setN$ with $m\neq n$. Without loss of generality, we can assume $m<n$. Then $f(m)\neq f(n)$ follows from $S=\setN$. Hence $f\colon\setN\to X$ is an injection.
+\end{proof}
+
+With the theorem shown, we can now characterize finite sets via the existence of injections onto proper subsets:
+
+\begin{theorem}[Dedekind Characterization]\label{theorem:finite_infinite:dedekind_characterization}
+    For a set $X$ the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item $X$ is finite.
+        \item For every proper subset $S\subset X$ there exists no injection $f\colon X\rightarrow S$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \proofright\marginnote{This direction can also be proven with the Pingeonhole Principle (see exercise \ref{exercise:finite_infinite:dedekind_characterization_pigeonhole}).} Let $X$ be finite. We assume, that there exists a proper subset $S\subset X$, so that there is an injection $f\colon X\to S$. Because $X$ is finite, there exists a bijection $j\colon X\to\setN_n$ for $n=|X|$. Hence, the restricted mapping $j\vert_S\colon S\rightarrow\setN_n$ is also an injection. But then $g=j^{-1}\circ j\vert_S\colon S\to X$ is an injection as a composition of injective mappings. From the Cantor-Schröder-Bernstein theorem \ref{theorem:mappings:cantor_schroeder_bernstein} it follows that there exists a bijection $h\colon X\to S$, i.e. $X\sim S$ and hence $|X|=|S|$, which contradicts the fact that $S$ is a proper subset of $X$ (see theorem \ref{theorem:finite_infinite:proper_subset}).
+
+    \proofleft Let $X$ be a set, so that for every proper subset $S\subset X$ there exists no injection $f\colon X\rightarrow S$. Assume that $X$ is not finite, then there exists no $n\in\setN$ with $X\sim\setN_n$.
+    \begin{align}\alpha\colon\powerset(\powerset(X))\to\powerset(\powerset(X))\colon \mathcal A\mapsto \bigcup_{A\in\mathcal A}\setdef{S\subseteq X\given \exists x\in X\setminus A\colon S=A\cup\{x\}}.\end{align}
+    By the recursion theorem there exists a mapping $\mathcal X\colon\setN\rightarrow\powerset(\powerset(X))$ with
+    \begin{align}\mathcal X(0)=\{\emptyset\}\qquad\text{and}\qquad \mathcal X(n+1)=\alpha(\mathcal X(n))\end{align}
+\end{proof}
+
+
+\subsection{Exercises}
+
+\begin{exercise}\label{exercise:finite_infinite:canonical_n_sets_bijection}
+    Let $n\in\setNnn$ and $a\in\setN_n$, then the mapping \begin{align}f\colon \setN_n\setminus\{a\}\to\setN_{n-1},\qquad b\mapsto \begin{cases}b, & b<a \\ b-1, & b>a\end{cases}\end{align} is bijective.
+\end{exercise}
+
+\begin{solution}
+    Let $b,c\in\setN_n\setminus\{a\}$ with $f(b)=f(c)$, then we have the following cases:
+    \begin{itemize}
+        \item If $b<a$ and $c<a$, then $b=f(b)=f(c)=c$, hence $b=c$.
+        \item If $b>a$ and $c>a$, then $f(b)=b-1=f(c)=c-1$, hence $b=c$.
+        \item If $b<a$ and $c>a$, then $f(b)=b<b$ but $f(c)=c-1\geq a$, thus $f(b)\neq f(c)$. So this case is not possible.
+        \item If $b>a$ and $c<a$, then $f(b)=b-1\geq a$ and $f(c)=c<a$, thus $f(b)\neq f(c)$. So this case is also not possible.
+    \end{itemize}
+    Hence $f$ is injective. Let $d\in\setN_{n-1}$, then we have the following cases:
+    \begin{itemize}
+        \item If $d<a$, then $f(d)=d$.
+        \item If $d\geq a$, then $d+1>a$, thus $d+1\in\setN_n\setminus\{a\}$ and $f(d+1)=d$.
+    \end{itemize}
+    Hence $f$ is surjective and therefore bijective.
+\end{solution}
+
+\input{chapter-basics/finite_infinite_exercises.tex}

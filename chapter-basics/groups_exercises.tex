@@ -1,0 +1,22 @@
+\subsection{Exercises}
+
+\begin{exercise}
+    Let $X$ be a set and let $R$ be a relation on $X$. We define the set of relation-preserving permutations as:
+    \begin{align}\autrel{X,R} = \setdef{f \in \symset X \colon \forall x,y \in X \colon (x,y) \in R \Leftrightarrow (f(x), f(y)) \in R}.\end{align}
+    Then $(\autrel{X,R}, \circ, \idmap_X)$ forms a group under mapping composition.
+\end{exercise}
+
+\begin{solution}
+    We show that $\autrel{X,R}$ is a subgroup of the symmetric group $\symset X$ by utilizing Remark \ref{theorem:groups:unital_semigroup_subset}. Clearly, $\idmap_X \in \autrel{X,R}$ since $(x,y) \in R \Leftrightarrow (\idmap_X(x), \idmap_X(y)) \in R$ trivially holds. 
+    Now let $f, g \in \autrel{X,R}$. For all $x,y \in X$, we have $(x,y) \in R \Leftrightarrow (g(x), g(y)) \in R \Leftrightarrow (f(g(x)), f(g(y))) \in R$, which implies $(f \circ g) \in \autrel{X,R}$. Thus, the set is closed under composition. 
+    Finally, let $f \in \autrel{X,R}$. Since $f$ is a bijection, for any $x,y \in X$ there exist $u,v \in X$ such that $f(u)=x$ and $f(v)=y$. Thus, $(x,y) \in R \Leftrightarrow (f(u), f(v)) \in R \Leftrightarrow (u,v) \in R \Leftrightarrow (f^{-1}(x), f^{-1}(y)) \in R$, showing $f^{-1} \in \autrel{X,R}$. Hence, every element is invertible within the subset structure, making it a distinct group.
+\end{solution}
+
+        %\item Let $X$ be a set and let $Y \subseteq X$ be a subset of $X$. We define the set of all bijections on $X$ that have $Y$ as the set of all fixed points:
+        %\begin{align}\symset_Y(X)\coloneq\setdef{f\in\symset X\given \fixset(f)=Y}.\end{align}
+        %Then $(\symset_Y(X), \circ, \idmap_X)$ forms a group under mapping composition.
+        %\begin{miniproof}
+        %    We show that $\symset_Y(X)$ is a subgroup of the symmetric group $\symset(X)$ by utilizing remark \ref{theorem:groups:unital_semigroup_subset}. First, the identity mapping $\idmap_X$ belongs to $\symset_Y(X)$ since $\idmap_X(y) = y$ holds trivially for all $y \in X$ (and thus for all $y \in Y$). 
+        %    Now let $f, g \in \symset_Y(X)$. For any element $y \in Y$, composition yields $(f \circ g)(y) = f(g(y)) = f(y) = y$, which proves that $f \circ g \in \symset_Y(X)$, satisfying closure under $\circ$. 
+        %    Finally, let $f \in \symset_Y(X)$. Since $f(y) = y$ for all $y \in Y$, applying the inverse mapping $f^{-1}$ to both sides of the equation yields $f^{-1}(f(y)) = f^{-1}(y)$, which simplifies to $y = f^{-1}(y)$. Thus, $f^{-1} \in \symset_Y(X)$, meaning every element is invertible within this subset structure.
+        %\end{miniproof}

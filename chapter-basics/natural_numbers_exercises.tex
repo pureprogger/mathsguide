@@ -1,0 +1,27 @@
+\subsection{Exercises}
+
+\begin{exercise}\label{exercise:natural_numbers:transient}
+    Show, by using the definition, that the set of natural numbers $\setN$ is a transitive set, that means $\setN\subseteq\powerset(\setN)$.
+\end{exercise}
+\begin{solution}
+    We proof the statement by induction and consider the set
+    \begin{align}S=\setdef{n\in\setN\given n\subseteq\setN}.\end{align}
+
+    \proofstep{$0\in S$} By definition holds that $0=\emptyset\subseteq\setN$, so $0\in S$.
+
+    \proofstep{$n\in S\Rightarrow \sigma(n)\in S$} Let $n\in S$, which means $n\subseteq\setN$. Then $\sigma(n)=n^+=n\cup\{n\}$. We have $\{n\}\subseteq\setN$ because of $n\in\setN$ and also $n\subseteq\setN$ by $n\in S$. Therefore $n\cup\{n\}\subseteq\setN$ follows. So $\sigma(n)\in S$.
+
+    In summary, $S=\setN$ follows, that means every element of $\setN$ is a subset of $\setN$, in symbols $\setN\subseteq\powerset(\setN)$.
+\end{solution}
+
+
+\begin{exercise}[Dedekind's Construction of the Natural Numbers]\label{exercise:natural_numbers:dedekind_construction}~\\ Let $A$ be a set and $S\subset A$ a proper subset, so that there exists an injection $\lambda\colon A\to S$. Construct a Peano model out of $S$ and $\lambda$.
+\end{exercise}
+
+\begin{solution}
+    Because $S$ is a proper subset of $A$, there exists an element $\tilde 0\in A\setminus S$. We set $B=S\cup\{\tilde 0\}$ and restrict the injection $\lambda$ to the mapping
+    \begin{align}\lambda_B\colon B\to B\setminus\{\tilde 0\}\colon\qquad n\mapsto \lambda(n).\end{align}
+    Then $\lambda_B$ is well-defined, because $\lambda(B)\subseteq S=B\setminus\{\tilde 0\}$, and it is also an injection as a restriction of the injection $\lambda$. We now define $N=\chainset_{\lambda_B}(\{\tilde 0\})\subseteq B$ and define the successor mapping
+    \begin{align}\sigma_N\colon N\to N\setminus\{\tilde 0\}\colon\qquad n\mapsto \lambda_B(n),\end{align}
+    which is also injective, because $\lambda_B$ is an injection. Then $(N,\tilde 0,\sigma_N)$ is Peano model by theorem \ref{theorem:natural_numbers:peano_model_characterization}.
+\end{solution}

@@ -1,0 +1,286 @@
+\section{Propositional Logic}
+
+\subsection{Propositions}
+
+In this section we will introduce the basic concepts of propositional logic, which is a branch of logic that deals with propositions and their logical connectives. Propositional logic is the foundation of mathematical logic and is used to reason about the truth values of propositions and to construct more complex propositions from simpler ones.
+
+We first claryfy the meaning of the word \enquote{proposition} and introduce the concept of truth values:
+
+\begin{definition}
+    A \emph{proposition} is a statement that is either true or false. Let $P$ denote a proposition, then we write $|P|=\text{T}$ if $P$ is true and $|P|=\text{F}$ if $P$ is false. We call $|P|$ the \emph{truth value} of the proposition $P$.
+\end{definition}
+
+
+\subsection{Propositional Formulas}
+
+The following definition claryfies the syntax of so called propositional formulas:
+
+\newcommand\provarset{\mathbf{V}}
+\newcommand\wffset{\mathbf{WFF}}
+
+\begin{definition}[Propositional Variables and Formulas]~\\
+    A propositional variable is a symbol that can be replaced by any proposition and is therefore either true or false, depending on the truth value of the proposition it is replaced by. We denote propositional variables by capital letters $A$, $B$, $C$, etc.
+
+    A propositional formula is a sentence that consists of propositional variables, so that the sentence always transforms into a proposition by replacing every propositional variable with a proposition. We denote propositional formulas by greek letters $\alpha$, $\beta$, $\gamma$, etc. More precisely propositional formulas are built inductively from propositional variables and logical connectives in the following way:
+
+    \begin{definitionenumerate}
+        \item \textbf{Atomic Formulas:} Every propositional variable $P$ is also propositional formula by itself, called an \emph{atomic formula}.
+        \item \textbf{Logical Connectives:} If $\alpha$ and $\beta$ are propositional formulas, then the following sentences are also propositional formulas:
+        \begin{align*}
+            &\alpha \land \beta &&\text{(\emph{conjunction})}   &&\alpha \Rightarrow \beta &&\text{(\emph{implication})} \\
+            &\alpha \lor \beta  &&\text{(\emph{disjunction})}   &&\alpha \Leftrightarrow \beta &&\text{(\emph{biconditional})} \\
+            &\lnot\alpha        &&\text{(\emph{negation})}
+        \end{align*}
+    \end{definitionenumerate}
+    We read $\alpha\land\beta$ as \enquote{$\alpha$ and $\beta$}, $\alpha\lor\beta$ as \enquote{$\alpha$ or $\beta$}, $\lnot\alpha$ as \enquote{not $\alpha$}, $\alpha\Rightarrow\beta$ as \enquote{$\alpha$ implies $\beta$} and $\alpha\Leftrightarrow\beta$ as \enquote{$\alpha$ if and only if $\beta$}, or shortly \enquote{$\alpha$ iff $\beta$}. We use parentheses to indicate the order of the connectives.
+\end{definition}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item $A\land (\lnot B\lor C)$ is a propositional formula. We can check this by building the propositional formula from the propositional variables $A$, $B$ and $C$ and using the logical connectives: $A$, $B$ and $C$ are propositional variables and therefore propositional formulas. Hence $\lnot B$ is a propositional formula, too. Thus $\lnot B\lor C$ is also a propositional formula and finally $A\land (\lnot B\lor C)\in\wffset$.
+        \item $A\Rightarrow\lnot B$ is a propositional formula. Because from $A\in\wffset$ and $B\in\wffset$ we conclude that also $\lnot B\in\wffset$ holds and therefore $A\Rightarrow\lnot B\in\wffset$.
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{definition}[Semantics]
+    Each propositional variable $P$ carries exactly one \emph{truth value} $|P|$, where $|P|=\text{T}$ denotes that $P$ is \enquote{true} and $|P|=\text{F}$ denotes that $P$ is \enquote{false}.
+
+    For every propositional formula $\alpha$, we write $|\alpha|$ to denote its truth value determined by the truth values of its propositional variables. The truth value of every propositional formula is uniquely determined by the following rules:
+
+    \begin{definitionenumerate}
+        \item $\alpha\land\beta$ is true if and only if both $\alpha$ and $\beta$ are true.
+        \item $\alpha\lor\beta$ is true if and only if at least one of $\alpha$ and $\beta$ is true.
+        \item $\lnot\alpha$ is true if and only if $\alpha$ is false.
+        \item $\alpha\Rightarrow\beta$ is false if and only if $\alpha$ is true and $\beta$ is false.
+        \item $\alpha\Leftrightarrow\beta$ is true if and only if $\alpha$ and $\beta$ have the same truth value.
+    \end{definitionenumerate}
+
+    To omit parentheses safely, the truth value of a formula is evaluated according to the following strict operator binding precedence (ordered from highest to lowest):
+    \begin{align*}\lnot \quad \longrightarrow \quad \land, \lor \quad \longrightarrow \quad \Rightarrow, \Leftrightarrow\end{align*}
+\end{definition}
+
+The semantics of propositional formulas determines the truth value of every propositional formula in dependence of the truth values of its propositional variables. The following table shows the truth values of the propositional connectives for every combination of truth values of the propositional variables:
+
+\begin{table}[ht]
+    \centering
+    \begin{NiceTabularX}{\textwidth}{X[c]|X[c]|X[2,c]|X[2,c]|X[2,c]|X[2,c]|X[2,c]}[
+         % This draws all horizontal and vertical lines automatically
+        code-before = \rowcolors{2}{white}{gray!10} % Alternating colors starting at row 2
+    ]
+        % Header
+        %\rowcolor{white} % Ensures the header remains white if needed
+        $|A|$ & $|B|$ & $|\lnot A|$ & $|A\land B|$ & $|A\lor B|$ & $|A\Rightarrow B|$ & $|A\Leftrightarrow B|$ \\
+        \hline
+        T & T & F & T & T & T & T \\
+        T & F & F & F & T & F & F \\
+        F & T & T & F & T & T & F \\
+        F & F & T & F & F & T & T \\
+    \end{NiceTabularX}
+    \caption{Truth tables for the logical connectives of propositional logic.}
+    \label{table:logic:connectives}
+\end{table}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:logic:disjunction_equals_implication} $\lnot A \lor B$ is a propositional formula. We get the following truth table for evaluating the truth values of that propositional formula:
+        
+        \begin{table}[ht]
+        \centering
+        \begin{NiceTabularX}{.6\textwidth}{X[c]|X[c]|X[c]|X[2,c]}[code-before=\rowcolors{2}{white}{gray!10}]
+            $|A|$ & $|B|$ & $|\lnot A|$ & $|\lnot A \lor B|$\\
+            \hline
+            T & T & F & T \\
+            T & F & F & F \\
+            F & T & T & T \\
+            F & F & T & T \\
+        \end{NiceTabularX}
+        \caption{Truth table for the formula $\lnot A \lor B$.}\label{table:logic:disjunction_equals_implication}
+        \end{table}
+
+        \item\label{example:logic:negation_of_conjunction} $\lnot(A \land B)$ is a propositional formula. Because the parentheses override the default operator binding precedence, the conjunction must be evaluated before the negation:
+        
+        \begin{table}[ht]
+        \centering
+        \begin{NiceTabularX}{.6\textwidth}{X[c]|X[c]|X[c]|X[2,c]}[code-before=\rowcolors{2}{white}{gray!10}]
+            $|A|$ & $|B|$ & $|A \land B|$ & $|\lnot(A \land B)|$\\
+            \hline
+            T & T & T & F \\
+            T & F & F & T \\
+            F & T & F & T \\
+            F & F & F & T \\
+        \end{NiceTabularX}
+        \caption{Truth table demonstrating the evaluation of $\lnot(A \land B)$.}\label{table:logic:negated_conjunction}
+        \end{table}
+
+        \item\label{example:logic:implication_of_implication} $A \Rightarrow (B \Rightarrow A)$ is a propositional formula containing nested implications. We evaluate the inner parenthesis first:
+        
+        \begin{table}[ht]
+        \centering
+        \begin{NiceTabularX}{.6\textwidth}{X[c]|X[c]|X[c]|X[2,c]}[code-before=\rowcolors{2}{white}{gray!10}]
+            $|A|$ & $|B|$ & $|B \Rightarrow A|$ & $|A \Rightarrow (B \Rightarrow A)|$\\
+            \hline
+            T & T & T & T \\
+            T & F & T & T \\
+            F & T & F & T \\
+            F & F & T & T \\
+        \end{NiceTabularX}
+        \caption{Truth table for the formula $A \Rightarrow (B \Rightarrow A)$, demonstrating a tautology.}\label{table:logic:tautology_example}
+        \end{table}
+
+        \item\label{example:logic:complex_conjunction} $(A \lor B) \land (\lnot A \land \lnot B)$ is a complex propositional formula. According to precedence rules, the unary negations are processed first, followed by the respective clauses, and finally the central conjunction:
+        
+        \begin{table}[ht]
+        \centering
+        \begin{NiceTabularX}{\textwidth}{X[c]|X[c]|X[c]|X[c]|X[c]|X[2,c]|X[3,c]}[code-before=\rowcolors{2}{white}{gray!10}]
+            $|A|$ & $|B|$ & $|A \lor B|$ & $|\lnot A|$ & $|\lnot B|$ & $|(\lnot A \land \lnot B)|$ & $|(A \lor B) \land (\lnot A \land \lnot B)|$\\
+            \hline
+            T & T & T & F & F & F & F \\
+            T & F & T & F & T & F & F \\
+            F & T & T & T & F & F & F \\
+            F & F & F & T & T & T & F \\
+        \end{NiceTabularX}
+        \caption{Truth table for the formula $(A \lor B) \land (\lnot A \land \lnot B)$, demonstrating a contradiction.}\label{table:logic:contradiction_example}
+        \end{table}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Tautologies and Logical Equivalences}
+
+\begin{definition}[Tautology]
+    A propositional formula $\alpha$ is called a \emph{tautology} if and only if $\alpha$ is true for all possible assignments of truth values to its propositional variables. Furthermore $\alpha$ is called a \emph{contradiction} if and only if $\lnot\alpha$ is a tautology.
+\end{definition}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item The propositional formula $A\Rightarrow (B\Rightarrow A)$ is a tautology, which is shown by the truth table of example \ref{example:logic:implication_of_implication}.
+        \item The propositional formula $(A\lor B)\land (\lnot A\land \lnot B)$ is a contradiction, which is shown by the truth table of example \ref{example:logic:complex_conjunction}.
+        \item The propositional formula $\lnot A\lor A$ is a tautology, which is easly verified by a truth table. It is called the \emph{law of the excluded middle}, because $\lnot A\lor A$ states that $A$ is false or true, but not both or neither.
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{definition}[Logical Equivalence]
+    Let $\alpha$ and $\beta$ be propositional formulas, then $\alpha$ and $\beta$ are called \emph{logically equivalent} if and only if the propositional formula $\alpha\Leftrightarrow\beta$ is a tautology. In this case we write $\alpha\equiv\beta$, read as \enquote{$\alpha$ is logically equivalent to $\beta$}.
+\end{definition}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:logic:demorgan} Let $\alpha$ and $\beta$ be propositional formulas, then the following logical equivalences hold:
+        \begin{align}
+            \lnot(\alpha\land\beta)\equiv \lnot\alpha\lor\lnot\beta\qquad\text{and}\qquad \lnot(\alpha\lor\beta)\equiv\lnot\alpha\land\lnot\beta.
+        \end{align}
+        Those equivalences are called \emph{De Morgan's laws}.
+        
+        \item\label{example:logic:double_negation} Let $\alpha$ be a propositional formula, then the \emph{law of double negation} holds:
+        \begin{align}\lnot(\lnot \alpha)\equiv \alpha.\end{align}
+        
+        \item\label{example:logic:biconditional_implication} Let $\alpha$ and $\beta$ be propositional formulas. Then
+        \begin{align}(\alpha\Rightarrow\beta)\land(\beta\Rightarrow\alpha)\equiv\alpha\Leftrightarrow\beta\end{align}
+        holds. That means $\alpha$ implies $\beta$ and $\beta$ implies $\alpha$ is logically equivalent to $\alpha$ if and only if $\beta$. This establishes the equivalence of the biconditional and mutual implication.
+
+        \item\label{example:logic:contraposition} Let $\alpha$ and $\beta$ be propositional formulas, then the \emph{law of contraposition} holds:
+        \begin{align}(\alpha\Rightarrow\beta)\equiv(\lnot\beta\Rightarrow\lnot\alpha).\end{align}
+        This equivalence is the foundational basis for proofs by contraposition, stating that a conditional statement is logically equivalent to its contrapositive.
+
+        \item\label{example:logic:material_implication} Let $\alpha$ and $\beta$ be propositional formulas, then the conditional rule for \emph{material implication} holds:
+        \begin{align}(\alpha\Rightarrow\beta)\equiv\lnot\alpha\lor\beta.\end{align}
+        This shows that an implication can be entirely expressed using only disjunction and negation.
+
+        \item\label{example:logic:commutativity} Let $\alpha$ and $\beta$ be propositional formulas, then the \emph{commutative laws} hold:
+        \begin{align}
+            \alpha\land\beta&\equiv\beta\land\alpha\\ \text{and}\qquad \alpha\lor\beta&\equiv\beta\lor\alpha.
+        \end{align}
+        These laws show that conjunction and disjunction are commutative.
+
+        \item\label{example:logic:distributivity} Let $\alpha$, $\beta$ and $\gamma$ be propositional formulas, then the \emph{distributive laws} hold:
+        \begin{align}
+            \alpha\land(\beta\lor\gamma)&\equiv(\alpha\land\beta)\lor(\alpha\land\gamma)\\ \text{and}\qquad \alpha\lor(\beta\land\gamma)&\equiv(\alpha\lor\beta)\land(\alpha\lor\gamma).
+        \end{align}
+        These show how conjunction and disjunction distribute over one another, acting similarly to multiplication over addition in standard algebra.
+
+        \item\label{example:logic:associativity} Let $\alpha$, $\beta$ and $\gamma$ be propositional formulas, then the \emph{associative laws} hold:
+        \begin{align}
+            (\alpha\land\beta)\land\gamma&\equiv\alpha\land(\beta\land\gamma)\\ \text{and}\qquad (\alpha\lor\beta)\lor\gamma&\equiv\alpha\lor(\beta\lor\gamma).
+        \end{align}
+        These laws assert that the grouping of consecutive conjunctions or disjunctions does not alter the truth value of the formula, justifying the omission of internal parentheses in long chains of identical operators. We therefore write for example 
+        \begin{align}
+            \alpha\land\beta\land\gamma \qquad \text{and} \qquad \alpha\lor\beta\lor\gamma.
+        \end{align}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Logical Substitution}
+
+Let $\alpha_1, \alpha_2, \beta_1$ and $\beta_2$ be propositional formulas such that $\alpha_1 \equiv \alpha_2$ and $\beta_1 \equiv \beta_2$. It follows directly via truth table evaluation that the logical connectives preserve these equivalences:
+
+\begin{align}
+    \lnot\alpha_1 &\equiv \lnot\alpha_2, & \alpha_1 \land \beta_1 &\equiv \alpha_2 \land \beta_2, \notag \\
+    \alpha_1 \lor \beta_1 &\equiv \alpha_2 \lor \beta_2, & \alpha_1 \Rightarrow \beta_1 &\equiv \alpha_2 \Rightarrow \beta_2, \notag \\
+    \alpha_1 \Leftrightarrow \beta_1 &\equiv \alpha_2 \Leftrightarrow \beta_2. \notag
+\end{align}
+
+Because every propositional formula is built inductively from propositional variables and logical connectives, these base cases ensure that replacing any arbitrary subformula with an equivalent one always yields an equivalent propositional formula. This foundational property is called the principle of \emph{logical substitution} (or the \emph{Replacement Theorem}). By logical substitution we can derive logical equivalences from already known ones:
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $\alpha$ and $\beta$ be propositional formulas, then it holds that
+        \begin{align}(\lnot\alpha\lor \beta)\land (\lnot\beta\lor\alpha)\equiv \alpha\Leftrightarrow\beta.\end{align}
+        We know that $(\alpha\Rightarrow\beta)\land(\beta\Rightarrow\alpha)\equiv\alpha\Leftrightarrow\beta$ holds by example \ref{example:logic:biconditional_implication}. We also know from example \ref{example:logic:material_implication} that $\alpha\Rightarrow\beta\equiv\lnot\alpha\lor\beta$ as well as $\beta\Rightarrow\alpha\equiv\lnot\beta\lor\alpha$ hold. Thus we get by logical substitution: $(\lnot\alpha\lor \beta)\land (\lnot\beta\lor\alpha)\equiv \alpha\Leftrightarrow\beta$.
+
+        \item\label{example:logic:negated_implication} Let $\alpha$ and $\beta$ be propositional formulas, then it holds that
+        \begin{align}\lnot(\alpha\Rightarrow\beta)\equiv \alpha\land\lnot\beta.\end{align}
+        By the rule of material implication (example \ref{example:logic:material_implication}), we have $\alpha\Rightarrow\beta \equiv \lnot\alpha\lor\beta$. Substituting this into the left-hand side yields $\lnot(\lnot\alpha\lor\beta)$. Applying De Morgan's laws (example \ref{example:logic:demorgan}) gives $\lnot(\lnot\alpha)\land\lnot\beta$. Finally, applying the law of double negation (example \ref{example:logic:double_negation}) to $\lnot(\lnot\alpha)$ results in $\alpha\land\lnot\beta$.
+
+        \item\label{example:logic:alternative_contraposition} Let $\alpha$ and $\beta$ be propositional formulas, then it holds that
+        \begin{align}(\lnot\alpha\Rightarrow\beta)\equiv(\lnot\beta\Rightarrow\alpha).\end{align}
+        By the law of contraposition (example \ref{example:logic:contraposition}), any conditional statement is equivalent to the implication of its negated components. Substituting $\lnot\alpha$ for the antecedent gives $(\lnot\alpha\Rightarrow\beta)\equiv(\lnot\beta\Rightarrow\lnot(\lnot\alpha))$. Applying the law of double negation (example \ref{example:logic:double_negation}) to subformula $\lnot(\lnot\alpha)$ simplifies the right-hand side directly to $\lnot\beta\Rightarrow\alpha$.
+
+        \item\label{example:logic:demorgan_implication} Let $\alpha$ and $\beta$ be propositional formulas, then it holds that
+        \begin{align}\lnot\alpha\Rightarrow\beta \equiv \alpha\lor\beta.\end{align}
+        From example \ref{example:logic:material_implication} we know that $(\lnot\alpha\Rightarrow\beta)\equiv \lnot(\lnot\alpha)\lor\beta$. By substituting $\alpha$ for $\lnot(\lnot\alpha)$ via the law of double negation (example \ref{example:logic:double_negation}), we arrive at $\alpha\lor\beta$.
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Logical Implications}
+
+\begin{definition}[Logical Implication]
+    Let $\alpha$ and $\beta$ be propositional formulas, then we say $\alpha$ \emph{logically implies} $\beta$ if and only if $\alpha\Rightarrow\beta$ is a tautology. In this case we write $\alpha\vDash\beta$, read as \enquote{$\alpha$ logically implies $\beta$}.
+\end{definition}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $\alpha$ and $\beta$ be propositional formulas, then \begin{align}\alpha\land(\alpha\Rightarrow\beta)\vDash\beta.\end{align}
+        holds. This logical implication is called the \emph{modus ponens} rule (or detachment).
+
+        \item Let $\alpha$ and $\beta$ be propositional formulas, then the rule of \emph{modus tollens} (denial) holds:
+        \begin{align}\lnot\beta \land (\alpha\Rightarrow\beta)\vDash\lnot\alpha.\end{align}
+        This states that if a conditional statement is assumed true, but its consequent is false, then its antecedent must also be false.
+
+        \item Let $\alpha$, $\beta$ and $\gamma$ be propositional formulas, then the rule of \emph{hypothetical syllogism} holds:
+        \begin{align}(\alpha\Rightarrow\beta) \land (\beta\Rightarrow\gamma)\vDash\alpha\Rightarrow\gamma.\end{align}
+        This demonstrates the transitivity of the conditional operator, allowing deductive chains to be linked together.
+
+        \item Let $\alpha$ and $\beta$ be propositional formulas, then the rule of \emph{disjunctive syllogism} holds:
+        \begin{align}(\alpha\lor\beta) \land \lnot\alpha\vDash\beta \qquad\text{and}\qquad (\alpha\lor\beta) \land \lnot\beta\vDash\alpha.\end{align}
+        This rule asserts that if a disjunction is true and one of the disjuncts is false, the remaining disjunct must be true.
+
+        \item Let $\alpha$, $\beta$ and $\gamma$ be propositional formulas, then the \emph{rule of cases} (or \emph{disjunction elimination}) holds:
+        \begin{align}(\alpha\lor\beta) \land (\alpha\Rightarrow\gamma) \land (\beta\Rightarrow\gamma)\vDash\gamma.\end{align}
+        This states that if at least one of two scenarios is true, and both scenarios independently yield the exact same conclusion, then that conclusion must hold true regardless of which case is realized.
+
+        \item Let $\alpha$ and $\beta$ be propositional formulas, then the rule of \emph{conjunction elimination} (simplification) holds:
+        \begin{align}\alpha\land\beta\vDash\alpha \qquad\text{and}\qquad \alpha\land\beta\vDash\beta.\end{align}
+        This allows one to conclude either conjunct individually from a true conjunction.
+
+        \item Let $\alpha$ and $\beta$ be propositional formulas, then the rule of \emph{disjunction introduction} (addition) holds:
+        \begin{align}\alpha\vDash\alpha\lor\beta \qquad\text{and}\qquad \beta\vDash\alpha\lor\beta.\end{align}
+        This states that if a formula is true, it can be weakened into a disjunction with any arbitrary formula without losing its validity.
+
+        \item Let $\alpha$ and $\beta$ be propositional formulas, then the \emph{principle of explosion} (\emph{ex falso quodlibet}) holds:
+        \begin{align}(\alpha\land\lnot\alpha)\vDash\beta.\end{align}
+        This formalizes that from a logical contradiction, any arbitrary assertion -- regardless of its content -- can be validly derived.
+
+        \item Let $\alpha$, $\beta$ and $\gamma$ be propositional formulas, then the rule of \emph{destructive dilemma} holds:
+        \begin{align}(\alpha\Rightarrow\beta) \land (\gamma\Rightarrow\delta) \land (\lnot\beta \lor \lnot\delta)\vDash\lnot\alpha \lor \lnot\gamma.\end{align}
+        This operates as a parallel version of \emph{modus tollens}, showing that if at least one of two consequents is false, then at least one of their corresponding antecedents must be false.
+    \end{exampleenumerate}
+\end{examples}

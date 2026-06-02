@@ -1,0 +1,964 @@
+\section{Relations}
+
+In this we will introduce the concept of ordered pairs, direct products and so called relations. We already know three relations given by the predicates \enquote{$=$}, \enquote{$\subseteq$} and \enquote{$\in$}. Those relations fulfill specific properties. For example a set $A$ is always a subset of itself, i.e. $A\subseteq A$, which is called the \emph{reflexivity} of the relation \enquote{$\subseteq$}. The relation \enquote{$=$} is called \emph{symmetric}, because for two sets $A$ and $B$ with $A=B$ also holds $B=A$. Note that \enquote{$=$} is also reflexive. The axiom of foundation guarantees that \enquote{$\in$} is not reflexive (see theorem \ref{theorem:sets:set_not_in_set}), i.e. $a\notin a$ for every set $a$, and not symmetric, i.e. if $a\in b$ then $b\notin a$ for all sets $a,b$ .
+
+The direct product of sets and ordered pairs allow us to define what a relation exactly is and to formalize and also proof some properties of relations. One important example of relations are the so called equivalence relations. In the next section we will introduce mappings as a special type of relations.
+
+\subsection{Ordered Pairs}
+
+The pairs $\{A,B\}$ and $\{B,A\}$ exist for any two sets $A$ and $B$ and are equal. That means the order of the elements in the pair $\{A,B\}$ does not matter (see remark \ref{remark:sets:pair_unordered}). However, in many cases we want to construct a set from two given sets $A$ and $B$ such that the order of $A$ and $B$ matters. Theorem \ref{theorem:sets:equality_ordered_pairs} gives us the means to construct the ordered pair of two sets:
+
+\begin{definition}
+    Let $a$ and $b$ be sets. The \emph{ordered pair} $(a,b)$ is defined as the set \begin{align}(a,b)=\{\{a\},\{a,b\}\}\end{align}
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $A$ and $B$ be sets. Then $(a,b)\in \powerset(\powerset(A\cup B))$ for every $a\in A$ and $b\in B$.
+        \begin{miniproof}
+            Let $a\in A$ and $b\in B$. Then $\{a\},\{a,b\}\subseteq A\cup B$, hence $\{a\},\{a,b\}\in\powerset(A\cup B)$ hold. Thus $(a,b)=\{\{a\},\{a,b\}\}\in\powerset(\powerset(A\cup B))$ follows.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{theorem}
+    Let $a$, $b$, $c$ and $d$ be sets, then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $(a,b)=(b,a)$ if any only if $a=b$.
+        \item $(a,b)=(c,d)$ if and only if $a=c$ and $b=d$.
+    \end{intheoremenumerate}
+\end{theorem}
+\begin{proof}
+    These statements follow directly from theorem \ref{theorem:sets:equality_ordered_pairs}.
+\end{proof}
+
+\begin{definition}
+    Let $a$, $b$ and $c$ be sets, then the set $(a,b,c)\coloneq (a,(b,c))$ denotes the \emph{ordered triple} or just \emph{triple} of $a$, $b$ and $c$.
+\end{definition}
+
+\subsection{Direct Products}
+
+The direct product of two sets $A$ and $B$ is the set of all ordered pairs $(a,b)$ with $a\in A$ and $b\in B$, as defined in the following definition:
+
+\begin{definition}
+    Let $A$ and $B$ be sets. Then we define \begin{align}A\times B\coloneq\setdef{x\in\powerset(\powerset(A\cup B))\given \exists a\in A\exists b\in B\colon x=(a,b)}.\end{align}
+    The set $A\times B$ is called the \emph{direct product} of $A$ and $B$ or \emph{Cartesian product} of $A$ and $B$.
+
+    We shortly write $\setdef{(a,b)\given a\in A\land b\in B}$ for $A\times B$.
+\end{definition}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick,element/.style={inner sep=0pt,fill=white,rounded corners=2pt}]
+        \foreach \x in {0,1,...,3}{
+            \foreach \y in {0,1} {
+                \coordinate (a-\x-\y) at ({\x*2},\y);
+            }
+        }
+
+        \draw (-.75,-.5) [rounded corners=10pt,pattern=dots,pattern color=gray] rectangle (6.75,1.5);
+        \draw (-2,-.5) [rounded corners=10pt] rectangle (-1,1.5);
+        \draw (-.75,-1.75) [rounded corners=10pt] rectangle (6.75,-0.75);
+
+        \node[element] at (a-0-0) {$\strut (a,e)$};
+        \node[element] at (a-1-0) {$\strut (b,e)$};
+        \node[element] at (a-2-0) {$\strut (c,e)$};
+        \node[element] at (a-3-0) {$\strut (d,e)$};
+        \node[element] at (a-0-1) {$\strut (a,f)$};
+        \node[element] at (a-1-1) {$\strut (b,f)$};
+        \node[element] at (a-2-1) {$\strut (c,f)$};
+        \node[element] at (a-3-1) {$\strut (d,f)$};
+
+        \node at (-1.5,0) {$\strut e$};
+        \node at (-1.5,1) {$\strut f$};
+        \node at (0,-1.25) {$\strut a$};
+        \node at (2,-1.25) {$\strut b$};
+        \node at (4,-1.25) {$\strut c$};
+        \node at (6,-1.25) {$\strut d$};
+
+        \node[anchor=east] at (-2.1,0.5) {$Y$};
+        \node[anchor=west] at (6.85,-1.25) {$X$};
+        \node[anchor=west] at (6.85,0.5) {$X\times Y$};
+    \end{tikzpicture}
+
+    \caption{Illustration of the Cartesian product $X\times Y$ with $X=\{a,b,c,d\}$ and $Y=\{e,f\}$.}\label{figure:sets:cartesian_product}
+\end{figure}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item The direct product $A\times B$ of two sets $A$ and $B$ exists by the axiom of specification and is uniquely determined.
+        \item\label{remark:relations:direct_product_elements} For sets $A$ and $B$ and sets $a$ and $b$ holds $(a,b)\in A\times B$ if and only if $a\in A$ and $b\in B$.
+        \item $A\times B=\emptyset$ if and only if $A=\emptyset$ or $B=\emptyset$.
+        \begin{miniproof}
+            \proofright Let $A\times B=\emptyset$. Assume $A\neq\emptyset$ and $B\neq\emptyset$. Then there exist $a\in A$ and $b\in B$. Hence $(a,b)\in A\times B$ by remark \ref{remark:relations:direct_product_elements}, which is a contradiction.
+            \proofleft Let $A=\emptyset$ or $B=\emptyset$. Assume $A\times B\neq\emptyset$. Then there exists an ordered pair $(a,b)\in A\times B$. Hence $a\in A$ and $b\in B$, thus $A\neq\emptyset$ and $B\neq\emptyset$, which is a contradiction.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $a,b,c,d$ be pairwise distinct sets and $A=\{a,b\}$ and $B=\{c,d\}$, then $A\times B=\{(a,c),(a,d),(b,c),(b,d)\}$.
+        \item Let $a$ and $b$ be sets with $a\neq b$ and $A=\{a,b\}$, then we have $A\times A=\{(a,a),(a,b),(b,a),(b,b)\}$.
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}
+    Let $A$, $B$, $C$ and $D$ be non-empty sets, then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $A\times B\subseteq C\times D$ if and only if $A\subseteq C$ and $B\subseteq D$.
+        \item $A\times B=C\times D$ if and only if $A=C$ and $B=D$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item\proofright Let $A\times B\subseteq C\times D$. Furthermore let $a\in A$. Because $B$ is non-empty, there exists a $b\in B$. Hence $(a,b)\in A\times B$ and thus $(a,b)\in C\times D$. That means $a\in C$ by definition of $C\times D$ and hence $A\subseteq C$. In the same way we conclude $B\subseteq D$.
+        
+        \proofleft Let $A\subseteq C$ and $B\subseteq D$. Furthermore let $x\in A\times B$. Then there exist $a\in A$ and $b\in B$ with $x=(a,b)$ by definition of $A\times B$. Because of $A\subseteq C$ and $B\subseteq D$ follows $a\in C$ and $b\in D$ and hence $x=(a,b)\in C\times D$, which means $A\times B\subseteq C\times D$.
+
+        \item This statement follows directly from theorem \ref{theorem:sets:subset_equals} and (i).
+    \end{proofenumerate}
+\end{proof}
+
+\subsection{Relations}
+
+
+
+\begin{definition}
+    Let $X$ and $Y$ be sets and $\Gamma\subseteq X\times Y$ a subset of the cartesian product. Then the triple $R=(\Gamma,X,Y)$ is called a \emph{relation from $X$ to $Y$}. For every $x\in X$ and $y\in Y$ we say \enquote{$x$ is related to $y$ under $R$} if and only if $(x,y)\in\Gamma$. In this case we write $x R y$.
+
+    For a relation $R=(\Gamma,X,Y)$ we call $X$ the \emph{domain of $R$} and $Y$ the \emph{codomain of $R$}. Furthermore $\Gamma(R)=\Gamma$ denotes the \emph{graph of $R$}. Is $S$ another relation from $X$ to $Y$, then we write \begin{align}R\subseteq S\iff\Gamma(R)\subseteq\Gamma(S)\end{align} and call $R$ \emph{smaller} than $S$.
+
+    For the case $X=Y$ we call $R=(\Gamma,X,X)$ with $\Gamma\subseteq X\times X$ a \emph{relation on $X$}.
+\end{definition}
+
+By definition, a relation $R$ consists of a subset $\Gamma(R)\subseteq X\times Y$ that contains all ordered pairs $(x,y)\in X\times Y$ for which $x$ and $y$ are related under $R$, that means
+\begin{align}\forall x\in X\,\forall y\in Y\colon xRy\Leftrightarrow (x,y)\in \Gamma(R).\end{align}
+Therefore we can define a relation $R$ from $X$ to $Y$ by specifying the ordered pairs that are contained in the graph $\Gamma(R)$ of the relation.
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick,element/.style={circle,inner sep=0pt,fill=white},connection/.style={-Latex,shorten >=10pt,shorten <=10pt},set/.style={rounded corners=10pt,pattern=dots,pattern color=gray}]
+        \begin{scope}[shift={(0,0)}]
+            \foreach \y in {0,1,...,3}{
+                \coordinate (a-\y) at (0,\y);
+            }
+            \draw (-.5,-.5) [set] rectangle (.5,3.5);
+            \node (label-a) at (0,-.8) {$\strut X$};
+        \end{scope}
+        \node at (1,5) {$\strut R$};
+        \begin{scope}[shift={(2,0)}]
+            \foreach \y in {0,1,...,5}{
+                \coordinate (b-\y) at (0,\y);
+            }
+            \draw (-.5,-.5) [set] rectangle (.5,5.5);
+            \node (label-b) at (0,-.8) {$\strut Y$};
+        \end{scope}
+
+        \node[element] at (a-0) {$\strut a$};
+        \node[element] at (a-1) {$\strut b$};
+        \node[element] at (a-2) {$\strut c$};
+        \node[element] at (a-3) {$\strut d$};
+
+        \node[element] at (b-0) {$\strut e$};
+        \node[element] at (b-1) {$\strut f$};
+        \node[element] at (b-2) {$\strut g$};
+        \node[element] at (b-3) {$\strut h$};
+        \node[element] at (b-4) {$\strut i$};
+        \node[element] at (b-5) {$\strut j$};
+
+        \draw[connection] (a-0) -- (b-1);
+        \draw[connection] (a-0) -- (b-0);
+        \draw[connection] (a-2) -- (b-1);
+        \draw[connection] (a-2) -- (b-2);
+        \draw[connection] (a-2) -- (b-3);
+        \draw[connection] (a-3) -- (b-5);
+
+        \begin{scope}[shift={(6,0)}]
+            \begin{scope}[shift={(0,0)}]
+                \foreach \y in {0,1,...,3}{
+                    \coordinate (c-\y) at (0,\y);
+                }
+                \draw (-.5,-.5) [set] rectangle (.5,3.5);
+                \node (label-c) at (0,-.8) {$\strut X$};
+            \end{scope}
+            \node at (1,3.5) {$\strut \idmap_X$};
+            \begin{scope}[shift={(2,0)}]
+                \foreach \y in {0,1,...,3}{
+                    \coordinate (d-\y) at (0,\y);
+                }
+                \draw (-.5,-.5) [set] rectangle (.5,3.5);
+                \node (label-d) at (0,-.8) {$\strut X$};
+            \end{scope}
+        \end{scope}
+
+        \node[element] at (c-0) {$\strut a$};
+        \node[element] at (c-1) {$\strut b$};
+        \node[element] at (c-2) {$\strut c$};
+        \node[element] at (c-3) {$\strut d$};
+
+        \node[element] at (d-0) {$\strut a$};
+        \node[element] at (d-1) {$\strut b$};
+        \node[element] at (d-2) {$\strut c$};
+        \node[element] at (d-3) {$\strut d$};
+
+        \draw[connection] (c-0) -- (d-0);
+        \draw[connection] (c-1) -- (d-1);
+        \draw[connection] (c-2) -- (d-2);
+        \draw[connection] (c-3) -- (d-3);
+    \end{tikzpicture}
+    \caption{Illustration of a relation $R$ from $X$ to $Y$ and of the identity relation $\idmap_X$ on $X$ by an arrow diagram, where $X=\{a,b,c,d\}$ and $Y=\{e,f,g,h,i,j\}$. Every arrow form an element $x\in X$ to an element $y\in Y$ denotes that $xRy$ holds. The relation $R$ fulfills the properties $aRe$, $aRf$, $cRf$, $cRg$, $cRh$ and $dRh$.}
+\end{figure}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $R$ and $S$ be relations from $X$ to $Y$, then $R\subseteq S$ holds if and only if $x R y$ implies $x S y$ for every $x\in X$ and $y\in Y$.
+        \begin{miniproof}
+            We get the following chain of equivalences:
+            \begin{align}\begin{split}
+                R\subseteq S\iff& \Gamma(R)\subseteq\Gamma(S)\\
+                \iff& \forall a\colon a\in\Gamma(R)\Rightarrow a\in\Gamma(S)\\
+                \iff& \forall x\in X\,\forall y\in Y\colon (x,y)\in\Gamma(R)\Rightarrow (x,y)\in\Gamma(S)\\
+                \iff& \forall x\in X\,\forall y\in Y\colon x R y\Rightarrow x S y.
+            \end{split}\end{align}
+        \end{miniproof}
+        \item Let $R$ and $S$ be relations from $X$ to $Y$, then $R=S$ if and only if $x R y$ is equivalent to $x S y$ for every $x\in X$ and $y\in Y$.
+        \item\label{remark:relations:equivalence_subsets} Similarly to sets, we can also use that $R=S$ if and only if $R\subseteq S$ and $S\subseteq R$ hold.
+        \item Let $X$ be a set and $R$ a relation on $X$, then $x R y$ does generally not imply $y R x$ for $x,y\in X$. The order of the elements matters.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item For all sets $X$ and $Y$ the relation $R_\emptyset=(\emptyset,X,Y)$ on $X\times Y$ is called the \emph{empty relation}. For the empty relation there exist no elements $x\in X$ and $y\in Y$ with $x R_\emptyset y$.
+        \item\label{example:relations:trivial_relation} For all sets $X$ and $Y$ the relation $R_{X\times Y}=(X\times Y,X,Y)$ from $X$ to $Y$ is called the \emph{trivial} or \emph{universial relation}. For the trivial relation $x R_{X\times Y} y$ holds for every $x\in X$ and $y\in Y$.
+        \item\label{example:relations:membership_relation} Let $X$ and $Y$ be arbitrary sets. Then the graph \begin{align}\Gamma(R_\in)=\setdef{(A,B)\in X\times Y\given A\in B}\subseteq X\times Y\end{align}
+        defines a relation $R_\in$ on $X\times Y$, the so called \emph{membership relation}. We have $A R_\in B$ iff $A\in B$ for every $A\in X$ and $B\in Y$. In this way $R_\in$ represents the \enquote{$\in$}-relation between sets.
+        %\item\label{example:relation:mappings_are_relations} Every mapping $f=(\Gamma(f),X,Y)$ is a special relation with the property that for every $x\in X$ exists exactly one $y\in Y$ with $xfy$ or $f(x)=y$. Thus, relations are a generalization of mappings.
+        \item\label{example:relation:reflexive_relation} For every non-empty set $X$ we call \begin{align}\Delta X=\setdef{(x,x)\given x\in X}\subseteq X\times X\end{align} the \emph{diagonal} of $X\times X$. Then $\idmap_X=(\Delta(X),X,X)$ is a relation, the so called \emph{identity relation on $X$}. The relation $\idmap_X$ has the property, that $x\, \idmap_X x'$ holds iff $x=x'$ for all $x,x'\in X$. %Note that $R_X=\idmap_X$.
+        %\item\label{example:relation:induced_relation} Is $R=(\Gamma,X,X)$ a relation on $X$ and $Y\subseteq X$ non-empty with $\Gamma\vert_Y=\Gamma\cap (Y\times Y)$, then $R\vert_Y=(\Gamma\vert_Y,Y,Y)$ is a relation on $Y$, the so called \emph{induced relation on $Y$ from $R$}.
+        \item Let $R$ be a relation from $X$ to $Y$, then the relation $R^{-1}$ with \begin{align}\Gamma(R^{-1})=\setdef{(y,x)\given (x,y)\in\Gamma(R)}\subseteq Y\times X\end{align}
+        is called the \emph{inverse relation of $R$} from $Y$ to $X$. That means $xRy$ iff $yR^{-1}x$ for all $x\in X$ and $y\in Y$. So the inverse relation $R^{-1}$ only switches the roles of $x$ and $y$ in the relation $R$. Note that $(R^{-1})^{-1}=R$ and $\idmap_X^{-1}=\idmap_X$. %Is $f\colon X\rightarrow Y$ a bijective mapping and treated as a relation, then the inverse mapping $f^{-1}$ is ideed the inverse relation of $f$, i.e. $\Gamma(f^{-1})=\setdef{(y,x)\given (x,y)\in\Gamma(f)}\subseteq Y\times X$.
+        \item Are $R$ und $S$ relations from $X$ to $Y$, then $R\cap S$ is the relation defined by
+        \begin{align}\Gamma(R\cap S)=\Gamma(R)\cap\Gamma(S).\end{align}
+        $R\cap S$ is called the \emph{intersection of $R$ and $S$} and is also a relation from $X$ to $Y$. Note that $x(R\cap S)y$ iff $xRy$ and $xSy$ for all $x\in X$ and $y\in Y$.
+        \item Let $X$ and $Y$ be sets and $R_\in$ the membership relation from \ref{example:relations:membership_relation}, then $R_\in\cap R_\in^{-1}=R_\emptyset$ holds, where $R_\emptyset$ denotes the empty relation from $X$ to $Y$.
+        \begin{miniproof}
+            $R_\emptyset\subseteq R_\in\cap R_\in^{-1}$ holds due to $\Gamma(R_\emptyset)=\emptyset$. We show $R_\in\cap R_\in^{-1}\subseteq R_\emptyset$. Let $A\in X$ and $B\in Y$ with $A (R_\in\cap R_\in^{ -1}) B$, then $A\in B$ and $B\in A$ follows. This is not possible by theorem \ref{theorem:sets:element_of_antisymmetric}, so $R_\in\cap R_\in^{-1}\subseteq R_\emptyset$ holds.
+        \end{miniproof}
+        \item Are $R$ and $S$ relations from $X$ to $Y$, then $R\cup S$ is the relation defined by
+        \begin{align}\Gamma(R\cup S)=\Gamma(R)\cup\Gamma(S).\end{align}
+        is a relation from $X$ to $Y$. Note that $x(R\cup S)y$ iff $xRy$ or $xSy$ for all $x\in X$ and $y\in Y$.
+        \item Let $R$ be a relation from $X$ to $Y$, then the relation $R^\complement$ is defined by \begin{align}\Gamma(R^\complement)=\Gamma(R)^\complement\subseteq X\times Y.\end{align}
+        The relation $R^\complement$ is called the \emph{complementary relation of $R$}. Note that $x R^\complement y$ if and only if $xRy$ does not hold for $x\in X$ and $y\in Y$. 
+    \end{exampleenumerate}
+\end{examples}
+
+The following table summarizes the previously defined relations:
+
+\begin{table}[ht]
+    \centering
+    % \rowcolors{row_to_start}{odd_color}{even_color}
+    %\rowcolors{2}{white}{gray!10}
+
+    \begin{NiceTabularX}{\textwidth}{l | l | X}[
+         % This draws all horizontal and vertical lines automatically
+        code-before = \rowcolors{2}{white}{gray!10} % Alternating colors starting at row 2
+    ]
+        % Header
+        %\rowcolor{white} % Ensures the header remains white if needed
+        \textbf{Relation} & \textbf{Symbol} & \textbf{Definition: } $\forall x \in X \, \forall y \in Y:$ \\\hline
+        Empty Relation & $R_\emptyset$ & $\lnot x R_\emptyset y$\\
+        Trivial Relation & $R_{X\times Y}$ & $x R_{X\times Y} y$\\
+        Identity Relation & $\idmap_X$ & $x\,\idmap_X y\iff x=y$\\
+        Inverse Relation & $R^{-1}$ & $y R^{-1} x\iff x R y$\\
+        Intersection & $R\cap S$ & $x (R\cap S) y\iff x R y\land x S y$\\
+        Union & $R\cup S$ & $x(R\cup S)y\iff x R y\lor x S y$\\
+        Complementary Relation & $R^\complement$ & $x R^\complement y\iff \lnot x R y$
+    \end{NiceTabularX}
+
+
+    %\begin{tabu} to 1\textwidth {X[2l]|X[l]|X[3l]}
+    %    Relation & Symbol & Definition: $\forall x\in X\,\forall y\in Y\colon$ \\
+    %    \hline
+%
+%        Empty Relation & $R_\emptyset$ & $\lnot x R_\emptyset y$\\
+%        Trivial Relation & $R_{X\times Y}$ & $x R_{X\times Y} y$\\
+%        Identity Relation & $\idmap_X$ & $x\,\idmap_X y\iff x=y$\\
+%        Inverse Relation & $R^{-1}$ & $y R^{-1} x\iff x R y$\\
+%        Intersection & $R\cap S$ & $x (R\cap S) y\iff x R y\land x S y$\\
+%        Union & $R\cup S$ & $x(R\cup S)y\iff x R y\lor x S y$\\
+%        Complementary Relation & $R^\complement$ & $x R^\complement y\iff \lnot x R y$
+%    \end{tabu}
+    \caption{Common relations from $X$ to $Y$ (and their inverses) with their characterizing properties.}
+\end{table}
+
+\subsection{Equivalence Relations}
+
+\begin{definition}
+    Let $X$ be a set and $R$ a relation on $X$. Then we define the following properties of $R$: The relation $R$ is called \dots
+    \begin{definitionenumerate}
+        \item \dots \emph{reflexive}, iff $xRx$ for all $x\in X$.
+        \item \dots \emph{symmetric}, iff $xRy\Rightarrow yRx$ for all $x,y\in X$.
+        \item \dots \emph{transitive}, iff $xRy\land yRz\Rightarrow xRz$ for all $x,y,z\in X$.
+        \item \dots \emph{antisymmetric}, iff $xRy\land yRx\Rightarrow x=y$ for all $x,y\in X$.
+    \end{definitionenumerate}
+\end{definition}
+
+%\begin{figure}[ht]
+%    \centering
+%    \begin{tikzpicture}[thick]
+%        % Grid lines:
+%        \foreach \x in {0,1,...,2}{
+%            \draw[gray] (\x,-1) -- (\x,3);
+%        };
+%        \foreach \y in {0,1,...,2}{
+%            \draw[gray] (-1,\y) -- (3,\y);
+%        };
+%
+%        % X-axis labels:
+%        \node at (-0.5,-1.4) {$\strut a$};
+%        \node at (0.5,-1.4) {$\strut b$};
+%        \node at (1.5,-1.4) {$\strut c$};
+%        \node at (2.5,-1.4) {$\strut d$};
+%
+%        % Y-axis labels:
+%        \node at (-1.4,-0.5) {$\strut e$};
+%        \node at (-1.4,0.5) {$\strut f$};
+%        \node at (-1.4,1.5) {$\strut g$};
+%        \node at (-1.4,2.5) {$\strut h$};
+%
+%        \fill (-0.5,-0.5) circle (4pt);
+%        \fill (0.5,0.5) circle (4pt);
+%        \fill (1.5,1.5) circle (4pt);
+%        \fill (2.5,2.5) circle (4pt);
+%    \end{tikzpicture}
+%\end{figure}
+
+The following theorem allows to characterize the previously defined properties of relations by equalities and inclusions of relations:
+
+\begin{theorem}\label{theorem:relations:properties}
+    Let $X$ be a set and $R$ a relation on $X$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $R$ if reflexive iff $R^{-1}$ is reflexive.
+        \item\label{theorem:relations:reflexive} $R$ is reflexive iff $\idmap_X\subseteq R$ iff $\idmap_X\subseteq R^{-1}$.
+        \item\label{theorem:relations:symmetric} $R$ is symmetric iff $R=R^{-1}$.
+        \item\label{theorem:relations:antisymmetric} $R$ is antisymmetric iff $R\cap R^{-1}\subseteq \idmap_X$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item For every $x\in X$ holds $x R x$ if and only if $x R^{-1} x$. Thus $R$ is reflexive if and only if $R^{-1}$ is reflexive.
+        
+        \item \proofright Let $R$ be reflexive. For every $x\in X$ holds $x\,\idmap_X x$ by definition of $\idmap_X$. By the reflexivity of $R$ also $xRx$ holds. Thus $\idmap_X\subseteq R$ follows.
+        
+        \proofleft Let $\idmap_X\subseteq R$. Let $x\in X$, then $x\,\idmap_X x$ holds by definition of $\idmap_X$. By assumption $xRx$ follows. Thus $R$ is reflexive.
+
+        $R$ is reflexive if and only if $\idmap_X\subseteq R^{-1}$ because of (i).
+
+        \item \proofright Let $R$ be symmetric. For $x,y\in X$ with $x R y$ follows $y R x$ by definition of the symmetry. $y R x$ is equivalent to $x R^{-1} y$. Thus $R\subseteq R^{-1}$ follows. Now assume that $x R^{-1} y$ holds, then $y R x$ follows and by symmetry of $R$ also $x R y$. Thus $R^{-1}\subseteq R$ and in summary $R=R^{-1}$.
+        
+        \proofleft Let $R=R^{-1}$. For $x,y\in X$ with $x R y$ follows $x R^{-1} y$ by assumption. $x R^{-1} y$ is equivalent to $y R x$. Thus $R$ is symmetric.
+
+        \item \proofright Let $R$ be antisymmetric. Let $x,y\in X$ with $x(R\cap R^{-1})y$. Then $x R y$ and $x R^{-1} y$ hold. This is equivalent to $x R y$ and $y R x$. By the antisymmetry of $R$ follows $x=y$ and thus $x\,\idmap_X y$. Therefore $R\cap R^{-1}\subseteq \idmap_X$.
+        
+        \proofleft Let $R\cap R^{-1}\subseteq \idmap_X$. Let $x,y\in X$ with $x R y$ and $y R x$. This is equivalent to $x R y$ and $x R^{-1} y$, which is equivalent to $x(R\cap R^{-1})y$. Thus, by assumption, $x\,\idmap_X y$ follows, which means $x=y$. Hence $R$ is antisymmetric.
+    \end{proofenumerate}
+\end{proof}
+
+Theorem \ref{theorem:relations:properties} does not characterize the transitivity of relations. For that we will need the concept of the composition of relations, that will get introduced in the next few sections.
+
+\begin{definition}
+    A relation $R$ is called an \emph{equivalence relation on $X$} iff $R$ is \emph{reflexive}, \emph{symmetric} and \emph{transitive}.
+\end{definition}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:relations:identity_relation_equivalence_relation} Let $X$ be a non-empty set, then the identity relation $\idmap_X$ is the smallest equivalence relation on $X$.
+        \begin{miniproof}
+            The identity relation $\idmap_X$ is reflexive and symmetric because of $\idmap_X\subseteq\idmap_X$ and $\idmap_X=\idmap_X^{-1}$ by theorem \ref{theorem:relations:reflexive} and \ref{theorem:relations:symmetric}. For $x,y,z\in X$ with $x\,\idmap_X y$ and $y\,\idmap_X z$ follows $x=y$ and $y=z$ and hence $x=z$, so $x\,\idmap_X z$. Therefore $\idmap_X$ is also transitive and in summary an equivalence relation.
+        \end{miniproof}
+        \item Let $R$ and $S$ be equivalence relations on $X$, then $R\cap S$ is also an equivalence relation on $X$.
+        \begin{miniproof}
+            Let $x\in X$, then $x R x$ and $x S x$ holds by the reflexivity of $R$ and $S$. Hence $x (R\cap S) x$, so $R\cap S$ is reflexive. Let $x,y\in X$ with $x (R\cap S) y$. That means $x R y$ and $x S y$ and thus $y R x$ and $y S x$ by the symmetry of $R$ and $S$. Therefore $y (R\cap S) x$ follows, which means $R\cap S$ is symmetric. Now let $x,y,z\in X$ with $x(R\cap S)y$ and $y(R\cap S)z$, then $x R y$, $x S y$, $y R z$ and $y S z$ follows. By the transitivity of $R$ and $S$ we deduce $x R z$ and $x S z$, wich means $x(R\cap S)z$. Thus $R\cap S$ is transitive and in summary an equivalence relation.
+        \end{miniproof}
+        \item\label{example:relations:intersection_relation} Let $X$ be a set and $Y\subseteq X$, then the relation $R_{\cap Y}$ on $\powerset(X)$ defined by \begin{align}\forall A,B\colon A R_{\cap Y} B\iff A\cap Y=B\cap Y\end{align}
+        is an equivalence relation.
+        \begin{miniproof}
+            Obviously $R_{\cap Y}$ is reflexive and symmetric. Let $A,B,C\in\powerset(X)$ with $A\cap Y=B\cap Y$ and $B\cap Y=C\cap Y$, then $A\cap Y=C\cap Y$ follows, thus $R_{\cap Y}$ is also transitive and in summary an equivalence relation.
+        \end{miniproof}
+        \item\label{example:relations:union_relation} Let $X$ be a set and $Y\subseteq X$, then the relation $R_{\cup Y}$ on $\powerset(X)$ defined by \begin{align}\forall A,B\colon A R_{\cup Y} B\iff A\cup Y=B\cup Y\end{align}
+        is an equivalence relation. It holds that $R_{\cap Y^\complement}=R_{\cup Y}$.
+        \begin{miniproof}
+            \proofsubset We show that $R_{\cap Y^\complement}\subseteq R_{\cup Y}$. Let $A,B\in\powerset(X)$ with $A R_{\cap Y^\complement} B$, i.e. $A\cap Y^\complement=B\cap Y^\complement$, then \begin{align}(A\cap Y^\complement)\cup Y=(B\cap Y^\complement)\cup Y\end{align} follows by applying the union with $Y$ on both sides. Using the distributive law (see theorem \ref{theorem:sets:distributive_laws}), we get \begin{align}(A\cup Y)\cap (Y^\complement\cup Y)=(B\cup Y)\cap (Y^\complement\cup Y).\end{align} Because of $Y^\complement\cup Y=X$ we conclude $A\cup Y=B\cup Y$, i.e. $A R_{\cup Y} B$. Hence $R_{\cap Y^\complement}\subseteq R_{\cup Y}$.
+
+            \proofsupset Let $A,B\in\powerset(X)$ with $A R_{\cup Y} B$, i.e. $A\cup Y=B\cup Y$. Then \begin{align}(A\cup Y)\cap Y^\complement=(B\cup Y)\cap Y^\complement\end{align} by applying the intersection with $Y^\complement$ on both sides, which leads by the distributive law to \begin{align}(A\cap Y^\complement)\cup(Y\cap Y^\complement)=(B\cap Y^\complement)\cup(Y\cap Y^\complement)\end{align} From $Y\cap Y^\complement=\emptyset$ follows $A\cap Y^\complement=B\cap Y^\complement$, i.e. $A R_{\cap Y^\complement} B$ and thus $R_{\cap Y^\complement}\subseteq R_{\cup Y}$.
+
+            In summary $R_{\cap Y^\complement}=R_{\cup Y}$ holds by remark \ref{remark:relations:equivalence_subsets}. So $R_{\cup Y}$ is an equivalence relation, because $R_{\cap Y^\complement}$ is an equivalence relation.
+        \end{miniproof}
+        \item\label{example:relations:projection_equivalence_relation} Let $X$ be a set, then the relation $R$ on $X\times X$ defined by \begin{align}\forall (x,a),(y,b)\in X\times X\colon (x,a)R(y,b)\iff x=y.\end{align}
+        is an equivalence relation.
+        
+
+        %\item Let $X$ be a non-empty set and $R$ a relation on $\powerset(X)$ with $(A,B)\in\Gamma$ iff $A\subseteq B$, then $R$ is reflexive, transitive and antisymmetric. Usually one identifies the symbol \enquote{$\subseteq$} with the relation $R$.
+        %\begin{miniproof}
+        %    The inclusion relation \enquote{$\subseteq$} is reflexive, because $A\subseteq A$ for every $A\subseteq X$. We already know that form $A\subseteq B$ and $B\subseteq C$ follows $A\subseteq C$ for every $A,B,C\subseteq X$, hence $R$ is transitive. Finally, let be $A,B\subseteq X$ with $A\subseteq B$ and $B\subseteq A$, then $A=B$ by theorem \ref{theorem:sets:subset_equals}. So $R$ is antisymmetric.
+        %\end{miniproof}
+        %\item\label{example:relations:mapping_equivalence_class} Let $X$ and $Y$ be non-empty sets and $f\colon X\rightarrow Y$ be a mapping. Then the relation $R_f$ defined by \begin{align}x R_f y\qquad\text{iff}\qquad f(x)=f(y)\end{align}
+        %defines an equivalence relation on $X$.
+        %\begin{miniproof}
+        %    Reflexivity: For every $x\in X$ we have $xR_f x$ because of $f(x)=f(x)$. Symmetry: Let be $x,y\in x$ with $xR_f y$, then we conclude $f(x)=f(y)$ and also $f(y)=f(x)$, hence $y R_f x$. Transitivity: For $x,y,z\in X$ with $x R_f y$ and $y R_f z$ we get $f(x)=f(y)$ and $f(y)=f(z)$ and thus $f(x)=f(z)$, which leads to $x R_f z$. So $R_f$ is an equivalence relation.
+        %\end{miniproof}
+        %\item\label{example:relations:bijections_between_sets} Let $X$ be a non-empty. We define a relation $\sim$ on $\powerset(X)$ by $A\sim B$ iff there exists a bijection $f\colon A\rightarrow B$ for $A,B\subseteq X$. Then $\sim$ defines an equivalence relation on $\powerset(X)$.
+        %\begin{miniproof}
+        %    Reflexivity: For $A\subseteq X$ is $\idmap_A\colon A\rightarrow A$ a bijection, hence $A\sim A$. Symmetry: Let $A,B\subseteq X$ with $A\sim B$, then there exists a bijection $f\colon A\rightarrow B$. The inverse $f^{-1}\colon B\rightarrow A$ is also a bijection, hence $B\sim A$. Transitivity: Now let $A,B,C\subseteq X$ with $A\sim B$ and $B\sim C$. That means there exist bijections $f\colon A\rightarrow B$ and $g\colon B\rightarrow C$. From thorem \ref{theorem:mappings:composition_inverse} follows, that $g\circ f\colon A\rightarrow C$ is also a bijection, thus $A\sim C$. In summary, $\sim$ defines an equivalence relation.
+        %\end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Equivalence Classes}
+
+\begin{definition}
+    Let $X$ be a set and $R$ an equivalence relation on $X$. Let $x\in X$ be an element of $X$, then
+    \begin{align}[x]_R=\setdef{y\given y\in X\colon x R y}\subseteq X\end{align}
+    defines the \emph{equivalence class of $x$ with respect to $R$}. Every element $y\in[x]_R$ is called a \emph{representant of the equivalence class of $x$ with respect to $R$}. The set
+    \begin{align}X/R\coloneq\setdef{[x]_R\given x\in X}\subseteq \powerset(X)\end{align}
+    is called the \emph{quotient of $X$ with respect to $R$}.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $X$ be a set and $R$ an equivalence relation on $X$, then the quotient of $X$ with respect to $R$ exists by the axiom of specification.
+        \begin{miniproof}
+            It holds that $X/R=\setdef{A\in\powerset(X)\given \exists x\in X\colon A=[x]_R}$.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+The next theorem shows how the quotient, that consists of all equivalence classes, forms a partition of $X$ -- every element $x\in X$ belongs to an equivalence class, every equivalence class is non-empty and two distinct equivalence classes are disjoint:
+
+\begin{theorem}[Partition Theorem]
+    Let $X$ be a non-empty set and $R$ an equivalence relation on $X$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $x\in[x]_R$ for all $x\in X$. So every element of $X$ is element of it's own equivalence class, furthermore every equivalence class is non-empty.
+        \item $xRy$ iff $[x]_R=[y]_R$ for all $x,y\in X$. Hence two equivalence classes are equal if and only if their representatives are equal with respect to $R$.
+        \item Either $[x]_R=[y]_R$ or $[x]_R\cap [y]_R=\emptyset$ for all $x,y\in X$. That means two equivalence classes are either equal or do not share any representatives.
+        \item\label{theorem:relations:quotient_is_partition} The quotient $X/R$ is a partition of $X$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item Because $R$ is reflexive, we have $xRx$ and hence $x\in[x]_R$ for all $x\in X$.
+        \item Let $x,y\in X$.
+        \proofright Assume $xRy$ and let $z\in [x]_R$. Then we have $zRx$ and thus $zRy$ by the transitivity of $R$, hence $z\in [y]_R$ and so $[x]_R\subseteq [y]_R$. The same way we can conclude $[y]_R\subseteq [x]_R$ and thus $[x]_R=[y]_R$. \proofleft Assume $[x]_R=[y]_R$. From (i) follows $x\in [x]_R$, hence $x\in [y]_R$, which means $xRy$.
+        \item Assume $[x]_R\cap [y]_R\neq\emptyset$ for some $x,y\in X$. Then there exists a $z\in [x]_R\cap[y]_R$, which means $xRz$ and $zRy$. By the transitivity of $R$ already follows $xRy$ and so $[x]_R=[y]_R$ by (ii).
+        \item We know from (i) that $x\in[x]_R$ for every $x\in X$. So $X=\bigcup X/R$ and $X/R$ consists of non-empty sets only. The sets in $X/R$ are pairwise disjoint by (iii). Hence $X/R$ is a partition of $X$.
+    \end{proofenumerate}
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be a set. By example \ref{example:relations:identity_relation_equivalence_relation} $\idmap_X$ is an equivalence relation on $X$. For the quotient holds $X/\idmap_X=\setdef{\{x\}\given x\in X}=\setdef{A\in \powerset(X)\given \exists x\in X\colon A=\{x\}}$.
+        
+        \begin{miniproof}
+            \proofsubset Let $A\in\setdef{\{x\}\given x\in X}$, then there exists an $x\in X$ with $A=\{x\}$. From $x\,\idmap_X x$ follows $\{x\}\subseteq [x]_{\idmap_X}$. Let $y\in [x]_{\idmap_X}$, then $x\,\idmap_X y$ holds, which means $x=y$. Therefore $\{x\}=[x]_{\idmap_X}$ and hence $A\in X/\idmap_X$.
+
+            \proofsupset Let $A\in X/\idmap_X$, then there exists an $x\in X$ with $A=[x]_{\idmap_X}$. Let $y\in X$ with $y\in[x]_{\idmap_X}$, then $x\,\idmap_X y$ holds. But this means $x=y$, therefore $A=\{x\}$ and hence $A\in\setdef{\{x\}\given x\in X}$.
+        \end{miniproof}
+
+        \item Let $X$ be a non-empty set and $R_{X\times X}$ the trivial relation on $X$ defined in example \ref{example:relations:trivial_relation}, then $X/R_{X\times X}=\{X\}$ holds.
+        
+        \begin{miniproof}
+            Let $A\in X/R_{X\times X}$. We show that $A=X$. By assumption there exists an $x\in X$ with $A=[x]_{R_{X\times X}}$. By definition of $R_{X\times X}$ we have $x R_{X\times X} y$ for every $y\in X$ and therefore $y\in A$ for every $y\in X$. Hence $X\subseteq A$. Because of $X/R_{X\times X}\subseteq\powerset(X)$, we have $A\subseteq X$ and therefore $A=X$ follows.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+Theorem \ref{theorem:relations:quotient_partition} shows that the quotient of a relation always forms a partition of the set it is defined on. Indeed, every partition of $X$ uniquely defines an equivalence relation on $X$ and the quotient of this relation is the partition itself:
+
+\begin{theorem}\label{theorem:relations:quotient_partition}
+    Let $X$ be a non-empty set and $P$ a partition of $X$. Then there exists a unique equivalence relation $R_P$ on $X$ with $X/R_P=P$. The equivalence relation $R_P$ fulfills the property \begin{align}\forall x,y\in X\colon x R_P y\Leftrightarrow \exists B\in P\colon x\in B\land y\in B.\label{eq:relations:quotient_partition}\end{align}
+\end{theorem}
+\begin{proof}
+    \proofstep{Existence} We define the relation $R_P$ by \begin{align}\Gamma(R_P)=\setdef{(x,y)\in X\times X\given \exists B\in P\colon (x,y)\in B\times B}.\end{align}
+    The relation $R_P$ fulfills the property \eqref{eq:relations:quotient_partition}. Let $x\in X$ be arbitrary. Because $P$ is a partition of $X$, $X=\bigcup P$ holds. Thus there exists a set $B\in P$ with $x\in B$. Hence $(x,x)\in B\times B$ and therefore $x R_P x$. Now let $y\in X$ with $x R_P y$, which means $(x,y)\in B\times B$ for some $B\in P$. Obviously $(y,x)\in B\times B$ follows, so $y R_P x$. Now let $z\in X$ with $x R_P z$ and $y R_P z$. Then $(x,y)\in B\times B$ and $(y,z)\in C\times C$ for some sets $B,C\in P$. That means $y\in B$ and $y\in C$, hence $B\cap C\supseteq\{y\}\neq\emptyset$. Because $P$ is a partition of $X$, $B=C$ follows (see remark \ref{remark:sets:partition_common_element}). So $(x,z)\in B\times B$ and $x R_P z$ follows. Therefore $R_P$ is an equivalence relation.
+
+    \proofstep{Uniqueness} Let $R$ be another equivalence relation on $X$ with $X/R=P$. We have to show that \begin{align}\forall x,y\in X\colon x R y\Leftrightarrow x R_P y\end{align}
+    \proofright Let $x,y\in X$ with $x R y$. That means $x,y\in[x]_R$. Hence $x R_P y$ because $(x,y)\in [x]_R\times [x]_R$ and $[x]_R\in X/R=P$. \proofleft Now let $x R_P y$, then there exists a set $B\in P$ with $(x,y)\in B\times B$ and thus $x,y\in B$. Because $X/R=P$ there exists a $z\in X$ with $[z]_R=B$. That means $x R z$ and $y R z$. By the transitivity and symmetry of $R$ we have $x R y$. Therefore we concluded $R=R_P$.
+\end{proof}
+
+Theorem \ref{theorem:relations:quotient_partition} not only allows us to construct a unique equivalence relation on $X$ from a parition of $X$. Sometimes theorem \ref{theorem:relations:quotient_partition} is useful to show that a relation $R$ on $X$ is an equivalence relation without showing that $R$ is reflexive, symmetric and transitive, as the following examples show:
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be a non-empty set and $a\in X$, then the relation $R_a$ on $\powerset(X)$ defined by the property \begin{align}\forall A,B\in\powerset(X)\colon A R_a B\iff (a\in A\land a\in B)\lor (a\notin A\land a\notin B)\end{align}
+        is an equivalence relation.
+        \begin{miniproof}
+            We define $P=\{\setdef{A\subseteq X\given a\in A},\setdef{A\subseteq X\given a\notin A}\}$ and show that $P$ is a partition of $\powerset(X)$. We have that $X\in\setdef{A\subseteq X\given a\in A}$ and $\emptyset\in\setdef{A\subseteq X\given a\notin A}$, hence $\emptyset\notin P$. Furthermore either $a\in A$ or $a\notin A$ holds for every $A\subseteq X$. Therefore $P$ is a partition of $\powerset(X)$ by theorem \ref{theorem:sets:partition_equivalence}.
+
+            Therefore there exists a unique equivalence relation $R_P$ on $\powerset(X)$ with $\powerset(X)/R_P=P$. We show that $R_P=R_a$.
+
+            Let $A,B\in\powerset(X)$, then $A R_P B$ iff $\exists C\in P\colon A\in C\land B\in C$ by \eqref{eq:relations:quotient_partition}. This is equivalent to $a\in A\land a\in B$ or $a\notin A\land a\notin B$, which is equivalent to $A R_a B$. So $R_P=R_a$. Hence $R_a$ is an equivalence relation.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Composition of Relations}
+
+We can connect two relations $R$ and $S$ to one relation by the so called \emph{composition} of $R$ and $S$:
+
+\begin{definition}
+    Let $X$, $Y$ and $Z$ be sets and $R$ a relation from $X$ to $Y$ and $S$ a relation from $Y$ to $Z$, then the relation $S\circ R$ from $X$ to $Z$ is defined by the graph \begin{align}\Gamma(S\circ R)=\setdef{(x,z)\in X\times Z\given \exists y\in Y\colon x R y\land y S z}\subseteq X\times Z\end{align}
+    The relation $S\circ R$ is called the \emph{composition} of $R$ and $S$.
+\end{definition}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick,element/.style={circle,inner sep=0pt,fill=white},connection/.style={-Latex,shorten >=10pt,shorten <=10pt},set/.style={rounded corners=10pt,pattern=dots,pattern color=gray}]
+
+        \begin{scope}[shift={(0,0)}]
+            \begin{scope}[shift={(0,0)}]
+                \foreach \y in {0,1,...,3}{
+                    \coordinate (a-\y) at (0,\y);
+                }
+                \draw (-.5,-.5) [set] rectangle (.5,3.5);
+                \node (label-a) at (0,-.8) {$\strut X$};
+            \end{scope}
+            \node at (1,3.25) {$\strut R$};
+            \begin{scope}[shift={(2,0)}]
+                \foreach \y in {0,1,...,3}{
+                    \coordinate (b-\y) at (0,\y);
+                }
+                \draw (-.5,-.5) [set] rectangle (.5,3.5);
+                \node (label-b) at (0,-.8) {$\strut Y$};
+            \end{scope}
+            \node at (3,3.25) {$\strut S$};
+            \begin{scope}[shift={(4,0)}]
+                \foreach \y in {0,1,...,3}{
+                    \coordinate (c-\y) at (0,\y);
+                }
+                \draw (-.5,-.5) [set] rectangle (.5,3.5);
+                \node (label-c) at (0,-.8) {$\strut Z$};
+            \end{scope}
+        \end{scope}
+
+        \begin{scope}[shift={(8,0)}]
+            \begin{scope}[shift={(0,0)}]
+                \foreach \y in {0,1,...,3}{
+                    \coordinate (d-\y) at (0,\y);
+                }
+                \draw (-.5,-.5) [set] rectangle (.5,3.5);
+                \node (label-d) at (0,-.8) {$\strut X$};
+            \end{scope}
+            \node at (1,3.25) {$\strut S\circ R$};
+            \begin{scope}[shift={(2,0)}]
+                \foreach \y in {0,1,...,3}{
+                    \coordinate (e-\y) at (0,\y);
+                }
+                \draw (-.5,-.5) [set] rectangle (.5,3.5);
+                \node (label-e) at (0,-.8) {$\strut Z$};
+            \end{scope}
+        \end{scope}
+
+        \node[element] at (a-0) {$\strut a$};
+        \node[element] at (a-1) {$\strut b$};
+        \node[element] at (a-2) {$\strut c$};
+        \node[element] at (a-3) {$\strut d$};
+        \node[element] at (d-0) {$\strut a$};
+        \node[element] at (d-1) {$\strut b$};
+        \node[element] at (d-2) {$\strut c$};
+        \node[element] at (d-3) {$\strut d$};
+
+        \node[element] at (b-0) {$\strut e$};
+        \node[element] at (b-1) {$\strut f$};
+        \node[element] at (b-2) {$\strut g$};
+        \node[element] at (b-3) {$\strut h$};
+
+        \node[element] at (c-0) {$\strut i$};
+        \node[element] at (c-1) {$\strut j$};
+        \node[element] at (c-2) {$\strut k$};
+        \node[element] at (c-3) {$\strut \ell$};
+        \node[element] at (e-0) {$\strut i$};
+        \node[element] at (e-1) {$\strut j$};
+        \node[element] at (e-2) {$\strut k$};
+        \node[element] at (e-3) {$\strut \ell$};
+
+        \draw[connection] (a-0) -- (b-0);
+        \draw[connection] (a-1) -- (b-0);
+        \draw[connection] (a-3) -- (b-2);
+        \draw[connection] (a-1) -- (b-1);
+
+        \draw[connection] (b-2) -- (c-1);
+        \draw[connection] (b-2) -- (c-2);
+        \draw[connection] (b-0) -- (c-0);
+        \draw[connection] (b-3) -- (c-3);
+
+        \draw[connection] (d-0) -- (e-0);
+        \draw[connection] (d-1) -- (e-0);
+        \draw[connection] (d-3) -- (e-2);
+        \draw[connection] (d-3) -- (e-1);
+
+    \end{tikzpicture}
+
+    \caption{Illustration of the composition $S\circ R$ of two relations $R$ from $X$ to $Y$ and $S$ from $Y$ to $Z$. The arrow diagram shows that $x(S\circ R)z$ holds if and only if there exists at least one element $y\in Y$ with $xRy$ and $ySz$ for $x\in X$ and $z\in Z$.}\label{figure:relations:composition}
+\end{figure}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $X$, $Y$ and $Z$ be sets and $R$ a relation from $X$ to $Y$ and $S$ a relation from $Y$ to $Z$, then for all $x\in X$ and $z\in Z$, $x (S\circ R) z$ holds if and only if there exists a $y\in Y$ with $x R y$ and $y S z$.
+        \item Let $X$ and $Y$ be sets and $R$ a relation from $X$ to $Y$ and $S$ a relation from $Y$ to $X$, then $S\circ R$ is a relation on $X$.
+        \item Let $R$ be a relation from $X$ to $Y$, then $R^{-1}\circ R$ is a relation on $X$ and $R\circ R^{-1}$ is a relation on $Y$.
+        \item\label{example:relations:composition_with_its_inverse} Let $X$ and $Y$ be sets and $R$ an arbitrary relation from $X$ to $Y$. Then the relations $R^{-1}\circ R$ and $R\circ R^{-1}$ are both symmetric.
+        \begin{miniproof}
+            Set $S=R^{-1}\circ R$. Let $x,y\in X$ with $x S y$, then there exists a $z\in Y$ with $x R z$ and $z R^{-1} y$, which is equivalent to $y R z$ and $z R^{-1} x$. Thus $y S x$ holds, which means $R^{-1}\circ R$ is symmetric. We can conclude in the same way that $R\circ R^{-1}$ is symmetric.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:relations:composition_identity} Let $X$ and $Y$ be sets and $R$ a relation over $X$ and $Y$, then $\idmap_Y\circ R=R$ and $R\circ\idmap_X=R$. That means the identity relations $\idmap_X$ and $\idmap_Y$ behave neutrally with respect to composition.
+        \begin{miniproof}
+            \proofsubset Let $x\in X$ and $y\in Y$ with $x (\idmap_Y\circ R) y$, then there exists a $z\in Y$ with $x R z$ and $z\,\idmap_Y y$. From the last relation follows $y=z$ and hence $x R y$, so $\idmap_Y\circ R\subseteq R$.
+            \proofsupset Let $x\in X$ and $y\in Y$ with $x R y$. Then $y\,\idmap_Y y$ holds. Thus there exists a $z\in Y$ with $x R z$ and $z\,\idmap_Y y$, namely $z=y$. Hence $x(\idmap_Y\circ R) y$, so $R\subseteq \idmap_Y\circ R$.
+            In summary we have $\idmap_Y\circ R=R$. In the same way we can show that $R\circ\idmap_X=R$.
+        \end{miniproof}
+        \item For a set $X$ it holds that $R_{\cup Y}\circ R_{\cap Y}=R_{\powerset(X)\times \powerset(X)}$, where $R_{\cup Y}$ and $R_{\cap Y}$ are the relations defined in example \ref{example:relations:intersection_relation} and \ref{example:relations:union_relation} and $R_{\powerset(X)\times \powerset(X)}$ is the trivival relation on $X$ defined in example \ref{example:relations:trivial_relation}.
+        \begin{miniproof}
+            Note that $R_{\cup Y}=R_{\cap Y^\complement}$ by example \ref{example:relations:union_relation}. It is clear that $R_{\cup Y}\circ R_{\cap Y}\subseteq R_{\powerset(X)\times \powerset(X)}$. Therefore we only show that $R_{\powerset(X)\times \powerset(X)}\subseteq R_{\cup Y}\circ R_{\cap Y}$. Let $A,B\in\powerset(X)$ (those sets already fulfill $A R_{\powerset(X)\times\powerset(X)} B$). Set $C=(A\cap Y)\cup (B\cap Y^\complement)$.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+We can now charactrize the transitivity of relations by the following statement:
+
+\begin{theorem}\label{theorem:relations:transitive_composition} 
+    Let $R$ be a relation on $X$, then $R$ is transitive iff $R\circ R\subseteq R$.
+\end{theorem}
+\begin{proof}
+    \proofright Let $R$ be transitive. Let $x,z\in X$ with $x(R\circ R)z$, then there exists a $y\in X$ with $x R y$ and $y R z$. By the  transitivity of $R$ follows $x R z$. Hence $R\circ R\subseteq R$.
+    
+    \proofleft Let $R\circ R\subseteq R$. Let $x,y,z\in X$ with $x R y$ and $y R z$, then $x(R\circ R)z$. By aussumption $x R z$ follows, hence $R$ is transitive.
+\end{proof}
+
+\begin{theorem}
+    Let $A$, $B$, $C$ and $D$ be sets and $R$ a relation from $A$ to $B$, $S$ a relation from $B$ to $C$ and $T$ a relation from $C$ to $D$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $T\circ (S\circ R)=(T\circ S)\circ R$ (associativity).
+        \item $S\circ R'\subseteq S\circ R$ for every relation $R'\subseteq R$ from $A$ to $B$ and $S'\circ R\subseteq S\circ R$ for every relation $S'\subseteq S$ from $B$ to $C$ (monotonicity).
+        \item $(S\circ R)^{-1}=R^{-1}\circ S^{-1}$ (inverse of composition).
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $(a,d)\in A\times D$. Then we get the following equivalences:
+        \begin{align}\begin{split}
+            a (T\circ (S\circ R)) d \iff & \exists c\in C\colon a (S\circ R) c\land c T d\\
+            \iff & \exists b\in B,c\in C\colon (a R b\land b S c)\land c T d\\
+            \iff & \exists b\in B,c\in C\colon a R b\land (b S c\land c T d)\\
+            \iff & \exists b\in B\colon a R b\land b (T\circ S) d\\
+            \iff & a ((T\circ S)\circ R) d.
+        \end{split}\end{align}
+        Thus $T\circ (S\circ R)=(T\circ S)\circ R$.
+        \item Let $(a,c)\in A\times C$ with $a (S\circ R') c$. Then there exists a $b\in B$ with $a R' b$ and $b S c$. From $R'\subseteq R$ follows $a R b$ and hence $a (S\circ R) c$. Thus $S\circ R'\subseteq S\circ R$. In the same way we conclude $S'\circ R\subseteq S\circ R$ for $S'\subseteq S$.
+        \item Let $(c,a)\in C\times A$. Then we get the following equivalences:
+        \begin{align}\begin{split}
+            c (R^{-1}\circ S^{-1}) a \iff& \exists b\in B\colon c S^{-1} b \land b R^{-1} a\\
+            \iff& \exists b\in B\colon b S c \land a R b\\
+            \iff& \exists b\in B\colon a R b \land b S c\\
+            \iff& a (R\circ S) c\iff c(R\circ S)^{-1} a.
+        \end{split}\end{align}
+        Hence $(R\circ S)^{-1}=R^{-1}\circ S^{-1}$.
+    \end{proofenumerate}
+\end{proof}
+
+\subsection{Totalness and Uniqueness}
+
+\begin{definition}
+    Let $X$ and $Y$ be sets and $R$ be an relation on $X\times Y$. The relation $R$ is called \dots
+    \begin{definitionenumerate}
+        \item \dots \emph{left total} iff $\forall x\in X\ \exists y\in Y\colon xRy$.
+        \item \dots \emph{right total} iff $\forall y\in Y\ \exists x\in X\colon xRy$.
+        \item \dots \emph{total} iff $R$ is both left and right total.
+        \item \dots \emph{left unique} iff $\forall y\in Y\ \forall x,x'\in X\colon xRy\land x'Ry\Rightarrow x=x'$.
+        \item \dots \emph{right unique} iff $\forall x\in X\ \forall y,y'\in Y\colon xRy\land xRy'\Rightarrow y=y'$.
+        \item \dots \emph{unique} iff $R$ is both left and right unique.
+    \end{definitionenumerate}
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item\label{remark:relations:properties_inverse} $R$ is left total iff $R^{-1}$ is right total. Also $R$ is left unique iff $R^{-1}$ is right unique. The corresponding statements also hold for right total and right unique.
+        \item Let $X$ be a set and $R$ be a symmetric relation on $X$. Then $R=R^{-1}$ by theorem \ref{theorem:relations:symmetric}. Therefore the properties \enquote{$R$ is left total}, \enquote{$R$ is right total}. \enquote{$R$ is total} are equivalent by remark \ref{remark:relations:properties_inverse}. The same holds for \enquote{$R$ is left unique}, \enquote{$R$ is right unique} and \enquote{$R$ is unique}.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:relations:identity_relation_unique_total} Let $X$ be a set, then the identity relation $\idmap_X$ is total and unique.
+        \begin{miniproof}
+            Let $x\in X$, then there exists a $y\in X$ with $x\,\idmap_X y$, namely $y=x$. Hence $\idmap_X$ is left total. Let $x\,\idmap_X y$ and $x\,\idmap_X y'$ for $y,y'\in X$, then $y=x$ and $y'=x$ hold, therefore $y=y'$. Hence $\idmap_X$ is right unique. Because of $\idmap_X=\idmap_X^{-1}$ we conclude by remark \ref{remark:relations:properties_inverse} that $\idmap_X$ is also right total and left unique and in summary total and unique.
+        \end{miniproof}
+        \item Let $X$ be a set of at least two elements and $R$ the equivalence relation on $X\times X$ defined by $(x,y)R(x',y')$ iff $x=x'$ (see example \ref{example:relations:projection_equivalence_relation}). Then $R$ is total but neither left nor right unique.
+        \begin{miniproof}
+            Let $(x,y)\in X\times X$, then $(x,y)R(x,y)$ holds, so $R$ is total. Let $(x,y),(x',y)\in X\times X$ with $x\neq x'$, which is possible, because $X$ has at least two elements. Then $(x,y)R(x',y)$ and $(x,y)R(x,y)$ as well as $(x',y)R(x,y)$ hold. Therefore $R$ is not left and right unique.
+        \end{miniproof}
+        \item Let $X$ be an non-empty set and $R_\subseteq$ the inclusion relation on $\powerset(X)$ defined by $A R_\subseteq B$ iff $A\subseteq B$ for $A,B\in\powerset(X)$, then $R_\subseteq$ is total but neither left nor right unique.
+        \begin{miniproof}
+            Let $A\in\powerset(X)$, then always $\emptyset\subseteq A$ and $A\subseteq X$ holds. Therefore $R_\subseteq$ is total. Because $X$ is non-empty, we have $\emptyset\neq X$ and $\emptyset\subseteq X$, $\emptyset\subseteq \emptyset$ as well as $X\subseteq X$. So $R_\subseteq$ is neither left nor right unique.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+The totalness and uniqueness of a relation $R$ can be expressed in terms of the composition of $R$ and its inverse $R^{-1}$:
+
+\begin{theorem}\label{theorem:relations:compositions_total_and_unique}
+    Let $X$ and $Y$ be sets and $R$ be a relation from $X$ to $Y$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $R$ is left total iff $\idmap_X\subseteq R^{-1}\circ R$.
+        \item $R$ is right total iff $\idmap_Y\subseteq R\circ R^{-1}$.
+        \item $R$ is left unique iff $R^{-1}\circ R\subseteq \idmap_X$.
+        \item $R$ is right unique iff $R\circ R^{-1}\subseteq\idmap_Y$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item \proofright Let $R$ be left total. Let $(x,x')\in\Gamma(\idmap_X)$, then $x=x'$ by definition of $\idmap_X$. Beacause $R$ is left total, there exists a $y\in Y$ with $x R y$. This means $x R y$ and $y R^{-1} x$. Thus $x(R^{-1}\circ R) x$, which is equivalent to $x(R^{-1}\circ R)x'$, thus $(x,x')\in\Gamma(R^{-1}\circ R)$ and hence $\idmap_X\subseteq R^{-1}\circ R$.
+        
+        \proofleft Let $\idmap_X\subseteq R^{-1}\circ R$. Let $x\in X$. From $x\idmap_X x$ follows $x(R^{-1}\circ R)x$ by assumption. Hence there exists a $y\in Y$ with $x R y$ and $y R^{-1} x$. Thus $x R y$, i.e. $R$ is left total.
+
+        \item $R$ is right total iff $R^{-1}$ is left total by remark \ref{remark:relations:properties_inverse}. Set $S=R^{-1}$, then $S$ is left total by (i) iff $\idmap_Y\subseteq S^{-1}\circ S$, which is equivalent to $\idmap_Y\subseteq ((R^{-1})^{-1}\circ R^{-1})=R\circ R^{-1}$. Thus $R$ is right total iff $\idmap_Y\subseteq R\circ R^{-1}$.
+        
+        \item \proofright Let $R$ be left unique. Let $x,x'\in X$ with $x(R^{-1}\circ R)x'$. So there exists a $y\in Y$ with $x R y$ and $y R^{-1} x'$, which means $x R y$ and $x' R y$, thus $x=x'$ by the left uniqueness of $R$. Thus $x\idmap_X x'$ holds, hence $R^{-1}\circ R\subseteq \idmap_X$.
+        
+        \proofleft Let $\idmap_X\subseteq R^{-1}\circ R$. Let $y\in Y$ and $x,x'\in X$ with $x R y$ and $x' R y$. This is equivalent to $x R y$ and $y R^{-1} x'$, which is equivalent to $x (R^{-1}\circ R)x'$. By assumption also $x\idmap_X x'$ holds, hence $x=x'$. Therefore $R$ is left unique.
+
+        \item This statement follows by the same argument as in (ii).
+    \end{proofenumerate}
+\end{proof}
+
+A direct consequence of theorem \ref{theorem:relations:compositions_total_and_unique} is the following theorem:
+
+\begin{theorem}\label{theorem:relations:total_and_unique}
+    Let $X$ and $Y$ be sets and $R$ be a relation from $X$ to $Y$. Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item $R$ is total and unique.
+        \item $R^{-1}\circ R=\idmap_X$ and $R\circ R^{-1}=\idmap_Y$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be a set, then the identity relation $\idmap_X$ is total and unique.
+        \begin{miniproof}
+            Note that $\idmap_X^{-1}=\idmap_X$ and $\idmap_X\circ\idmap_X=\idmap_X$ by example \ref{example:relations:composition_identity}. Thus $\idmap_X^{-1}\circ\idmap_x=\idmap_X=\idmap_X\circ\idmap_X^{-1}$, which means that $\idmap_X$ is total and unique by theorem \ref{theorem:relations:total_and_unique}.
+        \end{miniproof}
+        \item Let $X$ be a set and $R$ a reflexive relation on $X$. Then $R$ is total.
+        \begin{miniproof}
+            Let $R$ be reflexive, then $\idmap_X\subseteq R$ and $\idmap_X\subseteq R^{-1}$ by theorem \ref{theorem:relations:reflexive}. Thus $\idmap_X\subseteq R=R\circ \idmap_X\subseteq R\circ R^{-1}$ by the monotonocity of the composition. Hence $R$ is right total by theorem \ref{theorem:relations:compositions_total_and_unique}. In the same way $\idmap_X\subseteq R=\idmap_X\circ R\subseteq R^{-1}\circ R$ follows, which means $R$ is also left total and hence total.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+%\begin{definition}
+%    Let $X$ be a non-empty set and $R$ an equivalence relation on $X$, then
+%    \begin{align}p_R\colon X\rightarrow X/R,\qquad x\mapsto [x]_R\end{align}
+%    is a well-defined surjective mapping, the so called \emph{projection from $X$ to $X/R$}.
+%\end{definition}
+
+\subsection{Partial Orders}
+
+\begin{definition}
+    Let $X$ be a set and $R$ a relation on $X$. Then $R$ is called \dots
+    \begin{definitionenumerate}
+        \item \dots \emph{connected} iff $x\neq y$ implies $xRy\lor yRx$ for all $x,y\in X$.
+        \item \dots \emph{strongly connected} iff $xRy\lor yRx$ for all $x,y\in X$.
+    \end{definitionenumerate}
+\end{definition}
+
+\begin{theorem}
+    Let $X$ be a set and $R$ a relation on $X$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $R$ is connected iff $R\cup R^{-1}\cup\idmap_X=R_{X\times X}$.
+        \item $R$ is strongly connected iff $R\cup R^{-1}=R_{X\times X}$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{definition}[Partial Order]
+    A relation $\preceq$ on a set $X$ is called a \emph{partial order on $X$} if and only if $\preceq$ is reflexive, antisymmetric and transitive. If $R$ is additionaly strongly connected, then we call $\preceq$ a \emph{total order on $X$}.
+
+    We call $(X,\preceq)$ a \emph{partially ordered set} iff $\preceq$ is a partial order on $X$. If and only if $\preceq$ is a total order on $X$, $(X,\preceq)$ is called a \emph{totally ordered set}.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $\preceq$ be a partial order on a set $X$. Then we use for $x,y\in X$ the following notations:
+        \begin{align}\begin{split}
+            x \succeq y &\iff y\preceq x,\\
+            x\prec y&\iff x\preceq y\land x\neq y\\
+            \text{and}\qquad x\succ y&\iff y\prec x.
+        \end{split}\end{align}
+        For $x,y\in X$ we call $x$ \emph{less or equal than $y$} iff $x\preceq y$ holds and $x$ \emph{greater or equal than $y$} iff $x\succeq y$. Analogously we call $x$ \emph{(strictly) less than $y$} iff $x\prec y$ holds and $x$ \emph{(strictly) greater than $y$} iff $x\succ y$.
+        \item Let $\preceq$ be a total order of a set $X$. By the definitions of the previous remark, for all $x,y\in X$ exactly one of the following statements holds: $x\prec y$, $x=y$ or $x\succ y$.
+        \item For all $x,y\in X$, $x\prec y$ implies $x\preceq y$. Also $x\succ y$ implies $x\succeq y$.
+        \item Sometimes we use chained relations like $x\prec y\preceq z$, which should be equivalent to $x\prec y\land y\preceq z$ for $x,y,z\in X$.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be an arbitrary set, then $\subseteq$ is a partial order on $\powerset(X)$ that is in general not a total order.
+        \begin{miniproof}
+            The reflexivity, antisymmetry and transitivity of $\subseteq$ follow directly from theorem \ref{theorem:sets:subset_partial_order}. Let $X=\{a,b\}$ for $a\neq b$, then $\powerset(X)=\{\emptyset,\{a\},\{b\},\{a,b\}\}$ but neither $\{a\}\subseteq \{b\}$ nor $\{b\}\subseteq\{a\}$ holds, therefore $\subseteq$ is in general not a total order on $\powerset(X)$.
+        \end{miniproof}
+        \item Let $\preceq_X$ be a partial order on a set $X$ and $\preceq_Y$ a partial order on $Y$. Then \begin{align}(a,b)\preceq(c,d)\iff a\preceq_X c\land b\preceq_Y d,\qquad \forall a,b\in X,c,d\in Y\end{align}
+        defines a partial order $\preceq$ on $X\times Y$.
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{definition}
+    Let $(X,\preceq)$ be a partially ordered set and $A\subseteq X$, then we define the following:
+    \begin{definitionenumerate}
+        \item $x\in X$ is called an \emph{upper bound} of $A$ iff $a\preceq x$ for all $a\in A$.
+        \item $x\in X$ is called a \emph{lower bound} of $A$ iff $x\preceq a$ for all $a\in A$.
+        \item $A$ is called \emph{bounded above} iff there exists an upper bound.
+        \item $A$ is called \emph{bounded below} iff there exists a lower bound.
+        \item $A$ is called \emph{bounded} iff $A$ is bounded above and below.
+        \item $m\in X$ is called a \emph{maximum} of $A$ iff $m\in A$ and $m$ is a lower bound of $A$.
+        \item $m\in X$ is called a \emph{minimum} of $A$ iff $m\in A$ and $m$ is a upper bound of $A$.
+    \end{definitionenumerate}
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item\label{remark:relations:at_last_one_maximum_minimum} Let $(X,\preceq)$ be a partially ordered set and $A\subseteq X$, then $A$ has at least one maximum and minumum.
+        \begin{miniproof}
+            Let $m,n\in A$ be a maximum of $A$. Because $m$ is a upper bound of $A$, it holds that $n\preceq m$. But $n$ is also an upper bound of $A$, hence $m\preceq n$. So we conclude $m=n$ by the antisymmetry of $\preceq$. In the same way we can show that $A$ has at least one minimum.
+        \end{miniproof}
+        \item If a maximum of $A$ exists, then it is unique by remark \ref{remark:relations:at_last_one_maximum_minimum}. We write $\max A$ for the maximum of $A$, if it exists. Analogously, if a minimum of $A$ exists, then it is unique and we write $\min A$ for the minimum of $A$. Sometimes we call $\max A$ and $\min A$ the \emph{greatest and smallest element of $A$}.
+    \end{remarkenumerate}
+\end{remarks}
+
+\subsection{Closures}
+
+In many branches of mathematics the concept of a \emph{closure} is used under different names. Generally, a closure allows to construct the smallest set that contains a given set $A$ and fulfills a given property. For example, through closures we can construct the smallest transitive relation on a set $X$, that contains a given relation $R$ on a set $X$.
+
+\begin{definition}\label{definition:relations:closure}
+    Let $X$ be a set, $A\subseteq X$ and $\varphi(x)$ a property. We define the family
+    \begin{align}\mathcal F_\varphi(A)\coloneq \setdef{B\subseteq X\given A\subseteq B\land \varphi(B)}\subseteq \powerset(X).\end{align}
+    Then the set
+    \begin{align}\langle A\rangle_\varphi=\bigcap \mathcal F_\varphi(A)\subseteq X\end{align}
+    is called the \emph{$\varphi$-closure} of $A$ in $X$. We say that $\varphi$ is \emph{closed under intersections in $X$} iff for every family $\mathcal F\subseteq\powerset(X)$ with $\varphi(B)$ for all $B\in\mathcal F$ follows that $\varphi(\bigcap\mathcal F)$.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $X$ be a set and $\varphi(x)$ a property, then $\mathcal F_\varphi(\emptyset)=\setdef{B\subseteq X\given \varphi(B)}$ holds. So $F_\varphi(\emptyset)$ denotes the set of all subsets of $X$ that fulfill the property $\varphi(x)$.
+        \item Let $X$ be a set and $\varphi(x)$ a property, then $\varphi$ is closed under intersections in $X$ iff $\varphi(\bigcap\mathcal F)$ holds for every family $\mathcal F\subseteq \mathcal F_\varphi(\emptyset)$.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{theorem}[Closure Theorem]\label{theorem:relations:closure_minimal}
+    Let $X$ be a set, $A\subseteq X$ and $\varphi(x)$ a property that is closed under intersections. If $\mathcal F_\varphi(A)$ is non-empty, then \begin{align}\langle A\rangle_\varphi=\min\mathcal F_\varphi(A).\end{align}
+    That means $\langle A\rangle_\varphi$ is the smallest set (with respect to $\subseteq$) that contains $A$ and satisfies the property $\varphi$.
+\end{theorem}
+
+\begin{proof}
+    For $A=\emptyset$ is nothing to show, because $\emptyset\in\mathcal F_\varphi(\emptyset)$ and therefore $\langle A\rangle_\varphi=\bigcap\mathcal F_\varphi(\emptyset)=\emptyset=\min\mathcal F_\varphi(\emptyset)$. So we assume from now on that $A\neq\emptyset$.
+
+    We have to make sure that $\bigcap\mathcal F_\varphi(A)$ is non-empty, because otherweise $\langle A\rangle_\varphi=\emptyset$ follows and therefore $\langle A\rangle_\varphi\notin \mathcal F_\varphi(A)$, which means $\langle A\rangle_\varphi$ could not be the minimum of $\mathcal F_\varphi(A)$. Because $\mathcal F_\varphi(A)$ is non-empty by assumption and there exists an $a\in A$ with $a\in B$ for all $B\in F_\varphi(A)$, the intersection $\bigcap\mathcal F_\varphi(A)$ is non-empty (see remark \ref{remark:sets:intersection_non_empty}).
+
+    At first we have to show that $\langle A\rangle_\varphi\in \mathcal F_\varphi(A)$. We have $\langle A\rangle_\varphi\subseteq X$ by definition. Let $a\in A$, then $a\in \bigcap \mathcal F_\varphi(A)$ holds, because for every set $B\in\mathcal F_\varphi(A)$ holds $A\subseteq B$ and therefore $a\in B$. So $A\subseteq\langle A\rangle_\varphi$ follows. Because $\varphi$ is closed under intersections in $X$ and $\mathcal F_\varphi(A)\subseteq \mathcal F_\varphi(\emptyset)$ we conclude $\varphi(\langle A\rangle_\varphi)$ holds. Hence $\langle A\rangle_\varphi\in\mathcal F_\varphi(A)$.
+
+    Now let be $C\in\mathcal F_\varphi(A)$. Then already $\langle A\rangle_\varphi\subseteq C$ holds, because $\langle A\rangle_\varphi$ is the intersection of $\mathcal F_\varphi(A)$ (see remark \ref{remark:sets:intersection_subset}). Therefore $\langle A\rangle_{\varphi}=\min\mathcal F_\varphi(A)$.
+\end{proof}
+
+\begin{theorem}\label{theorem:relations:closure_properties}
+    Let $X$ be a set, $A\subseteq X$, $\varphi(x)$ a property that is closed unter intersections and $\mathcal F_\varphi(A)$ non-empty. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $A\subseteq\langle A\rangle_\varphi$. (extensitivity)
+        \item $\langle A\rangle_\varphi\subseteq B$ for every set $B\in\mathcal F_\varphi(A)$. (minimality)
+        \item $\langle \langle A\rangle_\varphi\rangle_\varphi=\langle A\rangle_\varphi$. (idempotence)
+        \item $A'\subseteq A$ implies $\langle A'\rangle_\varphi\subseteq\langle A\rangle_\varphi$ for all $A'\subseteq A$. (monotonicity)
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item This statement follows directly from $\langle A\rangle_\varphi\in\mathcal F_\varphi(A)$ by theorem \ref{theorem:relations:closure_minimal}.
+        \item The statement follows directly from $\langle A\rangle_\varphi=\min\mathcal F_\varphi(A)$ by theorem \ref{theorem:relations:closure_minimal}.
+        \item We have $\langle A\rangle_\varphi\subseteq \langle\langle A\rangle_\varphi\rangle_\varphi$ by (i). But clearly $\langle A\rangle_\varphi\in\mathcal F_\varphi(\langle A\rangle_\varphi)$ holds. Thus $\langle\langle A\rangle_\varphi\rangle_\varphi\subseteq \langle A\rangle_\varphi$ follows by (ii). Hence $\langle\langle A\rangle_\varphi\rangle_\varphi=\langle A\rangle_\varphi$.
+        \item Let $A'\subseteq A$. Then $\langle A\rangle\in\mathcal F_\varphi(A')$ holds, because $A'\subseteq A\subseteq \langle A\rangle_\varphi$ and $\varphi(\langle A\rangle_\varphi)$ holds. Therefore $\langle A'\rangle_\varphi\subseteq\langle A\rangle_\varphi$ follows by (ii).
+        %By theorem \ref{theorem:relations:closure_minimal} the set $\langle\langle A\rangle_\varphi\rangle_\varphi$ denotes the smallest set that contains $\langle A\rangle_\varphi$ and fulfills the property $\varphi$. Because of $\langle A\rangle_\varphi\in\mathcal F_{\varphi}(A)$ the set $\langle A\rangle_\varphi$ already fulfills $\varphi$, hence $\langle A\rangle_\varphi$ is the smallest set that contains istelf and fulfills $\varphi$, therefore $\langle\langle A\rangle_\varphi\rangle_\varphi=\langle A\rangle_\varphi$.
+    \end{proofenumerate}
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $Y$ be a set and $R$ a relation on $Y$. We set $X=Y\times Y$ and
+        \begin{align}\varphi(\Gamma)\equiv \text{$\Gamma$ is the graph of a transitive relation on $Y$}.\end{align}
+        Let $\mathcal F\subseteq\powerset(Y\times Y)$ be a family of subsets of $Y\times Y$, so that $\varphi(B)$ for every $B\in\mathcal F$. Let $(x,y)\in\bigcap\mathcal F$ and $(y,z)\in\bigcap\mathcal F$, then $(x,y)\in B$ and $(y,z)\in B$ for every $B\in\mathcal F$ hold. Because every set $B\in\mathcal F$ is the graph of a transitive relation, we conclude $(x,z)\in B$ for every $B\in\mathcal F$ and hence $(x,z)\in\bigcap\mathcal F$. Therefore $\varphi(\bigcap\mathcal F)$ holds and we have shown that the property $\varphi$ is closed under intersections in $Y\times Y$.
+
+        Note that $\varphi(Y\times Y)$ holds, i.e. the trivial relation $R_{Y\times Y}$ is transitive. So $\mathcal F_\varphi(\Gamma(R))\neq\emptyset$. Then $\langle \Gamma(R)\rangle_\varphi$ is the smallest graph of a transitive relation on $Y$ that contains $\Gamma(R)$ by theorem \ref{theorem:relations:closure_minimal}, moreover $T=(\langle \Gamma(R)\rangle_\varphi,Y,Y)$ is the smallest transitive relation on $Y$ with $R\subseteq T$. We call \begin{align}\langle R\rangle_{\rm{trans}}\coloneq (\langle \Gamma(R)\rangle_\varphi,Y,Y)\end{align}
+        the \emph{transtive closure of $R$ in $Y$}. Then $R\subseteq\langle R\rangle_{\rm{trans}}$ holds, where $\langle R\rangle_{\rm{trans}}$ is transitive.
+        \item In the same way we can construct the smallest symmetric relation $\langle R\rangle_{\rm{sym}}$ on $Y$ that contains an arbitrary relation $R$ on $Y$. It holds that $\langle R\rangle_{\rm{sym}}=R\cup R^{-1}$.
+        \begin{miniproof}
+            $R\cup R^{-1}$ is symmetric and $R\subseteq R\cup R^{-1}$ holds. Assume there exists a symmetric relation $S$ on $Y$ with $R\subseteq S$. Let $x,y\in Y$ with $x(R\cup R^{-1})y$, then $xRy$ or $x R^{-1}y$ holds, which is equivalent to $xRy$ or $yRx$. Because of $R\subseteq S$, $x Sy$ or $y Sx$ follows. But $S$ is symmetric, so both cases imply $x Sy$. Thus $R\cup R^{-1}\subseteq S$. Hence $R\cup R^{-1}$ is the smallest symmetric relation on $Y$ that contains $R$.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+
+\subsection{Exercises}
+
+\begin{exercise}
+    Let $X$ be a set and $Y\subseteq X$ non-empty. Show that \begin{align}\begin{split}\forall A,B\in\powerset(X)\colon A R_Y B\iff& (Y\cap A\neq\emptyset\land Y\cap B\neq\emptyset)\\&\lor (Y\cap A=\emptyset\land Y\cap B=\emptyset)\end{split}\end{align}
+    defines an equivalence relation $R_Y$ on $\powerset(X)$. Also show that
+    \begin{align}\powerset(X)/R_Y=\{\setdef{A\subseteq X\given Y\cap A\neq\emptyset},\setdef{A\subseteq X\given Y\cap A=\emptyset}\}.\end{align}
+\end{exercise}
+
+\begin{solution}
+    We show that $P=\{\setdef{A\subseteq X\given Y\cap A\neq\emptyset},\setdef{A\subseteq X\given Y\cap A=\emptyset}\}$ is a partition of $\powerset(X)$. Let $A\subseteq X$, then either $Y\cap A=\emptyset$ or $Y\cap A\neq\emptyset$ holds. Furthermore $Y\in \setdef{A\subseteq X\given Y\cap A\neq\emptyset}$, because $Y\cap Y=Y\neq\emptyset$, and $\emptyset\in\setdef{A\subseteq X\given Y\cap A=\emptyset}$. So $\emptyset\notin P$. Hence $P$ is a partition of $\powerset(X)$ by theorem \ref{theorem:sets:partition_equivalence}.
+
+    By theorem \ref{theorem:relations:quotient_partition} there exists a unique equivalence relation $R_P$ on $\powerset(X)$ with $\powerset(X)/R_P=P$. We show that $R_P=R_Y$ to conclude that $R_Y$ is an equivalence relation on $\powerset(X)$ with $\powerset(X)/R_Y=P$.
+
+    Let $A,B\in\powerset(X)$, then $A R_P B$ iff $\exists C\in P\colon A\in C\land B\in C$ by \eqref{eq:relations:quotient_partition}. This is equivalent to $Y\cap A\neq\emptyset\land Y\cap B\neq\emptyset$ or $Y\cap A=\emptyset\land Y\cap B=\emptyset$, which is equivalent to $A R_Y B$. So $R_P=R_Y$.
+\end{solution}
+
+
+\begin{exercise}[Distributive Laws]
+    Let $R$ be a relation from $Y$ to $Z$ as well as $S$ and $T$ relations from $X$ to $Y$. Show that the following statements hold:
+    \begin{intheoremenumerate}
+        \item $R\circ(S\cup T)=(R\circ S)\cup(R\circ T)$.
+        \item $R\circ(S\cap T)=(R\circ S)\cap(R\circ T)$.
+    \end{intheoremenumerate}
+\end{exercise}
+
+\begin{exercise}
+    Let $R$ and $S$ be equivalence relations on $X$. Show that $R\circ S$ is an equivalence relation iff $R\circ S=S\circ R$.
+\end{exercise}
+
+\begin{solution}
+    \proofright Let $R\circ S$ be an equivalence relation on $X$. Let $x,y\in X$ with $x(R\circ S)y$. By the symmetry of $R\circ S$ we also have $y(R\circ S)x$. Thus there exists a $z\in X$ with $y S z$ and $z R x$, which implies $x R z$ and $z S y$ by the symmetry of $R$ and $S$. Hence $x(S\circ R)y$ follows. That means $R\circ S\subseteq S\circ R$. Now let $x,y\in X$ with $x(S\circ R)y$, which means there exists a $w\in X$ with $x R w$ and $w S y$. By the symmetry of $R$ and $S$ we conclude $y S w$ and $w R x$, which means $y(R\circ S)x$ and by the symmetry of $R\circ S$ also $x(R\circ S)y$. Hence $S\circ R\subseteq R\circ S$ and in summary $R\circ S=S\circ R$.
+
+    \proofleft Assume that $R\circ S=S\circ R$.
+    
+    \proofstep{Reflexivity} Let $x\in X$, then $x S x$ and $x R x$ hold, beacause $S$ and $R$ are both reflexive, thus $x(R\circ S)x$ holds. So $R\circ S$ is reflexive.
+
+    \proofstep{Symmetry} Let $x,y\in X$ with $x(R\circ S)y$. Then also $x(S\circ R)y$ holds by assumption. Thus there exists a $z\in X$ with $x R z$ and $z S y$, which implies $y S z$ and $z R x$ by the symmetry of $R$ and $S$. Hence $y(R\circ S)x$ follows. That means $R\circ S$ is symmetric.
+
+    \proofstep{Transitivity} Because $R$ and $S$ are transitive, we have that $S\circ S\subseteq S$ and $R\circ R\subseteq R$ hold by theorem \ref{theorem:relations:transitive_composition}. Thus we conclude by the monotonicity and the associativity of the composition as well as by the assumption $R\circ S=S\circ R$ that
+    \begin{align}\begin{split}
+        (R\circ S)\circ (R\circ S)&=R\circ (S\circ S)\circ R
+        \subseteq R\circ S\circ R
+        =R\circ (S\circ R)\\
+        &=R\circ (R\circ S)
+        =(R\circ R)\circ S\subseteq R\circ S
+    \end{split}\end{align}
+    So we have $(R\circ S)\circ (R\circ S)\subseteq R\circ S$, hence $R\circ S$ is transitive by theorem \ref{theorem:relations:transitive_composition}.
+\end{solution}

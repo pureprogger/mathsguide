@@ -1,0 +1,226 @@
+\section{Groups}
+
+In the previous sections, we have already encountered many ways to combine objects of the same kind. For instance, we can combine sets using union and intersection, as well as relations and mappings using composition. In doing so, we observed that these operations are all associative and, in some cases, commutative. Some elements behave neutrally with respect to such operations. For example, the identity mapping acts as a neutral element with respect to composition, while, e.g., the composition of a bijection with its inverse mapping leads back to the identity mapping. These observations can be abstracted and studied more closely through the concept of a group.
+
+In this section, we first introduce the concept of a semigroup, which equips a set with an associative operation. Subsequently, we discuss the concept of a group, which forms a semigroup with additional, frequently occurring properties. Groups and semigroups are the first mathematical structures we will introduce in this book. The objective of this section is to present the general mathematical approach to dealing with structures. For instance, we will learn how so-called structure-preserving mappings, known as homomorphisms, are defined, and how two structures that behave identically are identified using so-called isomorphisms. Throughout this book, we will repeatedly encounter the concept of homomorphisms and isomorphisms for various structures. It will become apparent that the previously introduced concepts of mappings, surjections, injections, bijections, as well as equivalence relations and their quotients, are important components for an elegant description of groups.
+
+\subsection{Semigroups}
+
+\begin{definition}[Binary Operations, Magmas and Semigroups]~\\
+    Let $X$ be a set. A \emph{binary operation on $X$} is a mapping $\odot\colon X\times X\to X$. For all elements $a,b\in X$ we use the notation
+    \begin{align}a\odot b\coloneq \odot(a,b).\end{align}
+    
+    Let $M\subseteq X$ be a subset. Then $M$ is called \emph{closed} under the operation $\odot$ if and only if the \emph{restriction of $\odot$ to $M$} given by
+    \begin{align}\odot\vert_M\colon M\times M\to M,\qquad (a,b)\mapsto a\odot b\end{align}
+    is well-defined. We call the pair $(M,\odot)$ a \emph{magma} if and only if $M$ is closed under the binary operation $\odot$.
+
+    Furthermore $(M,\odot)$ is called \ldots
+    \begin{definitionenumerate}
+        \item \dots \emph{commutative} iff $a\odot b=b\odot a$ for all $a,b\in M$.
+        \item \dots \emph{associative} iff $(a\odot b)\odot c=a\odot(b\odot c)$ for all $a,b,c\in M$.
+    \end{definitionenumerate}
+
+    $(M,\odot)$ is called a \emph{semigroup} if and only if $(M,\odot)$ is an associative magma. If it is additionally a commutative magma, then $(M,\odot)$ is called an \emph{abelian semigroup}.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $X$ be a set, $\odot$ a binary operation on $X$  and $M\subseteq X$ a subset, then $(M,\odot)$ is a magma if and only if $a\odot b\in M$ holds for all $a,b\in M$.
+        \begin{miniproof}
+            This follows directly from theorem \ref{theorem:mappings:well_defined_codomain}.
+        \end{miniproof}
+        \item Let $X$ be a set and $\odot$ a binary operation on $X$, then $(X,\odot)$ is always a magma.
+        \begin{miniproof}
+            By definition is $X$ closed under $\odot$, furthermore $\odot\vert_X=\odot$ holds.
+        \end{miniproof}
+        \item Let $X$ be a set, $\odot$ a binary operation on $X$ and $M\subseteq X$ a subset so that $(M,\odot)$ is a magma, then $(M,\odot\vert_M)$ is also a magma.
+        \item\label{remark:groups:semigroup_closed_subset} Let $(M,\odot)$ be a semigroup and $N\subseteq M$, so that $N$ is closed under $\odot$, then $(N,\odot)$ is also a semigroup.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be any set and $M=\powerset(X)$. Then $(M,\cup)$ and $(M,\cap)$ are abelian semigroups, where
+        \begin{align}\cup\colon M\times M\to M, (A,B)\mapsto A\cup B\quad\text{and}\quad \cap\colon M\times M\to M, (A,B)\mapsto A\cap B\end{align}
+        are the corresponding binary operations.
+        \item Let $X$ be non-empty set and $M=\powerset(X)$. Then $(M,\setminus)$ is a magma where 
+        \begin{align}\setminus\colon M\times M\to M, \qquad (A,B)\mapsto A\setminus B\end{align}
+        denotes the set-theoretic difference. This magma is neither commutative nor associative.
+        \item Let $X$ be any set and $M=\powerset(X)$. The symmetric difference $\oplus$ defines a binary operation via
+        \begin{align}\oplus\colon M\times M\to M, \qquad (A,B)\mapsto (A\setminus B)\cup(B\setminus A).\end{align}
+        Then $(M,\oplus)$ is a abelian semigroup.
+        \item Let $X$ be a set, then $(\mapset X X,\circ)$ is a semigroup, where
+        \begin{align}\circ\colon \mapset X X\times \mapset X X \to \mapset X X,\qquad (f,g)\mapsto f\circ g.\end{align}
+        is the composition of mappings on $X$ as the binary operation.
+        \item Let $(Y,\odot)$ be a magma and $X$ be a set. Furthermore let $f\colon X\to Y$ and $g\colon X\to Y$ be mappings. We define the mapping
+        \begin{align}f\odot g\colon X\to Y,\qquad x\mapsto f(x)\odot g(x).\end{align}
+        Then $(\mapset X Y,\tilde{\odot})$ is a magma, where
+        \begin{align}\tilde{\odot}\colon \mapset X Y\times\mapset X Y\to \mapset X Y,\qquad (f,g)\mapsto f\odot g\end{align}
+        denotes the \emph{by $\odot$ induced} binary operation on $\mapset X Y$. If $(Y,\odot)$ is commutative or associative, then $(\mapset X Y,\tilde{\odot})$ inherits the respective property.
+        \item Let $M$ be any non-empty set. We can treat the projections
+        \begin{align}\pi_{\rm L}\colon M\times M\to M, (a,b)\mapsto a \quad\text{and}\quad \pi_{\rm R}\colon M\times M\to M, (a,b)\mapsto b\end{align}
+        as binary operations. Both $(M,\pi_{\rm L})$ and $(M,\pi_{\rm R})$ are semigroups, but they are non-abelian whenever $M$ contains at least two elements.
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Unital Semigroups}
+
+\begin{definition}[Neutral Elements]
+    Let $(M,\odot)$ be a semigroup and $e\in M$. Then we call the element $e$ \dots
+    \begin{definitionenumerate}
+        \item \dots \emph{left neutral} iff $e\cdot a=a$ for all $a\in M$.
+        \item \dots \emph{right neutral} iff $a\cdot e=a$ for all $a\in M$.
+        \item \dots \emph{neutral} or a \emph{unit} iff $e$ is left and right neutral.
+    \end{definitionenumerate}
+    A triple $(M,\odot,e)$ is called a \emph{unital semigroup} if and only if $(M,\odot)$ is a semigroup and $e\in M$ is neutral.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $(M,\odot)$ be a magma and $e\in M$. Then $(M,\odot,e)$ is a unital semigroup if and only if the following properties hold for all $a,b,c\in M$:
+        \begin{align}\begin{split}
+            &a\odot (b\odot c)=(a\odot b)\odot c\\
+            \text{and}\qquad& a\odot e=a=e\odot a.
+        \end{split}\end{align}
+        \item Let $(M,\odot)$ be an abelian semigroup. Then the properties \emph{left neutral}, \emph{right neutral} and \emph{neutral} are equivalent.
+        \item Let $(M,\odot,e)$ be a unital semigroup. Then $e$ is the only neutral element in $M$. We therefore call $e$ the \emph{identity} or \emph{unit} of $(M,\odot,e)$.
+        \begin{miniproof}
+            Let $e'\in M$ be another neutral element. Then $e'=e'\cdot e$ holds, because $e$ is neutral. But also $e'\cdot e=e$ holds, because $e'$ is neutral. Thus $e=e'$ holds.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be an arbitrary set and $M=\powerset(X)$. Then $(M,\cup,\emptyset)$ and $(M,\cap,M)$ are unital semigroups.
+        \item Let $X$ be a set, then $(\mapset X X,\circ,\idmap_X)$ is a unital semigroup.
+        \item Let $X$ be a set and $(Y,\odot,e)$ a unital semigroup, then $(\mapset X Y,\tilde{\odot},f_e)$ is a unital semigroup, where $f_e\colon X\to Y\colon x\mapsto e$.
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Groups}
+
+\begin{definition}[Invertible Elements and Groups]~\\
+    Let $(M,\odot,e)$ be a unital semigroup. Furthermore let $a\in M$. Then we call the element $a$ \dots
+    \begin{definitionenumerate}
+        \item \dots \emph{left invertible} iff there exists an element $b\in M$ with $b\odot a=e$.
+        \item \dots \emph{right invertible} iff there exists an element $b\in M$ with $a\odot b=e$.
+        \item \dots \emph{invertible} iff there exists an element $b\in M$ with $b\odot a=a\odot b=e$.
+    \end{definitionenumerate}
+    A triple $(M,\odot,e)$ is called an \emph{group} if and only if $(M,\odot,e)$ is a unital semigroup and every element of $M$ is invertible. If $(M,\odot,e)$ is additionally commutative, then $(M,\odot,e)$ is called an \emph{abelian group}.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $(M,\odot,e)$ be an abelian semigroup. Then the properties \emph{left invertible}, \emph{right invertible} and \emph{invertible} are equivalent.
+        \item Let $(M,\odot,e)$ be a unital semigroup and $a\in M$ invertible, then there exists only one element $b\in M$ with $e=a\odot b=b\odot a$. For that reason we call $a^{-1}$ the \emph{inverse} of $a$, that is uniquely determined by $a^{-1}\odot a=a\odot a^{-1}=e$.
+        \item Let $(M,\odot,e)$ be a unital semigroup, then $e$ is an invertible.
+        \item\label{theorem:groups:unital_semigroup_subset} Let $(M,\odot,e)$ be a unital semigroup. Furthermore let $N\subseteq M$ be a subset, so that $N$ is closed under $\odot$ and $e\in N$ holds. Then $(N,\odot,e)$ is also a unital semigroup.
+        \item A group $(G,\odot,e)$ fulfills the following \emph{group axioms} for all $a,b,c\in G$:
+        \begin{align}\begin{split}
+            a\odot (b\odot c)&=(a\odot b)\odot c,\\
+            a\odot e&=a=e\odot a,\\
+            \text{and}\qquad a^{-1}\odot a&=e=a\odot a^{-1}.
+        \end{split}\end{align}
+    \end{remarkenumerate}
+\end{remarks}
+
+\newcommand\symset{\rm{Sym}}
+\newcommand\autrel[1]{\rm{Aut}(#1)}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:groups:symmetric_group} Let $X$ be a set and define the set \begin{align}\symset(X)=\setdef{f\in\mapset X X\colon \text{$f$ is a bijection}}.\end{align} Then $(\symset(X),\circ,\idmap_X)$ with the composition $\circ$ of mappings forms a group, the so called \emph{symmetric group} of $X$.
+        \begin{miniproof}
+            The composition of bijections on $X$ yiels also a bijection on $X$ by theorem \ref{theorem:mappings:composition_inverse}, where the composition is associative (see remark \ref{remark:mappings:composition_associative}). So $(\symset(X),\circ)$ is a semigroup. The identity mapping $\idmap_X$ is a bijection on $X$, i.e. $\idmap_X\in\symset(X)$. For every bijection $f\in\symset X$ holds that $f\circ\idmap_X=f$ and $\idmap_X\circ f=f$. Thus $(\symset(X),\circ,\idmap_X)$ is a unital semigroup. Let $f\in\symset(X)$, then for the inverse mapping $f^{-1}$ hold $f^{-1}\in\symset(X)$ and $f\circ f^{-1}=\idmap_X=f^{-1}\circ f$ by theorem \ref{theorem:mappings:bijective_inverse}. Therefore $f$ is invertible for every $f\in\symset(X)$. In summary $(\symset(X),\circ,\idmap_X)$ is a group.
+        \end{miniproof}
+
+        \item Let $X$ be a set and let $M = \powerset(X)$ be equipped with the symmetric difference
+        \begin{align}\oplus\colon M\times M \to M, \qquad (A,B) \mapsto (A\setminus B) \cup (B\setminus A)\end{align}
+        as a binary operation. Then $(M, \oplus, \emptyset)$ forms an abelian group.
+        \begin{miniproof}
+            This follows directly from exercise \ref{exercise:sets:symmetric_difference_properties}.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Subgroups}
+
+\begin{definition}[Subgroups]
+    Let $(G,\odot,e)$ be a group and $H\subseteq G$. Then the set $H$ is called a \emph{subgroup} of $G$ if and only if $(H,\odot,e)$ is a group. In this case we write $H\leq G$, read as \enquote{$H$ is a subgroup of $G$}.
+\end{definition}
+
+\begin{definition}
+    Let $(G,\odot,e)$ be a group and $A,B\subseteq G$. Then we call
+    \begin{align}A\odot B\coloneq \odot(A\times B)=\setdef{a\odot b\given (a,b)\in A\times B}\subseteq G\end{align}
+    the \emph{product} of $A$ and $B$ under $\odot$. Furthermore we call
+    \begin{align}A^{-1}\coloneq \setdef{a^{-1}\given a\in A}\subseteq G\end{align}
+    the \emph{inverse} of $A$.
+\end{definition}
+
+\begin{theorem}\label{theorem:groups:subgroups_characterization}
+    Let $(G,\odot,e)$ be a group and $H\subseteq G$ non-empty. Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item $H\leq G$.
+        \item $H\odot H\subseteq H$ and $H^{-1}\subseteq H$.
+        \item $H\odot H^{-1}\subseteq H$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \proofcase{i}{ii} Let $H\leq G$. By definition, $(H,\odot,e)$ is a group. Thus, $H$ is closed under the binary operation $\odot$, meaning for all $a,b\in H$ we have $a\odot b \in H$, which implies $H\odot H \subseteq H$. Furthermore, for every element $a\in H$ holds $a^{-1}\in H$, which implies $H^{-1} \subseteq H$.
+    
+    \proofcase{ii}{iii} Assume that $H\odot H\subseteq H$ and $H^{-1}\subseteq H$. Let $x\in H\odot H^{-1}$, then there exist $a\in H$ and $b\in H^{-1}$ with $x=a\odot b$. Then $b\in H$ follows from $H^{-1}\subseteq H$ and also $a\odot b\in H$ from $H\odot H\subseteq H$, which impiles $x\in H$. Therefore $H\odot H^{-1}\subseteq H$ holds.
+    
+    \proofcase{iii}{i} Assume that $H\odot H^{-1}\subseteq H$. We show that $(H,\odot,e)$ is a group. Because $H$ is non-empty, there exists an $a\in H$ with $e=a\odot a^{-1}\in H\odot H^{-1}\subseteq H$. Thus $e\in H$. Take any $a\in H$, then $a^{-1}=e\odot a^{-1}\in H\odot H^{-1}\subseteq H$ holds, which impiles $a^{-1}\in H$. Now let $a,b\in H$, then $b^{-1}\in H$ and therefore $a\odot b=a\odot (b^{-1})^{-1}\in H\odot H^{-1}\subseteq H$ holds. So $H$ is closed under $\odot$ and because of $e\in H$, $(H,\odot,e)$ is a unital semigroup. Because we have already shown that every element of $H$ is invertible with an inverse in $H$, we finally conclude that $(H,\odot,e)$ is a group, i.e. $H\leq G$.
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $X$ be a set and $Y\subseteq X$, then the set
+        \begin{align}\symset_Y(X)\coloneq\setdef{f\in\symset X\given \fixset(f)=Y}\end{align}
+        contains all bijections on $X$ that have $Y$ as the set of all fixed-points. Then $\symset_Y(X)\leq \symset(X)$ holds, where $(\symset(X), \circ, \idmap_X)$ is the symmetric group of $X$ from example \ref{example:groups:symmetric_group}.
+
+        \begin{miniproof}
+            Let $f,g\in\symset_Y(X)$. We show that $\fixset(f\circ g^{-1})=Y$. Let $x\in Y$, then $f(x)=x$ holds. Furthermore $x=g^{-1}(g(x))$ holds. But from $g(x)=x$ we conclude $x=g^{-1}(g(x))=g^{-1}(x)$. Therefore $x=f(x)=f(g^{-1}(x))=(f\circ g^{-1})(x)$ follows. Hence $x\in\fixset(f\circ g^{-1})$ and so $Y\subseteq\fixset(f\circ g^{-1})$. Now let $x\in\fixset(f\circ g^{-1})$, which means $f(g^{-1}(x))=x$. Applying $f^{-1}$ and then
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{definition}[Cosets]
+    Let $(G,\odot,e)$ be a group, $g\in G$ and $H\leq G$. Then we define the sets
+    \begin{align}\begin{split}
+    g\odot H&\coloneq \{g\}\odot H=\setdef{g\odot h\given h\in H}\subseteq G\\
+    \text{and}\qquad H\odot g&\coloneq H\odot\{g\}=\setdef{h\odot g\given h\in H}\subseteq G
+    \end{split}\end{align}
+    We call $g\odot H$ the \emph{left coset} of $H$ with respect to $g$ and $H\odot g$ the \emph{right coset} of $H$ with respect to $g$.
+\end{definition}
+
+\begin{theorem}\label{theorem:groups:coset_equivalence}
+    Let $(G,\odot,e)$ be a group, $f,g\in G$ and $H\leq G$. Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item $f\odot H=g\odot H$
+        \item $f\odot H\subseteq g\odot H$
+        \item $f\in g\odot H$
+        \item $g^{-1}\odot f\in H$
+        \item $H\odot f^{-1}=H\odot g^{-1}$
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \proofcase{i}{ii} From $f\odot H=g\odot H$ directly follows $f\odot H\subseteq g\odot H$.
+    
+    \proofcase{ii}{iii} Let $f\odot H\subseteq g\odot H$. Because of $H\leq G$ we have $e\in H$ and therefore $f=f\odot e\in f\odot H$. Thus $f\in f\odot H\subseteq g\odot H$ follows.
+    
+    \proofcase{iii}{iv} Let $f\in g\odot H$. Because of $e\in H$, we conclude $g=g\odot e\in g\odot H$. From $H\leq G$ follows $g^{-1}\in H$ and also $g^{-1}\odot f\in H$.
+    
+    \proofcase{iv}{v} Let $g^{-1}\odot f\in H$. Because $H \leq G$, the inverse of this element is also in $H$, meaning $(g^{-1}\odot f)^{-1} = f^{-1}\odot (g^{-1})^{-1} = f^{-1}\odot g \in H$. 
+    Now let $x \in H\odot f^{-1}$. Then $x = h\odot f^{-1}$ for some $h \in H$. We can rewrite this as $x = h\odot (f^{-1}\odot g)\odot g^{-1}$. Since $h \in H$ and $(f^{-1}\odot g) \in H$, their product $h\odot f^{-1}\odot g$ belongs to $H$ by closure. Thus, $x \in H\odot g^{-1}$, proving $H\odot f^{-1} \subseteq H\odot g^{-1}$. 
+    Conversely, let $y \in H\odot g^{-1}$, so $y = k\odot g^{-1}$ for some $k \in H$. Rewriting this via the identity yields $y = k\odot (g^{-1}\odot f)\odot f^{-1}$. Since $k \in H$ and $(g^{-1}\odot f) \in H$, their product is in $H$, which shows $y \in H\odot f^{-1}$ and establishes $H\odot g^{-1} \subseteq H\odot f^{-1}$. Thus, $H\odot f^{-1}=H\odot g^{-1}$.
+    
+    \proofcase{v}{i} Let $H\odot f^{-1}=H\odot g^{-1}$. Because $e \in H$, we have $f^{-1} = e\odot f^{-1} \in H\odot f^{-1} = H\odot g^{-1}$. Thus, there exists some $h \in H$ such that $f^{-1} = h\odot g^{-1}$. Taking the global inverse of both sides yields $f = (h\odot g^{-1})^{-1} = g\odot h^{-1}$. Since $H \leq G$, we know $h^{-1} \in H$.
+    Now let $x \in f\odot H$, meaning $x = f\odot h_1$ for some $h_1 \in H$. Substituting our expression for $f$ yields $x = g\odot h^{-1}\odot h_1$. By subgroup closure, $h^{-1}\odot h_1 \in H$, which implies $x \in g\odot H$, showing $f\odot H \subseteq g\odot H$.
+    For the reverse containment, let $y \in g\odot H$, so $y = g\odot h_2$ for some $h_2 \in H$. From $f = g\odot h^{-1}$, we isolate $g$ to get $g = f\odot h$. Substituting this into our expression for $y$ yields $y = f\odot h\odot h_2$. Since $h\odot h_2 \in H$, we get $y \in f\odot H$, proving $g\odot H \subseteq f\odot H$. Thus, $f\odot H = g\odot H$.
+\end{proof}
+
+\input{chapter-basics/groups_exercises.tex}

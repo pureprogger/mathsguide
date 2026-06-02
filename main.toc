@@ -1,0 +1,72 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Basics}{5}{chapter.1}%
+\contentsline {section}{\numberline {1}Propositional Logic}{6}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1}Propositions}{6}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.2}Propositional Formulas}{6}{subsection.1.1.2}%
+\contentsline {subsection}{\numberline {1.3}Tautologies and Logical Equivalences}{8}{subsection.1.1.3}%
+\contentsline {subsection}{\numberline {1.4}Logical Substitution}{11}{subsection.1.1.4}%
+\contentsline {subsection}{\numberline {1.5}Logical Implications}{12}{subsection.1.1.5}%
+\contentsline {section}{\numberline {2}Sets}{14}{section.1.2}%
+\contentsline {subsection}{\numberline {2.1}Sets and Extensions}{14}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {2.2}Axiom of Pairing}{17}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {2.3}Subsets}{20}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {2.4}Powersets}{22}{subsection.1.2.4}%
+\contentsline {subsection}{\numberline {2.5}Axiom of Specification}{23}{subsection.1.2.5}%
+\contentsline {subsection}{\numberline {2.6}Unions}{25}{subsection.1.2.6}%
+\contentsline {subsection}{\numberline {2.7}Intersections}{28}{subsection.1.2.7}%
+\contentsline {subsection}{\numberline {2.8}Disjoint Sets and Partitions}{30}{subsection.1.2.8}%
+\contentsline {subsection}{\numberline {2.9}Differences and Complements}{31}{subsection.1.2.9}%
+\contentsline {subsection}{\numberline {2.10}Distributive and De Morgan's Laws}{34}{subsection.1.2.10}%
+\contentsline {subsection}{\numberline {2.11}Axiom of Foundation}{35}{subsection.1.2.11}%
+\contentsline {subsection}{\numberline {2.12}Russell's Paradox}{36}{subsection.1.2.12}%
+\contentsline {subsection}{\numberline {2.13}Exercises}{37}{subsection.1.2.13}%
+\contentsline {section}{\numberline {3}Relations}{41}{section.1.3}%
+\contentsline {subsection}{\numberline {3.1}Ordered Pairs}{41}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {3.2}Direct Products}{42}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {3.3}Relations}{43}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {3.4}Equivalence Relations}{46}{subsection.1.3.4}%
+\contentsline {subsection}{\numberline {3.5}Equivalence Classes}{49}{subsection.1.3.5}%
+\contentsline {subsection}{\numberline {3.6}Composition of Relations}{52}{subsection.1.3.6}%
+\contentsline {subsection}{\numberline {3.7}Totalness and Uniqueness}{54}{subsection.1.3.7}%
+\contentsline {subsection}{\numberline {3.8}Partial Orders}{56}{subsection.1.3.8}%
+\contentsline {subsection}{\numberline {3.9}Closures}{58}{subsection.1.3.9}%
+\contentsline {subsection}{\numberline {3.10}Exercises}{61}{subsection.1.3.10}%
+\contentsline {section}{\numberline {4}Mappings}{63}{section.1.4}%
+\contentsline {subsection}{\numberline {4.1}Mappings}{63}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {4.2}Well-Definedness}{65}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {4.3}Image and Preimage Sets}{69}{subsection.1.4.3}%
+\contentsline {subsection}{\numberline {4.4}Surjectivity, Injectivity, and Bijectivity}{73}{subsection.1.4.4}%
+\contentsline {subsection}{\numberline {4.5}Kernel Relations}{76}{subsection.1.4.5}%
+\contentsline {subsection}{\numberline {4.6}Compositions}{78}{subsection.1.4.6}%
+\contentsline {subsection}{\numberline {4.7}Inverse Mappings}{80}{subsection.1.4.7}%
+\contentsline {subsection}{\numberline {4.8}Fixed-Points and Idempotent Mappings}{82}{subsection.1.4.8}%
+\contentsline {subsection}{\numberline {4.9}Set Mappings and Closure Operators}{83}{subsection.1.4.9}%
+\contentsline {subsection}{\numberline {4.10}Cantor-Schröder-Bernstein Theorem}{86}{subsection.1.4.10}%
+\contentsline {subsection}{\numberline {4.11}Axiom of Choice}{88}{subsection.1.4.11}%
+\contentsline {section}{\numberline {5}Natural Numbers}{90}{section.1.5}%
+\contentsline {subsection}{\numberline {5.1}Peano Models}{90}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {5.2}Inductive Sets}{93}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {5.3}Construction of the Natural Numbers}{94}{subsection.1.5.3}%
+\contentsline {subsection}{\numberline {5.4}Recursive Definitions}{96}{subsection.1.5.4}%
+\contentsline {subsection}{\numberline {5.5}Isomorphisms of Peano Models}{97}{subsection.1.5.5}%
+\contentsline {subsection}{\numberline {5.6}Addition}{100}{subsection.1.5.6}%
+\contentsline {subsection}{\numberline {5.7}Multiplication}{103}{subsection.1.5.7}%
+\contentsline {subsection}{\numberline {5.8}Exercises}{103}{subsection.1.5.8}%
+\contentsline {section}{\numberline {6}Finite and infinite sets}{105}{section.1.6}%
+\contentsline {subsection}{\numberline {6.1}Equivalent sets}{105}{subsection.1.6.1}%
+\contentsline {subsection}{\numberline {6.2}Canonical finite sets}{106}{subsection.1.6.2}%
+\contentsline {subsection}{\numberline {6.3}Pigeonhole Principle and Uniqueness Theorem}{107}{subsection.1.6.3}%
+\contentsline {subsection}{\numberline {6.4}Finite Sets}{109}{subsection.1.6.4}%
+\contentsline {subsection}{\numberline {6.5}Subsets of finite sets}{110}{subsection.1.6.5}%
+\contentsline {subsection}{\numberline {6.6}Infinite Sets}{112}{subsection.1.6.6}%
+\contentsline {subsection}{\numberline {6.7}Dedekind-Infinite Sets}{113}{subsection.1.6.7}%
+\contentsline {subsection}{\numberline {6.8}Exercises}{116}{subsection.1.6.8}%
+\contentsline {subsection}{\numberline {6.9}Exercises}{116}{subsection.1.6.9}%
+\contentsline {section}{\numberline {7}Groups}{118}{section.1.7}%
+\contentsline {subsection}{\numberline {7.1}Semigroups}{118}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {7.2}Unital Semigroups}{120}{subsection.1.7.2}%
+\contentsline {subsection}{\numberline {7.3}Groups}{121}{subsection.1.7.3}%
+\contentsline {subsection}{\numberline {7.4}Subgroups}{122}{subsection.1.7.4}%
+\contentsline {subsection}{\numberline {7.5}Exercises}{125}{subsection.1.7.5}%
+\contentsfinish 
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

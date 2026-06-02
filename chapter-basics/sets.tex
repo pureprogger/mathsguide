@@ -1,0 +1,1121 @@
+\section{Sets}
+
+This chapter introduces the fundamental concepts of set theory. We will follow a stringent axiomatic approach rather than the \enquote{naive} approach, where the existence of sets with specific properties is often taken for granted. In our framework, the existence of every set must be deduced from a formal system of axioms. We will demonstrate how a surprisingly small set of axioms is sufficient to construct complex mathematical objects such as mappings, relations, and groups. In this context, every mathematical object is, fundamentally, a set.
+
+We introduce the axioms of \emph{Zermelo-Fraenkel} (ZF) set theory, a standard foundation for modern mathematics. Later we will extend the Zermelo-Fraenkel axioms with the \emph{axiom of choice} to form the ZFC set theory. We will not explore the meta-mathematical properties of these axioms -- such as their logical independence from one another -- but will instead focus on how they are used to construct sets with formal rigor.
+
+The primary reason mathematicians moved away from the naive approach of set theory was the discovery of the so called \emph{Russell's Paradox}, which can be avoided by adopting a formal system of axioms that does not allow to construct sets, that are \enquote{too large}. We will demonstrate Russells's Paradox in this section.
+
+While a set is often informally described as a \enquote{collection of elements}, we do not attempt to define the term \enquote{set} itself. Within this axiomatic system, \enquote{set} is an undefined primitive notion. This avoids the pitfall of circularity; defining a set as a "collection" would merely shift the burden of definition to the word "collection."
+
+This rigorous approach requires that even seemingly self-evident statements be proven through a chain of logically consistent implications. Rather than a limitation, this provides a valuable insight into formal correctness. This section also demonstrates essential methods of proof, including direct proof, proof by case distinction, and proof by contradiction.
+
+\subsection{Sets and Extensions}
+
+We introduce the \emph{universe} $\mathcal{U}$ of objects in mathematics. The universe $\mathcal{U}$ should contain so called \emph{sets} only. This means that in statements of the form $\forall x\colon \varphi(x)$ or $\exists x\colon \varphi(x)$, the variable $x$ refers exclusively to sets within the universe $\mathcal U$. So \enquote{$\forall x$} means \enquote{for all sets $x$} or \enquote{for every set $x$} and \enquote{$\exists x$} means \enquote{there exists a set $x$}.
+
+The relation between sets is defined by the new predicate \enquote{$\in$}: Let $A$ and $B$ be arbitrary sets, then we assume that the sentence \enquote{$B\in A$} is a proposition, that means $B\in A$ is either true or false for all sets $A$ and $B$. We read \enquote{$B\in A$} as \enquote{$B$ is an element of $A$}, \enquote{$B$ is a member of $A$} or \enquote{$B$ is contained in $A$}. If $B\in A$ holds, then we call $B$ an \emph{element} of $A$. Otherwise we write $B\notin A$ and say $B$ is \emph{not an element} of $A$. So we have the equivalence
+\begin{align}\forall A,B\colon B\notin A\Leftrightarrow \lnot (B\in A).\end{align}
+
+Usually we will denote sets with capital letters $A$, $B$, $C$ and elements of sets with small letters $a$, $b$, $c$, even though every element of a set is a set itself. As a shorthand, we write $A,B\in C$ if and only if $A\in C$ and $B\in C$ holds. We also write $A\in B,C$ if and only if $A\in B$ and $A\in C$ holds.
+
+The first axiom of set theory is the \emph{axiom of extensionality}. It defines under which condition two sets are equal. The intuitive way to define equality of sets is to say that two sets are equal if they have the same elements, or more formally:
+
+\begin{axiom}[Extensionality]
+    Two sets $A$ and $B$ are equal if for every set $x$ the statement $x\in A$ is equivalent to $x\in B$, or more formally:
+    \begin{align}(\forall x\colon x\in A\Leftrightarrow x\in B)\Longrightarrow A=B.\end{align}
+    We call this axiom the \emph{axiom of extensionality}.
+\end{axiom}
+
+The axiom of extensionality tells us that sets are uniquely determined by their elements and not by their defining properties. Note that the predicate \enquote{$=$} is already defined in the language of first-order logic. So the axiom of extensionality only axiomatizes how two sets are identified by their elements using the predicate \enquote{$\in$}.
+
+Remember that the principle of substitution allows us to replace objects, in our case sets, with other equivalent objects to obtain equivalent statements. That means if two sets $A$ and $B$ are equal, i.e. $A=B$, then already $x\in A\Leftrightarrow x\in B$ follows for all sets $x$ by the principle of substitution. So sometimes the axiom of extensionality is also written in the form \begin{align}(\forall x\colon x\in A\Leftrightarrow x\in B)\iff A=B,\end{align}
+even when the \enquote{$\Leftarrow$}-direction has not to be axiomatized.
+
+The following examples demonstrate the use of the axiom of extensionality to show the equivalence of two sets:
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:sets:simple_example_a} For sets $A$, $B$ and $C$ we define the set $\{A,B,C\}$ by the property \begin{align}\forall x\colon x\in\{A,B,C\}\Leftrightarrow x\in A\lor x\in B\lor x\in C.\end{align}
+        Or, to put it less formally: $x\in\{A,B,C\}$ holds if and only if $x$ is equal to $A$, $B$ or $C$, that means $\{A,B,C\}$ consists of the elements $A$, $B$ and $C$. We show that $\{A,B,C\}=\{A,C,B\}$ holds, that means the order of the elements does not matter.
+        \begin{miniproof}
+            Let $x$ be an arbitrary set, then we get by the commutativity of the disjunction the following chain of equivalences: \begin{align}\begin{split}x\in\{A,B,C\}&\iff x=A\lor x=B\lor x=C\\ &\iff x=A\lor x=C\lor x=B\iff x\in\{A,C,B\}.\end{split}\end{align}
+            Hence we have $x\in\{A,B,C\}\iff x\in\{A,C,B\}$. Because $x$ is an arbitrary set, we conclude $\{A,B,C\}=\{A,C,B\}$ by the axiom of extensionality.
+        \end{miniproof}
+        \item\label{example:sets:simple_example_b} For every set $A$ we define the singleton set $\{A\}$ by the property \begin{align}\forall x\colon x\in\{A\}\Leftrightarrow x=A.\end{align}
+        Then $\{A\}=\{B\}$ holds if and only if $A=B$.
+        \begin{miniproof}
+            \proofright Let $\{A\}=\{B\}$. We know that $A\in\{A\}$, because $A=A$ holds. Thus $A\in\{B\}$ holds by the principle of substitution. But that means $A=B$ by definition of $\{B\}$.
+            
+            \proofleft Let $A=B$. Then $\{A\}=\{B\}$ holds by the principle of substitution.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+The previous examples demonstrate how proofs for set-theoretic statements are conducted. However, the examples introduce sets whose existence is not guaranteed. So far, we have only presupposed how two sets can be identified with one another.
+
+In the naive approch to set theory, we would define a set as a collection of elements and would just assume that sets like $\{A,B,C\}$ and $\{A\}$ as collections of elements exist. Our approach is stringent and we need to axiomatize the existence of sets with certain properties. The following definition gives a general way, like a template, to axiomatize the existence of sets with certain properties:
+
+\begin{definition}
+    Let $A$ be a set and $\varphi(x)$ be a property. Then $A$ is called an \emph{extension} of the property $\varphi(x)$ if and only if \begin{align}\forall x\colon x\in A\Leftrightarrow\varphi(x)\end{align}
+\end{definition}
+
+The axiom of extensionality guarantees that a set $A$, that is an extension of a property $\varphi(x)$, is uniquely determined, if it exists:
+
+\begin{theorem}\label{theorem:sets:extension_unique}
+    Let $A$ be a set and $\varphi(x)$ be a property, furthermore let $A$ be the extension of $\varphi(x)$. Then $A$ is the only extension of $\varphi(x)$, that means for every set $B$, that is an extension of $\varphi(x)$, already follows $A=B$.
+\end{theorem}
+
+\begin{proof}
+    We use the axiom of extensionality to show that $A=B$. Let $x$ be an arbitrary set. Because $A$ is an extension of $\varphi(x)$, we know that $x\in A\Leftrightarrow \varphi(x)$. But $B$ is also an extension of $\varphi(x)$, so we have $x\in B\Leftrightarrow \varphi(x)$. From those logical equivalences follows
+    \begin{align}x\in A\Leftrightarrow\varphi(x)\Leftrightarrow x\in B\end{align}
+    and thus $x\in A\Leftrightarrow x\in B$. Because $x$ is an arbitrary set, $x\in A\Leftrightarrow x\in B$ holds for every set $x$. Hence $A=B$ by the axiom of extensionality.
+\end{proof}
+
+The existence of an extension of a property $\varphi(x)$ has to be axiomatized for specific types of properties. The following axiom guarantees the existence of a set that contains no elements, hence we assume there exists a so-called empty set $\emptyset$ as an extension of the property $\varphi(x)\equiv x\notin \emptyset$:
+
+\begin{axiom}[Empty set]
+    There exists a set $\emptyset$ such that for all sets $x$, $x\in\emptyset$ does not hold, or formally: \begin{align}\forall x\colon x\notin\emptyset.\end{align} We call $\emptyset$ the \emph{empty set}.
+\end{axiom}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item The empty set is an extension of the property $\varphi(x)\equiv x\notin\emptyset$. Hence by theorem \ref{theorem:sets:extension_unique} the empty set is unique. More precisely, if $A$ is a set with $\forall x\colon x\notin A$ then $A=\emptyset$ holds.
+        \item\label{remark:sets:non_empty_sets} Let $A$ be a set then $A\neq\emptyset$ holds if and only if there exists a set $x$ with $x\in A$. We call a set $A$ \emph{non-empty} if and only if $A\neq\emptyset$ holds.
+    \end{remarkenumerate}
+\end{remarks}
+
+The axiom of extensionality and the axiom of the empty set do not ensure the existence of non-empty sets. We need to introduce the axiom of pairing to give a construction of non-empty sets.
+
+\subsection{Axiom of Pairing}
+
+The axiom of pairing allows us to construct sets from given sets. In particular, it allows us to construct sets containing only one or two given elements.
+
+\begin{axiom}[Pairing]
+    For every two sets $A$ and $B$, there exists a set $\{A,B\}$ such that for all sets $C$, $C\in\{A,B\}$ holds if and only if $C=A$ or $C=B$. More formally:
+    \begin{align}\forall C\colon C\in\{A,B\}\Leftrightarrow C=A\lor C=B.\end{align}
+    We call $\{A,B\}$ the \emph{pair} of $A$ and $B$.
+\end{axiom}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item\label{remark:sets:pair_elements} The axiom of pairing guarantees for all sets $A$ and $B$ the existence of a set $\{A,B\}$ that contains $A$ and $B$ as elements, i.e. $A\in\{A,B\}$ and $B\in\{A,B\}$ holds.
+        \begin{miniproof}
+            Let $A$ and $B$ be sets, then $A=A$ and thus $A=A\lor A=B$ holds, this means $A\in\{A,B\}$ by definition of $\{A,B\}$. Similarly $B\in\{A,B\}$ holds.
+        \end{miniproof}
+        \item\label{remark:sets:pair_non_empty} Let $A$ and $B$ be sets. Then $\{A,B\}$ is non-empty.
+        \begin{miniproof}
+            We have $A\in\{A,B\}$ and $B\in\{A,B\}$ by remark \ref{remark:sets:pair_elements}. Thus $\{A,B\}\neq\emptyset$ by \ref{remark:sets:non_empty_sets}.
+        \end{miniproof}
+        \item\label{remark:sets:pair_unordered} The order of the sets in the notation $\{A,B\}$ does not matter. That means $\{A,B\}=\{B,A\}$ for all sets $A$ and $B$.
+        \begin{miniproof}
+            Let $A$, $B$ and $x$ be a set. Then we have by the commutativity of the disjunction \begin{align}x\in\{A,B\}\Leftrightarrow x=A\lor x=B\Leftrightarrow x=B\lor x=A\Leftrightarrow x\in\{B,A\}.\end{align}
+            Hence $\{A,B\}=\{B,A\}$ by the axiom of extensionality.
+        \end{miniproof}
+        \item\label{remark:sets:pair_uniqueness} Let $A$ and $B$ be sets. The set $\{A,B\}$ is the only set with $\forall C\colon C\in\{A,B\}\Leftrightarrow C=A\lor C=B$ as a property. That means if $P$ is a set with $\forall C\colon C\in P\Leftrightarrow C=A\lor C=B$, then $P=\{A,B\}$ holds.
+        \begin{miniproof}
+            $\{A,B\}$ is per definition an extension of the property $\varphi(x)\equiv x=A\lor x=B$. Hence the statement follows from theorem \ref{theorem:sets:extension_unique}.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:sets:singleton} For every set $A$, the pair $\{A,A\}$ exists. We write \begin{align}\{A\}\coloneq\{A,A\}\end{align} and call $\{A\}$ the \emph{singleton set} of $A$. It holds that $B\in\{A\}$ if and only if $B=A$ for every set $B$. That means $A$ is the only element of the singleton set $\{A\}$.
+        \begin{miniproof}
+            Because for all sets $B$, $B\in\{A\}=\{A,A\}$ holds if and only if $B=A$ or $B=A$ holds, which is equivalent to $B=A$.
+        \end{miniproof}
+        \item For every two sets $A$ and $B$ the set $\{A,\{A,B\}\}$ exists.
+        \begin{miniproof}
+            The set $\{A,B\}$ exists by the axiom of pairing, and thus the set $\{A,\{A,B\}\}$ exists as the pair of $A$ and $\{A,B\}$.
+        \end{miniproof}
+        \item\label{example:sets:ordered-pairs} For any two sets $A$ and $B$ the set $\{\{A\},\{A,B\}\}$ exists.
+        \begin{miniproof}
+            The set $\{A\}$ exists by example \ref{example:sets:singleton}, the set $\{A,B\}$ exists by the axiom of pairing, and thus the set $\{\{A\},\{A,B\}\}$ exists as the pair of $\{A\}$ and $\{A,B\}$.
+        \end{miniproof}
+        \item The previous examples and the existence of the empty set ensure the existence of the following sets: $\{\emptyset\}$, $\{\{\emptyset\}\}$, $\{\emptyset,\{\emptyset\}\}$ and much more sets. We also know that $\emptyset\neq\{\emptyset\}$ from remark \ref{remark:sets:pair_non_empty}, that means $\{\emptyset\}$ is a set distinct from the empty set. Thus the axiom of pairing allows us to construct new sets from the empty set.
+     \end{exampleenumerate}
+\end{examples}
+
+The following theorem gives necessary and sufficient conditions to identify two pairs of sets:
+
+\begin{theorem}\marginnote{We will use statement (iv) for defining so called ordered pairs.}
+    Let $A$, $B$, $C$ and $D$ be sets. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $\{A\}=\{B\}$ if and only if $A=B$.
+        \item\label{theorem:sets:singleton_equals_pair} $\{A\}=\{B,C\}$ if and only if $A=B\land A=C$.
+        \item $\{A,B\}=\{C,D\}$ if and only if $(A=C\land B=D)\lor (A=D\land B=C)$.
+        \item\label{theorem:sets:equality_ordered_pairs} $\{\{A\},\{A,B\}\}=\{\{C\},\{C,D\}\}$ if and only if $A=C\land B=D$.
+    \end{intheoremenumerate}
+\end{theorem}
+\begin{proof}
+    \begin{proofenumerate}
+        \item\marginnote{These proofs are rather technical, but they show how different logical implications can be used.} \proofright Let $\{A\}=\{B\}$. From $A\in\{A\}$ follows $A\in\{B\}$, which is equivalent to $A=B$ by example \ref{example:sets:singleton}. \proofleft Let $A=B$, then we get $\{A\}=\{B\}$ by the principle of substitution.
+        \item \proofright Let $\{A\}=\{B,C\}$. Then we have $B,C\in\{B,C\}$ (see remark \ref{remark:sets:pair_elements}) and thus $B,C\in\{A\}$. We know that $x\in\{A\}$ if and only if $x=A$ holds by example \ref{example:sets:singleton}, so $A=B$ and $A=C$ follows.
+        \proofleft Let $A=B$ or $A=C$. Then we get $\{B,C\}=\{A,A\}=\{A\}$ by the principle of substitution and hence $\{B,C\}=\{A\}$.
+        \item \proofright Let $\{A,B\}=\{C,D\}$. Then $A\in\{C,D\}$ and $B\in\{C,D\}$ holds by remark \ref{remark:sets:pair_elements}. That means $(A=C\lor A=D)\land (B=C \lor B=D)$ holds by definition of $\{C,D\}$. But also $C\in\{C,D\}$ and $D\in\{C,D\}$ holds, thus $(C=A\lor C=B)\land(D=A\lor D=B)$ holds. Hence we get by the distributive law
+        \begin{align*}\begin{split}&(A=C\lor A=D)\land (B=C\lor B=D)\land (C=A\lor C=B)\land (D=A\lor D=B)\\
+        \Leftrightarrow\quad&(A=C\lor(A=D\land B=C))\land (B=D\lor(A=D\land B=C))\\
+        \Leftrightarrow\quad& (A=C\land B=D)\lor(A=D\land B=C).\end{split}\end{align*}
+
+        \proofleft Let $(A=C\land B=D)\lor(A=D\land B=C)$. For the case $A=C\land B=D$ we conclude $\{A,B\}=\{C,D\}$ by the principle of substitution. The same follows for the case $A=D\land B=C$.
+
+        \item \proofright Let $\{\{A\},\{A,B\}\}=\{\{C\},\{C,D\}\}$. From (iii) we know that two cases are possible. We show $A=C\land B=D$ for every case:
+        
+        \proofstep{Case $\{A\}=\{C\}\land \{A,B\}=\{C,D\}$}\marginnote{Here we use the law of cases.} From (iii) and $\{A,B\}=\{C,D\}$ we conclude that $A=C\land B=D$ (case a) or $A=D\land B=C$ (case b). Using (ii) and $\{A\}=\{C\}$ we conclude $A=C$ for case a and case b. For case a we conclude $A=C\land B=D$ and for case b we get from $A=D$ that $D=C$, hence $A=C\land B=D$ again.
+
+        \proofstep{Case $\{A\}=\{C,D\}\land \{A,B\}=\{C\}$} From (ii) and $\{A\}=\{C,D\}$ we conclude that $A=C\land A=D$. Using (ii) again for $\{A,B\}=\{C\}$ yields $A=C\land B=C$. From $C=A=D$ also follows $A=C\land B=D$.
+
+        \proofleft Let $A=C$ and $B=D$, then we get $\{\{A\},\{A,B\}\}=\{\{C\},\{C,D\}\}$ by the principle of substitution.
+    \end{proofenumerate}
+\end{proof}
+
+\subsection{Subsets}
+
+The following definitions allow us to formalize if a set is a part of another set. For that we introduce a new predicate \enquote{$\subseteq$}:
+
+\begin{definition}
+    Let $A$ and $B$ be sets. We call $A$ a \emph{subset} of $B$ if and only if for all sets $x$, $x\in A$ implies $x\in B$. In this case we write $A\subseteq B$. More formally:
+    \begin{align}A\subseteq B\iff\forall x\colon x\in A\Rightarrow x\in B.\end{align}
+    If $A$ is a subset of $B$, but $A$ and $B$ are not equal, then we call $A$ a \emph{proper subset} of $B$ and write $A\subset B$ or $A\subsetneq B$. More formally:
+    \begin{align}A\subset B\iff A\subseteq B\land A\neq B.\end{align}
+    We call \enquote{$A\subseteq B$} the \emph{inclusion} of $A$ into $B$ and \enquote{$A\subset B$} the \emph{proper/strict inclusion} of $A$ into $B$.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $A$ and $B$ be sets, then from $A\subset B$ follows $A\subseteq B$ by definition. In general, $A\subseteq B$ does not imply $A\subset B$ (see example \ref{example:sets:inclusion_pairs}). Thus the inclusion \enquote{$A\subseteq B$} is called weaker than the strict inclusion \enquote{$A\subset B$}.
+    \end{remarkenumerate}
+\end{remarks}
+
+Before we show some examples for inclusions, we show the following theorem:
+
+\begin{theorem}\label{theorem:sets:subset_partial_order}
+    Let $A$, $B$ and $C$ be sets, then the following statements hold:
+    \begin{intheoremenumerate}
+        \item\label{theorem:sets:always_subsets} $A\subseteq A$ and $\emptyset\subseteq A$ always hold.
+        \item\label{theorem:sets:subset_equals} $A=B$ if and only if $A\subseteq B$ and $B\subseteq A$ hold.
+        \item\label{theorem:sets:subset_transitive} If $A\subseteq B$ and $B\subseteq C$ hold, shortly $A\subseteq B\subseteq C$, then $A\subseteq C$ follows.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item $A\subseteq A$ holds, because for all sets $x$, $x\in A$ implies $x\in A$. Furthermore $\emptyset\subseteq A$ holds, because there exists no set $x$ in $x\in\emptyset$ so that $x\in A$ does not hold.
+        \item Let $A$ and $B$ be sets. If $A=B$, then for all sets $x$, $x\in A$ holds if and only if $x\in B$ holds, and thus $A\subseteq B$ and $B\subseteq A$ hold. Conversely, if $A\subseteq B$ and $B\subseteq A$ hold, then for all sets $x$, $x\in A$ implies $x\in B$ and $x\in B$ implies $x\in A$, which is equivalent to $x\in A$ holds if and only if $x\in B$ holds, and thus $A=B$ holds by the axiom of extensionality.
+        \item Let $A$, $B$ and $C$ be sets with $A\subseteq B$ and $B\subseteq C$. Then $A\subseteq C$ holds, because for all sets $x$, $x\in A$ implies $x\in B$ and $x\in B$ implies $x\in C$, from which it follows that $x\in A$ implies $x\in C$.
+    \end{proofenumerate}
+\end{proof}
+
+Another useful theorem is the sandwich theorem to identify sets:
+\begin{theorem}[Sandwich theorem]\label{theorem:sets:sandwich_theorem}
+    Let $A$, $B$ and $C$ be sets with \begin{align}A\subseteq B\subseteq C.\end{align} If $A=C$, then already $A=B=C$ holds.
+\end{theorem}
+\begin{proof}
+    We have $A\subseteq B$ and $B\subseteq C=A$ and thus also $B\subseteq A$. Hence $A=B=C$ by theorem \ref{theorem:sets:subset_equals}.
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:sets:inclusion_pairs} For sets $A$ and $B$ we have $\{A\}\subseteq \{A,B\}$ and $\{B\}\subseteq \{A,B\}$. The inclusions are strict if and only if $A\neq B$.
+        \begin{miniproof}
+            Let $x\in \{A\}$ then $x=A$ by example \ref{example:sets:singleton}. Because of $A\in\{A,B\}$ we also have $x\in\{A,B\}$. Hence $x\in\{A\}$ implies $x\in\{A,B\}$ for every set $x$. Thus $\{A\}\subseteq\{A,B\}$. In the same way we can show $\{B\}\subseteq\{A,B\}$.
+
+            From theorem \ref{theorem:sets:singleton_equals_pair} follows that $\{A\}=\{A,B\}$ if and only if $A=A\land A=B$, which is equivalent to $A=B$. Hence we conclude the strict inclusion $\{A\}\subset\{A,B\}$ holds if and only if $A\neq B$. We can argue similarly for the other inclusion.
+        \end{miniproof}
+        \item\label{example:sets:singleton_subset} Let $A$ be a non-empty set. Then $\{a\}\subseteq A$ if and only if $a\in A$ for every set $a$.
+        \begin{miniproof}
+            \proofright Let $\{a\}\subseteq A$. That means for every $x\in\{a\}$ follows $x\in A$. We know that $a\in\{a\}$ holds by example \ref{example:sets:singleton}, so $a\in A$ follows. \proofleft Let $a\in A$. Furthermore let $x\in \{a\}$, then $x=a$ by example \ref{example:sets:singleton}. Thus $a=x\in A$ follows and hence $\{a\}\subseteq A$ holds.
+        \end{miniproof}
+        \item\label{example:sets:singleton_subset_singleton} Let $A$ and $B$ be sets. Then $\{A\}\subseteq\{B\}$ if and only if $A=B$.
+        \begin{miniproof}
+            \proofright Let $\{A\}\subseteq\{B\}$. Then $A\in\{B\}$ and hence $A=B$ by example \ref{example:sets:singleton}. \proofleft Let $A=B$, then $\{A\}=\{B\}$ and thus also $\{A\}\subseteq\{B\}$.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+With the axiom of extensionality, the axiom of empty set and the axiom of pairing we are only capable of constructing sets with no, one or two elements. For constructing sets with more than two elements we need further axioms.
+
+\subsection{Powersets}
+
+We already have defined what a subset is, but we are not able to construct a set that contains all subsets of a given set. Thus we axiomatize the existence of the powerset of a given set, which contains all its subsets:
+
+\begin{axiom}[Powerset]
+    For every set $A$, there exists a set $\powerset(A)$ such that for every set $B$, $B\in\powerset(A)$ holds if and only if $B\subseteq A$. More formally:
+    \begin{align}\forall B\colon B\in\powerset(A)\Leftrightarrow B\subseteq A.\end{align}
+    We call $\powerset(A)$ the \emph{powerset} of $A$.
+\end{axiom}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item The powerset $\powerset(A)$ of a set $A$ is uniquely determined, because it is the extension of $\varphi(x)\equiv x\subseteq A$ (see theorem \ref{theorem:sets:extension_unique}).
+        \item Let $A$ and $B$ be sets, then $A\subseteq B$ if and only if $B\in\powerset(A)$ holds.
+        \begin{miniproof}
+            This follows directly from the definition of $\powerset(A)$ and subsets.
+        \end{miniproof}
+        \item\label{remark:sets:powerset_elements} For every set $A$ holds $A\in\powerset(A)$ and $\emptyset\in\powerset(A)$.
+        \begin{miniproof}
+            This follows directly from theorem \ref{theorem:sets:always_subsets}.
+        \end{miniproof}
+        \item For sets $A$ and $B$ holds $\powerset(A)=\powerset(B)$ if and only if $A=B$.
+        \begin{miniproof}
+            \proofright Let $\powerset(A)=\powerset(B)$. Then $A\in\powerset(A)$ by remark \ref{remark:sets:powerset_elements} and hence $A\in\powerset(B)$. That means $A\subseteq B$. Similarly $B\subseteq A$ follows. Hence $A=B$ by theorem \ref{theorem:sets:subset_equals}.
+            \proofleft Let $A=B$. Then $\powerset(A)=\powerset(B)$ by the principle of substitution.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item $\powerset(\emptyset)=\{\emptyset\}$.
+        \begin{miniproof}
+            \proofsubset Let $B\in\powerset(\emptyset)$, then $B\subseteq\emptyset$. By theorem \ref{theorem:sets:always_subsets} also $\emptyset\subseteq B$ holds. Hence $B=\emptyset\in\{\emptyset\}$.
+            \proofsupset Let $B\in\{\emptyset\}$, then $B=\emptyset$. Now $B\in\powerset(\emptyset)$ holds by remark \ref{remark:sets:powerset_elements}.
+        \end{miniproof}
+        \item For every set $A$ holds $\powerset(\{A\})=\{\emptyset,\{A\}\}$.
+        \begin{miniproof}
+            \proofsubset Let $B\in\powerset(\{A\})$, then $B\subseteq\{A\}$. If $B=\emptyset$ then $B\in\{\emptyset,\{A\}\}$. If $B\neq\emptyset$ then for every $x\in B$ holds $x\in\{A\}$ which is equivalent to $x=A$. Thus $B=\{A\}\in\{\emptyset,\{A\}\}$.
+            \proofsupset Let $B\in\{\emptyset,\{A\}\}$, then $B=\emptyset$ or $B=\{A\}$. In both cases $B\in\powerset(\{A\})$ holds by remark \ref{remark:sets:powerset_elements}.
+        \end{miniproof}
+        \item For all sets $A$ and $B$ with $A\neq B$ holds \begin{align}\forall C\colon C\in\powerset(\{A,B\})\Leftrightarrow C=\emptyset\lor C=\{A\}\lor C=\{B\}\lor C=\{A,B\}.\end{align}
+        That means $\powerset(\{A,B\})$ contains exactly four elements. For that reason we shortly write $\powerset(\{A,B\})=\{\emptyset,\{A\},\{B\},\{A,B\}\}$.
+        \begin{miniproof}
+            \proofsubset Let $C\in\powerset(\{A,B\})$, then $C\subseteq\{A,B\}$. We know that $\emptyset\subseteq\{A,B\}$ and $\{A,B\}\subseteq\{A,B\}$. Hence $C\in\{\emptyset,\{A\},\{B\},\{A,B\}\}$ for $C=\emptyset$ or $C=\{A,B\}$. Consider the case that $C\neq\emptyset$ and $C\neq\{A,B\}$. Because $C$ is non-empty, there exists a set $x\in C$. We have that $x=A$ or $x=B$. Because of $A\neq B$ and $C\neq\{A,B\}$ only one case (either $x=A$ or $x=B$) can hold. Thus $C\subseteq\{A\}$ or $C\subseteq\{B\}$. Furthermore we have $\{x\}\subseteq C$ by example \ref{example:sets:singleton_subset}. From that follows $\{x\}\subseteq C\subseteq\{A\}$ or $\{x\}\subseteq C\subseteq\{B\}$ and hence $\{x\}\subseteq\{A\}$ or $\{x\}\subseteq\{B\}$ by theorem \ref{theorem:sets:subset_transitive}. Thus $\{x\}=\{A\}$ or $\{x\}=\{B\}$ by example \ref{example:sets:singleton_subset_singleton}. Therefore $C=\{A\}$ or $C=\{B\}$ by the sandwich theorem \ref{theorem:sets:sandwich_theorem} and thus $C\in\{\emptyset,\{A\},\{B\},\{A,B\}\}$ for all cases.
+
+            \proofsupset This inclusion directly follows from theorem \ref{theorem:sets:always_subsets} and example \ref{example:sets:inclusion_pairs}.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\subsection{Axiom of Specification}
+
+\begin{axiom}[Specification]
+    For every set $A$ and every property $\varphi(x)$, there exists a set $\setdef{x\in A\given\varphi(x)}$ such that for all sets $y$, $y\in\setdef{x\in A\given\varphi(x)}$ holds if and only if $y\in A$ and $\varphi(y)$ holds. More formally:
+    \begin{align}\forall y\colon y\in\setdef{x\in A\given\varphi(x)}\Leftrightarrow y\in A\land \varphi(y).\end{align}
+    We call $\setdef{x\in A\given\varphi(x)}$ the \emph{subset of $A$ defined by the property $\varphi$}.
+\end{axiom}
+
+The axiom of specification guarantees the existence of a set $\setdef{x\in A\given\varphi(x)}$ such that every element $x$ of that set is an element of $A$ and fulfills the property $\varphi(x)$. It is important, that the axiom of specification needs an already existing set $A$ as a base for the construction of a subset of $A$ using an arbitrary property $\varphi(x)$ as a filter. Thus the axiom of specification does not allow the construction of larger sets.
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item\label{remark:sets:specification_subset} Let $A$ be a set and $\varphi(x)$ a property. Then $\setdef{x\in A\given\varphi(x)}\subseteq A$ holds. Thus it is justified to call $\setdef{x\in A\given\varphi(x)}$ the subset of $A$ defined by the property $\varphi$.
+        \begin{miniproof}
+            Let $y\in\setdef{x\in A\given\varphi(x)}$. By definition of $\setdef{x\in A\given\varphi(x)}$ we have $y\in A$ and $\varphi(y)$. Thus $y\in A$. Because $y$ is an arbitrary element of $\setdef{x\in A\given\varphi(x)}$, we conclude that $\setdef{x\in A\given\varphi(x)}\subseteq A$.
+        \end{miniproof}
+        \item For a set $A$ and a property $\varphi(x)$ is $\setdef{x\in A\given \varphi(x)}$ uniquely determined, because $\setdef{x\in A\given\varphi(x)}$ is the extension of $\psi(x)\equiv x\in A\land \varphi(x)$ (see theorem \ref{theorem:sets:extension_unique}).
+        \item For a set $A$ and a property $\varphi(x)$ we sometimes also write \begin{align}\setdef{x\given x\in A\land \varphi(x)}\coloneq \setdef{x\in A\given\varphi(x)}.\end{align}
+        The choice of the symbol $x$ does not matter, i.e. $\setdef{y\in A\given \varphi(y)}$ is also a valid notation for $\setdef{x\in A\given\varphi(x)}$.
+        \item\label{remark:sets:specification_subsets} Let $A$ be a set and $\varphi(x)$ a property, then we write
+        \begin{align}\setdef{B\subseteq A\given \varphi(B)}\coloneq \setdef{B\in\powerset(A)\given \varphi(B)}.\end{align}
+        So by the axiom of specification and the axiom of powerset the existence of a set containing all subsets of $A$ that fulfill the property $\varphi(x)$ is guaranteed.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item Let $A$ and $B$ be sets. Then there exists exactly one set $C$ with 
+        \begin{align}\forall x\colon x\in C\Leftrightarrow x\in A\land x\in B\end{align}
+        Moreover $C\subseteq A$ and $C\subseteq B$ hold.
+        \begin{miniproof}
+            The set $C=\{x\in A\colon x\in B\}$ exists by the axiom of specification (define $\varphi(x)\equiv x\in B$) and is a subset of $A$ by remark \ref{remark:sets:specification_subset}. For every set $y$ holds $y\in C$ iff $y\in A\land y\in B$ by definition of $\{x\in A\colon x\in B\}$, hence $C\subseteq B$ also holds.
+        \end{miniproof}
+        \item Let $A$ be a non-empty set and $a\in A$, then $\setdef{x\in A\given x=a}=\{a\}$.
+        \begin{miniproof}
+            \proofsubset For every set $y$, $y\in\setdef{x\in A\given x=a}$ is equivalent to $y\in A$ and $y=a$. Hence $y\in\{a\}$ by example \ref{example:sets:singleton}.
+            \proofsupset For every $y\in\{a\}$ holds $y=a$. Because $a\in A$ we have $y\in A$ and $y=a$, hence $y\in\setdef{x\in A\given x=a}$.
+
+            In summary we showed that $\setdef{x\in A\given x=a}\subseteq \{a\}$ and $\{a\}\subseteq\setdef{x\in A\given x=a}$, thus $\setdef{x\in A\given x=a}=\{a\}$ by theorem \ref{theorem:sets:subset_equals}.
+        \end{miniproof}
+        \item\label{example:sets:empty_set_specification} Let $A$ be an arbitrary set, then $\setdef{x\in A\given x\notin A}=\emptyset$.
+        \begin{miniproof}
+            Assume there exists a set $y$ with $y\in\setdef{x\in A\given x\notin A}$. Then $y\in A$ and $y\notin A$, which is a contradiction. Thus $\setdef{x\in A\given x\notin A}=\emptyset$.
+        \end{miniproof}
+        \item Let $A$ be a set, then $\setdef{B\subseteq A\given \exists a\in A\colon B=\{a\}}$ denotes the set of all singleton subsets of $A$. The existence of this set follows by remark \ref{remark:sets:specification_subsets}.
+    \end{exampleenumerate}
+\end{examples}
+
+Example \ref{example:sets:empty_set_specification} gives an alternative way to construct the empty set. So instead to axiomatize the existence of the empty set it is already sufficient to axiomatize the existence of at least one arbitrary set and to include the axiom of specification.
+
+\subsection{Unions}
+
+In this and in the next few subsections we will introduce so called set operations. These operations are unions, intersections and differences as well as symmetric differences (introduced as an exercise). These set operations allow to combine sets in different ways and are shown in the so called Venn diagrams (see figure \ref{figure:sets:venn_diagram}).
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick]
+        % Define the paths for the two circles
+        \begin{scope}[shift={(0,0)}]
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % Fill the intersection with dots
+            \begin{scope}
+                \clip \circleA;
+                \fill[pattern=dots, pattern color=gray] \circleB;
+            \end{scope}
+            % Draw the outlines of the circles
+            \draw \circleA;
+            \draw \circleB;
+            % Add Labels
+            \node at (-1.2, 1.6) {$A$};
+            \node at (1.2, 1.6) {$B$};
+            \node at (0, 1.6) {$A \cap B$};
+        \end{scope}
+        \begin{scope}[shift={(0,-4)}]
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % Fill the intersection with dots
+            \begin{scope}
+                \clip \circleA; % First, clip to the bounds of circle A
+                % Then, fill circle A, BUT don't fill the area that overlaps with circle B
+                \fill[pattern=dots, pattern color=gray] \circleA;
+                \fill[white] \circleB; % Use a white fill to "carve out" the intersection
+            \end{scope}
+            % Draw the outlines of the circles
+            \draw \circleA;
+            \draw \circleB;
+            % Add Labels
+            \node at (-1.2, 1.6) {$A$};
+            \node at (1.2, 1.6) {$B$};
+            \node at (0, 1.6) {$A\setminus B$};
+        \end{scope}
+        \begin{scope}[shift={(6,0)}]
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % Fill the intersection with dots
+            \begin{scope}
+                \fill[pattern=dots, pattern color=gray] \circleA;
+                \fill[pattern=dots, pattern color=gray] \circleB;
+            \end{scope}
+            % Draw the outlines of the circles
+            \draw \circleA;
+            \draw \circleB;
+            % Add Labels
+            \node at (-1.2, 1.6) {$A$};
+            \node at (1.2, 1.6) {$B$};
+            \node at (0, 1.6) {$A\cup B$};
+        \end{scope}
+        \begin{scope}[shift={(6,-4)}]
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % Fill the intersection with dots
+            \begin{scope}
+                \fill[pattern=dots, pattern color=gray, even odd rule] \circleA \circleB;
+            \end{scope}
+            % Draw the outlines of the circles
+            \draw \circleA;
+            \draw \circleB;
+            % Add Labels
+            \node at (-1.2, 1.6) {$A$};
+            \node at (1.2, 1.6) {$B$};
+            \node at (0, 1.6) {$A\oplus B$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Venn diagrams representing set operations of two sets $A$ and $B$. A point is an element of a set, if it lies in its circle. The marked areas represent the intersection $A\cap B$, the union $A\cup B$, the difference $A\setminus B$ and the symmetric difference $A\oplus B$. For example $A\cap B$ represents all points that lie in both circles.}\label{figure:sets:venn_diagram}
+\end{figure}
+
+However, one quickly realizes that the axioms already stated only allow for the construction of sets with at most two elements (axiom of pairing), sets of subsets (axiom of powersets), and subsets of sets with certain properties (axiom of specification). The following axiom is necessary to allow for the existence of union sets that can be larger than the sets being unioned:
+
+\begin{axiom}[Union]
+    For every set $A$, there exists a set $\bigcup A$ such that $x\in\bigcup A$ holds if and only if there exists a set $B\in A$ with $x\in B$. That means more formally:
+    \begin{align}\forall x\colon x\in\bigcup A\Leftrightarrow\exists B\in A\colon x\in B.\end{align}
+    We call $\bigcup A$ the \emph{union} of $A$.
+\end{axiom}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item The union $\bigcup A$ of a set $A$ is uniquely determined by theorem \ref{theorem:sets:extension_unique}, because $\bigcup A$ is the extension of $\varphi(x)\equiv \exists B\in A\colon x\in B$.
+        \item Instead of $\bigcup A$, we also write \begin{align}\bigcup_{B\in A} B\coloneq\bigcup A\end{align} and read it as \enquote{the union of all $B$ in $A$}.
+        \item\label{remark:sets:union_subsets} For every set $A$ and every set $B\in A$ holds $B\subseteq \bigcup A$.
+        \begin{miniproof}
+            Let $B\in A$. Furthermore let $x\in B$. Then there exists a set $C\in A$ with $x\in C$, namely $C=B$. Thus $x\in\bigcup A$ by definition of $\bigcup A$. Hence $B\subseteq \bigcup A$.
+        \end{miniproof}
+        %\item The union $\bigcup A$ of a set $A$ is the smallest set containing all elements of the sets in $A$. More precisely, if $B$ is a set with $\forall x\in A\colon B\supseteq x$, then $\bigcup A\subseteq B$ holds.
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{definition}
+    Let $A$ and $B$ be sets. The axiom of pairing guarantees the existence of a set $\{A,B\}$. Then we write \begin{align}A\cup B\coloneq\bigcup \{A,B\}\end{align} and call $A\cup B$ the \emph{union} of $A$ and $B$.
+\end{definition}
+
+\begin{theorem}\label{theorem:sets:union_pair_properties}
+    Let $A$, $B$ and $C$ be sets. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item\label{theorem:sets:union_disjunction} $A\cup B=\setdef{x\given x\in A\lor x\in B}$.
+        \item\label{theorem:sets:union_subsets} $A\subseteq A\cup B$ and $B\subseteq A\cup B$ (shortly $A,B\subseteq A\cup B$).
+        \item $A\cup A=A$.
+        \item $A\cup\emptyset=A$.
+        \item $A\cup B=B\cup A$ (commutativity).
+        \item $(A\cup B)\cup C=A\cup (B\cup C)$ (associativity).
+        \item\label{theorem:sets:union_absorbption} $A\subseteq B$ if and only if $A\cup B=B$.
+    \end{intheoremenumerate}
+\end{theorem}
+\begin{proof}
+    \begin{proofenumerate}
+        \item We get the following chain of equivalences:
+        \begin{align}\begin{split}x\in A\cup B \iff& x\in \bigcup\{A,B\}\\\iff&\exists C\in\{A,B\}\colon x\in C\\
+        \iff& \exists C\colon (C=A\lor C=B)\land x\in C\\
+        \iff& \exists C\colon (C=A\land x\in C)\lor (C=B\land x\in C)\\
+        \iff& x\in A\lor x\in B\\
+        \iff& x\in A\lor x\in B\iff x\in\setdef{x\given x\in A\lor x\in B}
+        \end{split}\end{align}
+        Hence $x\in A\cup B$ if and only if $x\in\setdef{x\given x\in A\lor x\in B}$, which means $A\cup B=\setdef{x\given x\in A\lor x\in B}$ by the axiom of extensionality.
+        \item Let $x\in A$, then $x\in A\lor x\in B$. That means $x\in A\cup B$ by (i). Thus $A\subseteq A\cup B$. Similarly $B\subseteq A\cup B$.
+        \item Let $x$ be a set, then $x\in A\cup A$ is equivalent to $x\in A\lor x\in A$ by (i), which is equivalent to $x\in A$. Thus $A\cup A=A$ by the axiom of extensionality.
+        \item Let $x$ be a set, then $x\in A\cup\emptyset$ is equivalent to $x\in A\lor x\in\emptyset$ by (i). Beacause $x\in\emptyset$ is not possible, this is equivalent to $x\in A$. Thus $A\cup\emptyset=A$ by the axiom of extensionality.
+        \item We have $A\cup B=\setdef{x\given x\in A\lor x\in B}=\setdef{x\given x\in B\lor x\in A}=B\cup A$. Thus $A\cup B=B\cup A$.
+        \item From the associativity of the disjunction and (i) follows \begin{align}\begin{split}(A\cup B)\cup C&=\setdef{x\given x\in A\cup B\lor x\in C}\\&=\setdef{x\given (x\in A\lor x\in B)\lor x\in C}\\&=\setdef{x\given x\in A\lor (x\in B\lor x\in C)}\\&=\setdef{x\given x\in A\lor x\in B\cup C}=A\cup (B\cup C).\end{split}\end{align}
+        \item \proofright Let $A\subseteq B$. We already know that $B\subseteq A\cup B$ by (ii). Let $x\in A\cup B$, then $x\in A$ or $x\in B$. Because of $A\subseteq B$, in both cases $x\in B$ follows. Thus $B\subseteq A\cup B\subseteq B$ and thus $A\cup B=B$ by theorem \ref{theorem:sets:subset_equals}. \proofleft Let $A\cup B=B$. Because of $A\subseteq A\cup B$ by (ii) already $A\subseteq B$ follows.
+    \end{proofenumerate}
+\end{proof}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item If $A$ and $B$ are sets then $\{A\}\cup\{B\}=\{A,B\}$.
+        \begin{miniproof}
+            $x\in\{A\}\cup\{B\}$ is equivalent to $x\in\{A\}\lor x\in\{B\}$, which is equivalent to $x=A\lor x=B$. Thus $\{A\}\cup\{B\}=\{A,B\}$.
+        \end{miniproof}
+        \item If $A$, $B$ and $C$ are sets then $\{A\}\cup\{B\}\cup\{C\}=\{A,B,C\}$, where
+        \begin{align}\forall x\colon x\in\{A,B,C\}\Leftrightarrow x=A\lor x=B\lor x=C.\end{align}
+        \item For every set $A$ holds that $\bigcup \powerset(A)=A$.
+        \begin{miniproof}
+            We know that $A\subseteq \bigcup\powerset(A)$, because of $A\in\powerset(A)$ and by remark \ref{remark:sets:union_subsets}.
+            Let $x\in\bigcup\powerset(A)$, then there exists a set $B\in\powerset(A)$ with $x\in B$. Because $B\subseteq A$ we conclude $x\in A$. Hence $A\subseteq\bigcup\powerset(A)\subseteq A$ and thus $\bigcup\powerset(A)=A$ by theorem \ref{theorem:sets:sandwich_theorem}.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+Theorem \ref{theorem:sets:union_disjunction} shows that the union $A\cup B$ of two sets $A$ and $B$ corresponds to the logical disjunction of the statement to be a member of the union: A set $x$ is an element of $A\cup B$ if and only if $x\in A$ \emph{or} $x\in B$ holds. In the next subsection we will introduce the concept of intersections corresponding to the logical conjunction.
+
+\subsection{Intersections}
+
+\begin{theorem}[Intersection]
+    For every non-empty set $A$, there exists a set $\bigcap A$ such that $x\in\bigcap A$ holds if and only if for all sets $B\in A$, $x\in B$ holds. More formally:
+    \begin{align}\forall x\colon x\in\bigcap A\Leftrightarrow\forall B\colon B\in A\wedge x\in B.\end{align}
+    We call $\bigcap A$ the \emph{intersection} of $A$.
+\end{theorem}
+
+\begin{proof}
+    Because $A$ is non-empty, there exists a set $C\in A$. We show that
+    \begin{align}\bigcap A=\setdef{x\in C\given \forall B\in A\colon x\in B}.\end{align}
+    \proofsubset Let $x\in\bigcap A$, then, by definition of $\bigcap A$, $x\in C$ because of $C\in A$. Hence $x\in\setdef{x\in C\given \forall B\in A\colon x\in B}$.
+    \proofsupset Let $x\in\setdef{x\in C\given \forall B\in A\colon x\in B}$, then $x\in B$ holds for every $B\in A$. Thus $x\in\bigcap A$.
+
+    In summary, $\bigcap A$ exists by the axiom of specification.
+\end{proof}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item\label{remark:sets:intersection_notation} Instead of $\bigcap A$ we also write \begin{align}\bigcap_{B\in A} B\coloneq\bigcap A\end{align} and read it as \enquote{the intersection of all sets $B$ in $A$}.
+        \item If $A$ is empty, we set $\bigcap A=\emptyset$.
+        \item\label{remark:sets:intersection_non_empty} $\bigcap A\neq\emptyset$ if and only if $A\neq\emptyset$ and there exists an $x$ with $x\in B$ for every $B\in A$. This means the intersection of a set is non-empty if and only if we take the intersection of at least one set in $A$ and there exists at least one common element of every set in $A$.
+        \begin{miniproof}
+            \proofright Let $\bigcap A\neq\emptyset$. Then there exists an $x\in\bigcap A$. That means $x\in B$ for every $B\in A$ by definition of $\bigcap A$. Assume $A=\emptyset$, then $\bigcap A=\emptyset$ in contradiction to $\bigcap A\neq\emptyset$. Hence $A\neq\emptyset$.
+            \proofleft Let $A\neq\emptyset$ and assume there exists an $x$ with $x\in B$ for every $B\in A$. Then $x\in\bigcap A$ by definition of $\bigcap A$. Thus $\bigcap A\neq\emptyset$.
+        \end{miniproof}
+        \item\label{remark:sets:intersection_subset} For every set $A$ and every $B\in A$ holds $\bigcap A\subseteq B$. Therefore the intersection $\bigcap A$ is a subset of every set in $A$.
+        \begin{miniproof}
+            Let $B\in A$. Furthermore let $x\in \bigcap A$. Then $x\in B$ by definition of $\bigcap A$. Hence $\bigcap A\subseteq B$.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{definition}
+    Let $A$ and $B$ be sets. The \emph{intersection} of $A$ and $B$ is defined as \begin{align}A\cap B\coloneq \bigcap\{A,B\}.\end{align}
+\end{definition}
+
+\begin{theorem}\label{theorem:sets:intersection_pair_properties}
+    Let $A$, $B$ and $C$ be sets. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $A\cap B=\setdef{x\given x\in A\land x\in B}$.
+        \item\label{theorem:sets:intersection_subsets} $A\cap B\subseteq A$ and $A\cap B\subseteq B$ (shortly $A\cap B\subseteq A,B$).
+        \item $A\cap A=A$.
+        \item\label{theorem:sets:intersection_emptyset} $A\cap\emptyset=\emptyset$.
+        \item $A\cap B=B\cap A$ (commutativity).
+        \item $(A\cap B)\cap C=A\cap (B\cap C)$ (associativity).
+        \item\label{theorem:sets:intersection_absorbption} $A\subseteq B$ if and only if $A\cap B=A$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item We get the following chain of equivalences:
+        \begin{align}\begin{split}x\in A\cap B \iff& x\in \bigcap\{A,B\}\\\iff&\forall C\colon C\in\{A,B\}\land x\in C\\
+        \iff& \forall C\colon (C=A\lor C=B)\land x\in C\\
+        \iff& \forall C\colon (C=A\land x\in C)\lor (C=B\land x\in C)\\
+        \iff& x\in A\land x\in B\iff x\in\setdef{x\given x\in A\land x\in B}
+        \end{split}\end{align}
+        Hence $A\cap B=\setdef{x\given x\in A\land x\in B}$ by the axiom of extensionality.
+        \item Let $x\in A\cap B$, then $x\in A$ and $x\in B$ by (i), hence $A\cap B\subseteq A$ and $A\cap B\subseteq B$.
+        \item We have $A\cap A=\setdef{x\given x\in A\land x\in A}=\setdef{x\given x\in A}=A$ by (i).
+        \item Assume $A\cap\emptyset$ is non-empty. Then there exists an element $x\in A\cap\emptyset$, so $x\in A$ and $x\in\emptyset$ by (i), which is not possible, because $\emptyset$ does not contain any element. Thus $A\cap\emptyset=\emptyset$.
+        \item $x\in A\cap B$ is equivalent to $x\in A$ and $x\in B$ and equivalent to $x\in B$ and $x\in A$ and thus equivalent to $x\in A\cap B$. Hence $A\cap B=B\cap A$ by the axiom of extensionality.
+        \item From the associativity of the conjunction and (i) follows \begin{align}\begin{split}(A\cap B)\cap C&=\setdef{x\given x\in A\cap B\land x\in C}\\&=\setdef{x\given (x\in A\land x\in B)\land x\in C}\\&=\setdef{x\given x\in A\land (x\in B\land x\in C)}\\&=\setdef{x\given x\in A\land x\in B\cap C}=A\cap (B\cap C).\end{split}\end{align}
+        \item \proofright Let $A\subseteq B$. We already know that $A\cap B\subseteq A$ by remark \ref{remark:sets:intersection_subset}. Thus we have to show that $A\subseteq A\cap B$ holds. Let $x\in A$, then also $x\in B$ holds due to $A\subseteq B$. Hence $x\in A\cap B$. Thus $A\cap B=A$ follows from theorem \ref{theorem:sets:subset_equals}.
+        \proofleft Let $A\cap B=A$. Furthermore let $x\in A$, then $x\in A\cap B$ and therefore $x\in B$ by (i). Thus $A\subseteq B$.
+    \end{proofenumerate}
+\end{proof}
+
+\subsection{Disjoint Sets and Partitions}
+
+\begin{definition}
+    Let $A$ and $B$ be sets. Then $A$ and $B$ are called \emph{disjoint} iff $A\cap B=\emptyset$. For a set $C$ we write $C=A\cupdot B$ if and only if $A$ and $B$ are disjoint and $C=A\cup B$. In this case we call $A\cupdot B$ the \emph{disjoint union} of $A$ and $B$.
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $A$ and $B$ disjoint sets. Then $x\in A\cupdot B$ if and only if either $x\in A$ or $x\in B$.
+        \begin{miniproof}
+            \proofright Let $x\in A\cupdot B=A\cup B$, then $x\in A$ or $x\in B$. Because $A\cap B=\emptyset$ there exists no element $y$ with $y\in A$ and $y\in B$. Thus either $x\in A$ or $x\in B$ follows.
+            \proofleft Let $x$ be a set with either $x\in A$ or $x\in B$, then $x\in A$ or $x\in B$ follows, hence $x\in A\cupdot B$.
+        \end{miniproof}
+        \item Let $A$ be an arbitrary set, then $A$ and $\emptyset$ are always disjoint.
+        \begin{miniproof}
+            This follows directly from theorem \ref{theorem:sets:intersection_emptyset}.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item\label{example:sets:singleton_disjoint} For sets $A$ and $B$ holds that $\{A,B\}=\{A\}\cupdot\{B\}$ if and only if $A\neq B$.
+        \item If $A$ and $B$ are disjoint sets and $C\subseteq A$ as well as $D\subseteq B$. Then $C$ and $D$ are also disjoint.
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{definition}
+    Let $A$ be a set. A set $P$ of subsets of $A$, namely $P\subseteq \powerset(A)$ is called a \emph{partition of $A$} if and only if $P$ is a set of non-empty pairwise disjoint subsets of $A$ such that $A=\bigcup P$, or formally:
+    \begin{align}A=\bigcup P,\quad\forall B\in P\colon B\neq\emptyset\quad\text{and}\quad \forall B,C\in P\colon B\neq C\Rightarrow B\cap C=\emptyset.\end{align}
+\end{definition}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick,element/.style={circle,inner sep=0pt,fill=white,below=4.5pt}]
+
+        \draw (-1,-1.6) [rounded corners=10pt] rectangle (6,1);
+        \node at (6.3,0) {$A$};
+        \node[white] at (-1.3,0) {$A$};
+
+        \draw (-.4,-1) [rounded corners=10pt,pattern=dots,pattern color=gray] rectangle (1.4,.5);
+        \node at (0.5,-1.3) {$B$};
+        \draw (1.6,-1) [rounded corners=10pt,pattern=dots,pattern color=gray] rectangle (4.4,.5);
+        \node at (3,-1.3) {$C$};
+        \draw (4.6,-1) [rounded corners=10pt,pattern=dots,pattern color=gray] rectangle (5.4,.5);
+        \node at (5,-1.3) {$D$};
+        
+        \fill (0,0) circle (2pt) node[element]{\strut $a$};
+        \fill (1,0) circle (2pt) node[element]{\strut $b$};
+        \fill (2,0) circle (2pt) node[element]{\strut $c$};
+        \fill (3,0) circle (2pt) node[element]{\strut $d$};
+        \fill (4,0) circle (2pt) node[element]{\strut $e$};
+        \fill (5,0) circle (2pt) node[element]{\strut $f$};
+
+    \end{tikzpicture}
+    \caption{Illustration of a partition $P$ of $A$ into three sets $B,C,D$. Here $A=\{a,b,c,d,e,f\}$ and $P=\{B,C,D\}$ with $B=\{a,b\}$, $C=\{c,d,e\}$ and $D=\{f\}$.}\label{figure:sets:partition}
+\end{figure}
+
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item\label{remark:sets:partition_common_element} Let $A$ be a set and $P$ a partition of $A$. If $B,C\in P$ and there exists an element $x\in B\cap C$, then $B=C$ follows.
+        \begin{miniproof}
+            By definition we have $B\cap C=\emptyset$ for $B\neq C$. Hence $B=C$ for $B\cap C\neq\emptyset$.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+\begin{examples}
+    \begin{exampleenumerate}
+        \item For sets $A$ and $B$ with $A\neq B$, we have that $\{\{A\},\{B\}\}$ is a partition of $\{A,B\}$.
+        \item Let $A$ be a set, then $P=\setdef{B\subseteq A\given \exists a\in A\colon B=\{a\}}$ is a partition of $A$.
+        \begin{miniproof}
+            Note that $\{a\}\in P$ for every $a\in A$ by definition of $P$. Hence for every $a\in A$ holds $a\in\{a\}\in P$ and thus $a\in\bigcup P$. Let $B\in P$, then $B=\{b\}$ for some $b\in A$, hence $B\neq\emptyset$. Now let $C\in P$ with $B\neq C$. There exists a $c\in A$ with $C=\{c\}$. Then $b\neq c$ follows from $C\neq B$. Thus $C\cap B=\emptyset$ by example \ref{example:sets:singleton_disjoint}.
+        \end{miniproof}
+    \end{exampleenumerate}
+\end{examples}
+
+\begin{theorem}\label{theorem:sets:partition_equivalence}
+    Let $A$ be a set and $P\subseteq\powerset(A)$. Then the following statements are equivalent:
+    \begin{intheoremenumerate}
+        \item $P$ is a partition of $A$.
+        \item $\emptyset\notin P$ and for every $x\in A$ there exists exactly one $B\in P$ with $x\in B$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \proofcase{i}{ii} By definition of a partition $P$ every set $B\in P$ is non-empty, hence $\emptyset\notin P$. Now let $x\in A$. Because of $A=\bigcup P$ there exists a set $B\in P$ with $x\in B$. Assume there is another set $C\in P$ with $x\in C$, then $x\in B\cap C$ and hence $B=C$ follows by remark \ref{remark:sets:partition_common_element}.
+
+    \proofcase{ii}{i} Let $x\in A$, then there exists a set $B\in P$ with $x\in B$ by assumption. Hence $x\in\bigcup P$ and thus $A\subseteq\bigcup P$. Now let $x\in\bigcup P$, then there is a set $B\in P$ with $B\subseteq A$ (because $P\subseteq\powerset(A)$) and hence $x\in A$. Thus $\bigcup P\subseteq A$ and therefore $A=\bigcup P$ follows.
+
+    By assumption, $\emptyset\notin P$, hence $B\neq\emptyset$ for every $B\in P$. Now let $B,C\in P$ with $B\neq C$. Assume $B\cap C\neq\emptyset$. Then there exists an element $x\in B\cap C$, so $x\in B$ and $x\in C$, which contradicts the assumption that there exists exactly one element $B\in P$ with $x\in B$. Thus $B\cap C=\emptyset$ follows. So $P$ is a partition of $A$.
+\end{proof}
+
+%\subsection{Minimal and Smallest Sets}
+
+%\begin{definition}
+%    Let $A$ be a set. A subset $\mathcal F\subseteq \powerset(A)$ is called a \emph{family of subsets of $A$}. Assume $\mathcal F$ is a family of subsets of $A$, then we define:
+
+%    \begin{definitionenumerate}
+%        \item An element $M\in\mathcal F$ is called \emph{minimal} in $\mathcal F$ if and only if there exists no other element $N\in\mathcal F$ such that $N\subset M$.
+%        \item An element $S\in\mathcal F$ is called the \emph{smallest} set in $\mathcal F$ if and only if $S\subseteq F$ for all $F\in\mathcal F$.
+%    \end{definitionenumerate}
+%\end{definition}
+
+%\begin{remarks}
+%    \begin{remarkenumerate}
+%        \item Let $\mathcal F$ be a family of subsets of a set $A$, then every smallest element of $\mathcal F$ is a minimal element of $\mathcal F$.
+%        \begin{miniproof}
+%            Let $S\in\mathcal F$ be a smallest element of $\mathcal F$. Assume there exists an element $N\in\mathcal F$ such that $N\subset S$. Then $N\subseteq S$ and also $S\subseteq N$ holds by definition of the smallest element. Thus $N=S$ follows, which is a contradiction to $N\subset S$. Hence $S$ is a minimal element of $\mathcal F$.
+%        \end{miniproof}
+%        \item Let $\mathcal F$ be a family of subsets of a set $A$, then there does not have to exist a smallest element of $\mathcal F$.
+%        \begin{miniproof}
+%            Set $\mathcal A=\{\emptyset,\{\emptyset\}\}$, then $\mathcal F=\{\{\emptyset\},\{\{\emptyset\}\}\}\subseteq\powerset(A)$ is a family of subsets of $A$. But $\{\emptyset\}$ is not a subset of $\{\{\emptyset\}\}$ nor is $\{\{\emptyset\}\}$ a subset of $\{\emptyset\}$.
+%        \end{miniproof}
+%    \end{remarkenumerate}
+%\end{remarks}
+
+%\begin{theorem}
+%    Let $\mathcal F$ be a family of subsets of a set $A$. If there exists a smallest element $S\in\mathcal F$, then $S$ is uniquely determined, i.e. if $S'\in\mathcal F$ is another smallest element of $\mathcal F$, then $S=S'$.
+%\end{theorem}
+%\begin{proof}
+%    Let $S$ and $S'$ be two smallest elements of $\mathcal F$. Then $S\subseteq S'$ and $S'\subseteq S$ by definition. Thus $S=S'$ follows by theorem \ref{theorem:sets:subset_equals}.
+%\end{proof}
+
+%\begin{theorem}
+%    Let $A$ be a set and $\varphi(x)$ be a property. We define the family
+%    \begin{align}\mathcal A(\varphi)=\setdef{B\subseteq A\given \varphi(B)}=\setdef{B\in\powerset(A)\given \varphi(B)}.\end{align}
+%    as the set of all subsets of $A$ that fulfill the property $\varphi(x)$.
+%    \begin{align}\bigcap \mathcal A(\varphi)\end{align}
+%    is the smallest set of $\mathcal A(\varphi)$, if $\bigcap \mathcal A(\varphi)$ is non-empty.
+%\end{theorem}
+%\begin{proof}
+%    We have to show that $\bigcap \mathcal A(\varphi)$ is an element of the family $\mathcal A(\varphi)$. Let $\bigcap \mathcal A(\varphi)$ be non-empty. By remark \ref{remark:sets:intersection_non_empty} there exists a set $B\in\bigcap\mathcal A(\varphi)$ with $B\subseteq A$ and $\varphi(B)$. Then by remark \ref{remark:sets:intersection_subset} we have $\bigcap \mathcal A(\varphi)\subseteq B\subseteq A$ and hence $\mathcal A(\varphi)\subseteq A$.
+%\end{proof}
+
+\subsection{Differences and Complements}
+
+\begin{definition}
+    Let $A$ and $B$ be sets. Then the \emph{difference of $A$ and $B$} is defined as \begin{align}A\setminus B\coloneq\setdef{x\in A\given x\notin B}.\end{align}
+\end{definition}
+
+First we proof some properties of the difference of two sets $A$ and $B$:
+
+\begin{theorem}
+    Let $A$ and $B$ be sets. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item\label{theorem:sets:difference_self} $A\setminus A=\emptyset$.
+        \item\label{theorem:sets:difference_emptyset} $A\setminus \emptyset=A$.
+        \item\label{theorem:sets:difference_subset} $A\setminus B\subseteq A$.
+        \item\label{theorem:sets:difference_inclusion} $A\setminus B\subseteq A\setminus C$ for every subset $C\subseteq B$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item $A\setminus A=\setdef{x\in A\given x\notin A}=\emptyset$, because there is no set $x$ fulfilling $x\in A\land x\notin A$.
+        \item $A\setminus\emptyset=\setdef{x\in A\given x\notin\emptyset}=A$, because $x\in A\land x\notin\emptyset$ is equivalent to $x\in A$.
+        \item This follows directly from remark \ref{remark:sets:specification_subset}.
+        \item Let $C\subseteq B$. Furthermore let $x\in A\setminus B$. Then $x\in A$ and $x\notin B$. Because of $C\subseteq B$ we also have $x\notin C$, hence $x\in A\setminus C$.
+    \end{proofenumerate}
+\end{proof}
+
+The following theorem shows that it is sufficient to only consider the difference of two sets $A$ and $B$ for subsets $B\subseteq A$.
+
+\begin{theorem}
+    Let $A$ and $B$ be sets, then the following statements hold:
+    \begin{intheoremenumerate}
+        \item\label{theorem:sets:difference_supset} $(A\cup B)\setminus B=A\setminus B$
+        \item\label{theorem:sets:difference_subsets_only} $A\setminus B=A\setminus(A\cap B)$
+    \end{intheoremenumerate}
+\end{theorem}
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $x$ be a set. Then we get \begin{align}\begin{split}x\in (A\cup B)\setminus B&\Leftrightarrow x\in A\cup B\land x\notin B\\&\Leftrightarrow (x\in A\lor x\in B)\land x\notin B\\&\Leftrightarrow (x\in A\land x\notin B)\lor (x\in B\land x\notin B)\\&\Leftrightarrow x\in A\land x\notin B\Leftrightarrow x\in A\setminus B.\end{split}\end{align}
+        Hence $(A\cup B)\setminus B=A\setminus B$.
+        \item Set $C=A\cap B$. Note that $x\notin A\cap B$ if and only if $x\notin A\lor x\notin B$.
+
+        \proofsubset Let $x\in A\setminus B$. Then $x\in A$ and $x\notin B$. Hence $x\in A$ and $x\notin C$, which is equivalent to $x\in A\setminus C=A\setminus(A\cap B)$.
+
+        \proofsupset Let $x\in A\setminus C$. Then $x\in A$ and $x\notin C$, which is equivalent to $x\in A$ and $x\notin A\lor x\notin B$. Thus $x\in A$ and $x\notin B$, which is equivalent to $x\in A\setminus B$.
+        
+        In summary, $A\setminus B=A\setminus C=A\setminus(A\cap B)$ follows from theorem \ref{theorem:sets:subset_equals}. $A\cap B\subseteq A$ holds by theorem \ref{theorem:sets:intersection_subsets}.
+    \end{proofenumerate}
+\end{proof}
+
+The previous theorem motivates the following definition:
+
+\begin{definition}
+    Let $A$ be a set and $B$ a subset of $A$. Then the \emph{complement of $B$ in $A$} is defined as \begin{align}B^\complement\coloneq A\setminus B.\end{align}
+\end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Keep in mind that the notation $B^\complement$ requires that $B$ be a subset of $A$, and that the reference to the set $A$ is clear from the context.
+        \item For every subset $C\subseteq A$ holds that $C\cap B^\complement=C\setminus B$. So we can rewrite set differences by complements and intersections.
+        \begin{miniproof}
+            We have $C\subseteq A$ and hence $C\cap A=C$ by theorem \ref{theorem:sets:intersection_absorbption}. Thus $C\cap B^\complement=(C\cap A)\cap B^\complement=C\cap (A\cap B^\complement)$.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+The following properties are fullfilled by the complement:
+
+\begin{theorem}
+    Let $A$ and $B,C$ be sets with $B,C\subseteq A$. Then the following statements hold for the complements in $A$:
+    \begin{intheoremenumerate}
+        \item $A^\complement=\emptyset$ and $\emptyset^\complement=A$.
+        \item $B^\complement\subseteq A$.
+        \item\label{theorem:sets:double_complement} $(B^\complement)^\complement=B$.
+        \item $B\cup B^\complement=A$ and $B\cap B^\complement=\emptyset$, i.e. $\{B,B^\complement\}$ is a partition of $A$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item This statement follos directly from theorem \ref{theorem:sets:difference_self} and \ref{theorem:sets:difference_emptyset}.
+        \item This statement follows directly from theorem \ref{theorem:sets:difference_subset}.
+        \item Let $x$ be a set. Then $x\in (B^\complement)^\complement$ is equivalent to $x\in A$ and $x\notin B^\complement$, which is equivalent to $x\in A$ and $x\notin A\lor x\in B$, which is equivalent to $x\in B$. Hence $(B^\complement)^\complement=B$.
+        \item This statement follows directly from theorem \ref{theorem:sets:difference_inclusion}.
+        \item \proofstep{$B\cup B^\complement=A$} Let $x\in B\cup B^\complement$, then $x\in B$ or $x\in B^\complement$. For $x\in B$ already follows $x\in A$ by $B\subseteq A$. For $x\in B^\complement$ follows $x\in A$ and $x\notin B$, hence $x\in A$ again. Thus $B\cup B^\complement\subseteq A$. Now let $x\in A$. Then $x\in B\lor x\notin B$ is a tautology and therefore true. Hence $x\in B\cup B^\complement$. Thus $A\subseteq B\cup B^\complement$ and consequently $B\cup B^\complement=A$ by theorem \ref{theorem:sets:subset_equals}.
+        
+        \proofstep{$B\cap B^\complement=\emptyset$} Assume there exists an $x\in B\cap B^\complement$. Then $x\in B$ and $x\notin B$, which is a contradiction. Thus $B\cap B^\complement=\emptyset$.
+
+        Thus $\{B,B^\complement\}$ is a partition of $A$.
+    \end{proofenumerate}
+\end{proof}
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[thick]
+        % 1. DEFINE PATHS
+        % A large rectangle for the Universal Set (U) and the two circles
+        \begin{scope}[shift={(0,0)}]
+            \def\universe{(-2,-1.5) rectangle (2,1.5)}
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            
+            % 2. FILL THE COMPLEMENT OF THE UNION
+            % The 'even odd rule' treats the area inside the rectangle but 
+            % outside the circles as the fill zone.
+            \fill[pattern=dots, pattern color=gray] 
+                \universe \circleA \circleB;
+            \fill[white] \circleA \circleB;
+            % 3. DRAW OUTLINES
+            \draw \universe; % The Universal set boundary
+            \draw \circleA;
+            \draw \circleB;
+            % 4. LABELS
+            \node at (-1.2, 0) {$B$};
+            \node at (1.2, 0) {$C$};
+            \node at (0, 1.8) {$A$};
+            \node at (0, -1.8) {$(B\cup C)^\complement$};
+        \end{scope}
+        \node at (2.5,0) {$=$};
+        \begin{scope}[shift={(5,0)}]
+            \def\universe{(-2,-1.5) rectangle (2,1.5)}
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % 2. FILL THE COMPLEMENT OF THE UNION
+            % The 'even odd rule' treats the area inside the rectangle but 
+            % outside the circles as the fill zone.
+            \fill[pattern=dots, pattern color=gray, even odd rule] 
+                \universe \circleA;
+            % 3. DRAW OUTLINES
+            \draw \universe; % The Universal set boundary
+            \draw \circleA;
+            \draw \circleB;
+            % 4. LABELS
+            \node at (-1.2, 0) {$B$};
+            \node[fill=white,circle,inner sep=1pt] at (1.2, 0) {$C$};
+            \node at (0, 1.8) {$A$};
+            \node at (0, -1.8) {$B^\complement$};
+        \end{scope}
+        \node at (7.25,0) {$\cap$};
+        \begin{scope}[shift={(9.5,0)}]
+            \def\universe{(-2,-1.5) rectangle (2,1.5)}
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % 2. FILL THE COMPLEMENT OF THE UNION
+            % The 'even odd rule' treats the area inside the rectangle but 
+            % outside the circles as the fill zone.
+            \fill[pattern=dots, pattern color=gray, even odd rule] 
+                \universe \circleB;
+            % 3. DRAW OUTLINES
+            \draw \universe; % The Universal set boundary
+            \draw \circleA;
+            \draw \circleB;
+            % 4. LABELS
+            \node[fill=white,circle,inner sep=1pt] at (-1.2, 0) {$B$};
+            \node at (1.2, 0) {$C$};
+            \node at (0, 1.8) {$A$};
+            \node at (0, -1.8) {$C^\complement$};
+        \end{scope}
+
+        \begin{scope}[shift={(0,-4.5)}]
+            \def\universe{(-2,-1.5) rectangle (2,1.5)}
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % 2. FILL THE COMPLEMENT OF THE UNION
+            % The 'even odd rule' treats the area inside the rectangle but 
+            % outside the circles as the fill zone.
+            \fill[pattern=dots, pattern color=gray] 
+                \universe;
+            \begin{scope}
+                \clip \circleA;
+                \fill[white] \circleB;
+            \end{scope}
+            % 3. DRAW OUTLINES
+            \draw \universe; % The Universal set boundary
+
+            \draw \circleA;
+            \draw \circleB;
+            % 4. LABELS
+            \node[fill=white,circle,inner sep=1pt] at (-1.2, 0) {$B$};
+            \node[fill=white,circle,inner sep=1pt] at (1.2, 0) {$C$};
+            \node at (0, 1.8) {$A$};
+            \node at (0, -1.8) {$(B\cap C)^\complement$};
+        \end{scope}
+        \node at (2.5,-4.5) {$=$};
+        \begin{scope}[shift={(5,-4.5)}]
+            \def\universe{(-2,-1.5) rectangle (2,1.5)}
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % 2. FILL THE COMPLEMENT OF THE UNION
+            % The 'even odd rule' treats the area inside the rectangle but 
+            % outside the circles as the fill zone.
+            \fill[pattern=dots, pattern color=gray, even odd rule] 
+                \universe \circleA;
+            % 3. DRAW OUTLINES
+            \draw \universe; % The Universal set boundary
+            \draw \circleA;
+            \draw \circleB;
+            % 4. LABELS
+            \node at (-1.2, 0) {$B$};
+            \node[fill=white,circle,inner sep=1pt] at (1.2, 0) {$C$};
+            \node at (0, 1.8) {$A$};
+            \node at (0, -1.8) {$B^\complement$};
+        \end{scope}
+        \node at (7.25,-4.5) {$\cup$};
+        \begin{scope}[shift={(9.5,-4.5)}]
+            \def\universe{(-2,-1.5) rectangle (2,1.5)}
+            \def\circleA{(-0.6,0) circle (1.2)}
+            \def\circleB{(0.6,0) circle (1.2)}
+            % 2. FILL THE COMPLEMENT OF THE UNION
+            % The 'even odd rule' treats the area inside the rectangle but 
+            % outside the circles as the fill zone.
+            \fill[pattern=dots, pattern color=gray, even odd rule] 
+                \universe \circleB;
+            % 3. DRAW OUTLINES
+            \draw \universe; % The Universal set boundary
+            \draw \circleA;
+            \draw \circleB;
+            % 4. LABELS
+            \node[fill=white,circle,inner sep=1pt] at (-1.2, 0) {$B$};
+            \node at (1.2, 0) {$C$};
+            \node at (0, 1.8) {$A$};
+            \node at (0, -1.8) {$C^\complement$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Illustration of the De Morgan's law $(B\cup C)^\complement=B^\complement\cap C^\complement$ with Venn diagrams.}\label{figure:sets:de_morgans_laws}
+\end{figure}
+
+\subsection{Distributive and De Morgan's Laws}
+
+\begin{theorem}[Distributive Laws]\label{theorem:sets:distributive_laws}
+    Let $A$, $B$ and $C$ be sets, then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$.
+        \item $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$.
+    \end{intheoremenumerate}
+\end{theorem}
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $x$ be a set. Then we get the following chain of equivalences by the distrubutive laws of logic:
+        \begin{align}\begin{split}x\in A\cup(B\cap C)\iff& x\in A\lor x\in B\cap C\\
+            \iff& x\in A\lor (x\in B\land x\in C)\\
+            \iff& (x\in A\lor x\in B)\land (x\in A\lor x\in C)\\
+            \iff& x\in A\cup B\land x\in A\cup C\\
+            \iff& x\in (A\cup B)\cap (A\cup C).\end{split}\end{align}
+        Hence $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$ by the axiom of extensionality.
+        \item The identity $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$ follows in an analogous way.
+    \end{proofenumerate}
+\end{proof}
+
+The following theorem shows that not only the distributive laws of logic but also the De Morgan's laws of logic can be translated into the corresponding statements about the complements, unions and intersections of sets:
+
+\begin{theorem}[De Morgan's Laws]
+    Let $A$, $B$ and $C$ be sets with $B\subseteq A$ and $C\subseteq A$. Then the following statements hold:
+    \begin{intheoremenumerate}
+        \item $(B\cup C)^\complement=B^\complement\cap C^\complement$.
+        \item\label{theorem:sets:de_morgan_laws_cap} $(B\cap C)^\complement=B^\complement\cup C^\complement$.
+    \end{intheoremenumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{proofenumerate}
+        \item Let $x$ be a set. We get the following chain of equivalences:
+        \begin{align}\begin{split}x\in(B\cup C)^\complement\iff& x\in A\land x\notin B\cup C\\
+        \iff& x\in A\land\lnot(x\in B\lor x\in C)\\
+        \iff& x\in A\land (x\notin B\land x\notin C)\\
+        \iff& (x\in A\land x\notin B)\land (x\in A\land x\notin C)\\
+        \iff& x\in B^\complement\cap C^\complement.\end{split}\end{align}
+        Hence $(B\cup C)^\complement=B^\complement\cap C^\complement$ by the axiom of extensionality.
+        \item Using (i) and theorem \ref{theorem:sets:double_complement} yiels \begin{align}(B\cap C)^\complement=((B^\complement)^\complement\cap (C^\complement)^\complement)^\complement=((B^\complement\cup C^\complement)^\complement)^\complement=B^\complement\cup C^\complement.\end{align}
+        Hence $(B\cap C)^\complement=B^\complement\cup C^\complement$.
+    \end{proofenumerate}
+\end{proof}
+
+\subsection{Axiom of Foundation}
+
+In the last subsection we introduce the axiom of foundation, which guarantees many important properties of sets: For example that no set can be an element of itself. The axiom of foundation also ensures that pairs of sets are always sets distinct from their elements, that means if $A$ and $B$ are sets, we can only show $A\neq \{A,B\}$ and $B\neq \{A,B\}$ by the axiom of foundation.
+
+\begin{axiom}[Foundation]
+    For every non-empty set $S$ there exists a set $F\in S$ such that there exists no set $x$ that is contained in $S$ and $F$ simultaneously. Or more formally:
+    \begin{align}\forall S\colon S\neq\emptyset\Rightarrow \exists F\in S\ \forall x\in S\colon x\notin F.\end{align}
+    A set $F\in S$ with the property $\forall x\in S\colon x\notin F$ is called a \emph{foundation} of $S$.
+\end{axiom}
+
+\begin{theorem}\label{theorem:sets:set_not_in_set}
+    For every set $A$ holds $A\notin A$. That means no set can contain itself.
+\end{theorem}
+\begin{proof}
+    Let $A$ be a set. By the axiom of pairing the singleton set $S=\{A\}$ exists (see \ref{example:sets:singleton}). Because $A\in S$ by remark \ref{remark:sets:pair_elements}, the set $S$ is non-empty. Thus by the axiom of foundation there exists a foundation $F\in S$ such that $x\notin F$ for every set $x\in S$. Because of $A\in S$ we have $A\notin F$. But from $F\in S=\{A\}$ we conclude that $F=A$ by example \ref{example:sets:singleton}. Thus $A\notin A$.
+\end{proof}
+
+\begin{theorem}\label{theorem:sets:element_of_antisymmetric}
+    Let $A$ and $B$ be sets. Then $A\in B$ and $B\in A$ cannot hold at the same time.
+\end{theorem}
+\begin{proof}
+    Let $A$ and $B$ be sets. By the axiom of pairing the pair $\{A,B\}$ exists. Because $A\in \{A,B\}$ (and $B\in \{A,B\}$) by remark \ref{remark:sets:pair_elements}, the set $\{A,B\}$ is non-empty. Thus by the axiom of foundation there exists a foundation $F\in \{A,B\}$ such that $x\notin F$ for every set $x\in \{A,B\}$. From $F\in\{A,B\}$ follows $F=A$ or $F=B$ (see remark \ref{remark:sets:pair_elements}). For the case $F=A$ we conclude that $B\notin A$ because of $B\in\{A,B\}$. For the case $F=B$ we conclude that $A\notin B$ because of $A\in\{A,B\}$. Hence $A\in B$ and $B\in A$ cannot hold at the same time.
+\end{proof}
+
+\begin{theorem}
+    Let $A$ and $B$ be sets. Then $A\neq \{A,B\}$ and $B\neq \{A,B\}$ holds.
+\end{theorem}
+
+\begin{proof}
+    We proof the statement via contraposition. Assume that $A=\{A,B\}$. Then $A\in\{A,B\}$ by remark \ref{remark:sets:pair_elements}. Because of $A=\{A,B\}$ we also have $A\in A$, which is a contradiction due to theorem \ref{theorem:sets:set_not_in_set}. Thus $A\neq\{A,B\}$. In the same way we can conclude that $B\neq\{A,B\}$ holds.
+\end{proof}
+
+In the next sections we well introduce further axioms to gurantee the existence of infinite sets, which are important for the construction of the natural numbers. For now we have enough axioms to formalize relations and mappings between sets, which are important tools to define the underlying structure of natural numbers.
+
+\subsection{Russell's Paradox}
+
+In naive set theory, the axiom of comprehension states that for every property $\varphi(x)$ there exists a set $\setdef{x\given \varphi(x)}$ such that for all sets $y$, $y\in\setdef{x\given \varphi(x)}$ holds if and only if $\varphi(y)$ is fullfilled. In comparison to the axiom of specification, the axiom of comprehension is more general and does not require a base set $A$, from which elements are selected by a property $\varphi(x)$.
+
+Even when the axiom of comprehension seems intuitive and valid, it leads to a paradox. For example, the axiom of comprehension allows us to define the set of all sets. Because by the axiom of foundation, every set is not an element of itself, we could define the set of all sets by \begin{align}R=\setdef{x\given x\notin x},\end{align}
+where the existence is provided by the axiom of comprehension with the property $\varphi(x)\equiv x\notin x$. By the axiom of foundation, $R\notin R$ holds, but this leads to $R\in R$ by definition of $R$, a contradiction. Therefore the statement $R\in R$ is neither true nor false -- the axiom of comprehension is inconsistent. The paradox is called \emph{Russell's Paradox}. Even without the axiom of foundation, $R\in R$ leads to $R\notin R$ by definition of $R$, which is also a contradiction. If we define $S=\setdef{x\given \text{$x$ is a set}}$, then we would be able to construct $R$ as a subset of $S$ by the axiom of specification, which also leads to a contradiction.
+
+One solution to the Russell's Paradox is to use the axiom of specification instead of the axiom of comprehension. The consequence is, that the set of all sets does not exist in the Zermelo-Fraenkel set theory. Another solution is the introduction of the \emph{Neumann-Bernays-Gödel} set theory (NBG), which reformulates the ZF set theory in such a way, that sets are a special kind of so called \emph{classes}. In this theory, the objects $R$ and $S$ are identified as \emph{proper classes}, that are not sets, but their elements are sets.
+
+\subsection{Exercises}
+
+\begin{exercise}[Absorption Laws]
+    Let $A$ and $B$ be sets. Show the following statements:
+    \begin{exerciseenumerate}
+        \item $A\cup(A\cap B)=A$.
+        \item $A\cap(A\cup B)=A$.
+    \end{exerciseenumerate}
+\end{exercise}
+\begin{solution}
+    \begin{solutionenumerate}
+        \item We have $A\cap B\subseteq A$ by theorem \ref{theorem:sets:intersection_subsets} and hence $A\cup(A\cap B)= A$ by theorem \ref{theorem:sets:union_absorbption}.
+        \item We have $A\subseteq A\cup B$ by theorem \ref{theorem:sets:union_subsets} and therefore $A\cap(A\cup B)=A$ by theorem \ref{theorem:sets:intersection_absorbption}.
+    \end{solutionenumerate}
+\end{solution}
+
+\begin{exercise}[Symmetric difference]\label{exercise:sets:symmetric_difference_properties}
+    Let $A$ and $B$ be sets. Then the \emph{symmetric difference} of $A$ and $B$ is defined as \begin{align}A\oplus B\coloneq (A\cup B)\setminus (A\cap B).\end{align} Show for sets $A$, $B$ and $C$ the following statements:
+    \begin{exerciseenumerate}
+        \item $A\oplus B=(A\setminus B)\cup(B\setminus A)$.
+        \item $A\oplus B=B\oplus A$.
+        \item $(A\oplus B)\oplus C=A\oplus(B\oplus C)$.
+        \item $A\oplus \emptyset=A$.
+        \item $A\oplus A=\emptyset$.
+        \item $A\oplus C\subseteq (A\oplus B)\cup (B\oplus C)$.
+        \item $(A\cap C)\oplus (C\cap B)\subseteq A\oplus B$.
+        \item $(A\cup C)\oplus (C\cup B)\subseteq A\oplus B$.
+    \end{exerciseenumerate}
+\end{exercise}
+\begin{solution}
+    \begin{solutionenumerate}
+        \item Note that $A\cap B\subseteq A\cup B$ and $A\oplus B=(A\cap B)^\complement$ with respect to $A\cup B$. Then we conclude with the De Morgan's law and theorem \ref{theorem:sets:difference_supset} that
+        \begin{align}\begin{split}
+        A\oplus B&=(A\cap B)^\complement\\&=A^\complement\cup B^\complement\\
+        &=((A\cup B)\setminus A)\cup((A\cup B)\setminus B)=(B\setminus A)\cup (A\setminus B).
+        \end{split}\end{align}
+        Hence $A\oplus B=(A\setminus B)\cup(B\setminus A)$.
+        \item $A\oplus B=B\oplus A$ follows directly by the commutativity of the union and intersection and by the definition of the symmetric difference.
+        \item 
+        \item $A\oplus\emptyset=(A\cup\emptyset)\setminus (A\cap\emptyset)=A\setminus\emptyset=A$.
+        \item $A\oplus A=(A\cup A)\setminus (A\cap A)=A\setminus A=\emptyset$.
+        \item 
+        \item 
+        \item 
+    \end{solutionenumerate}
+\end{solution}
+
+\begin{exercise}[Powersets]
+    Let $A$ and $B$ be sets. Show the following statements:
+    \begin{exerciseenumerate}
+        \item $\powerset(A)\cap\powerset(B)=\powerset(A\cap B)$.
+        \item $\powerset(A)\cup\powerset(B)\subseteq\powerset(A\cup B)$.
+        \item $\powerset(A\oplus B)=\setdef{S\subseteq A\cup B\given S\cap (A\cap B)=\emptyset}$
+    \end{exerciseenumerate}
+\end{exercise}
+
+\begin{solution}
+    \begin{solutionenumerate}
+        \item \proofsubset Let $X\in\powerset(A\cap B)$, then $X\subseteq A\cap B$. We know that $A\cap B\subseteq A$ and $A\cap B\subseteq B$ by theorem \ref{theorem:sets:intersection_subsets}. Hence $X\subseteq A$ and $X\subseteq B$ follows, thus $X\in\powerset(A)\cap\powerset(B)$.
+        
+        \proofsupset Let $X\in\powerset(A)\cap\powerset(B)$, then $X\subseteq A$ and $X\subseteq B$. That means every element of $X$ is an element of $A$ and $B$. Hence $X\subseteq A\cap B$ follows and thus $X\in\powerset(A\cap B)$.
+
+        \item Let $X\in\powerset(A)\cup\powerset(B)$, then $X\subseteq A$ or $X\subseteq B$. In both cases $X\subseteq A\cup B$ holds by theorem \ref{theorem:sets:union_subsets}. Thus $X\in\powerset(A\cup B)$.
+    \end{solutionenumerate}
+\end{solution}
+
+%\begin{exercise}
+%    Let $A$, $B$, $C$ and $D$ be sets. Show that $\{A,\{A,B\}\}=\{C,\{C,D\}\}$ if and only if $A=C$ and $B=D$.
+%\end{exercise}
+
+\begin{exercise}[Successor]
+    Let $A$ be a set. Then $A\cup\{A\}$ is called the \emph{successor} of $A$. Show that $A\neq A\cup\{A\}$.
+\end{exercise}
+\begin{solution}
+    Let $A$ be a set. Then $A\in\{A\}$ and hence $A\in A\cup\{A\}$. Because of $A\notin A$ by theorem \ref{theorem:sets:set_not_in_set} we have $A\neq A\cup\{A\}$ by the axiom of extensionality.
+\end{solution}
+
+\begin{exercise}[No circular chains]
+    Let $A$, $B$ and $C$ be sets with $A\in B$ and $B\in C$. Then $C\notin A$.
+\end{exercise}
+\begin{solution}
+    Consider the set $S=\bigcup\{\{A\},\{B,C\}\}$. Then $x\in S$ if and only if $x=A$ or $x=B$ or $x=C$. Moreover $S$ is non-empty, so by the axiom of foundation there exists a set $F\in S$ with $x\notin F$ for every $x\in S$. By assumption, $F$ can not be $B$ and $C$. Therefore $F=A$ and hence $C\notin A$ because of $C\in S$.
+\end{solution}
+
+\begin{exercise}[Transitive sets]
+    Let $A$ be a set. Then $A$ is called \emph{transitive} if and only if every element of $A$ is also a subset of $A$, i.e. $A\subseteq \powerset(A)$. Show the following statements:
+    \begin{exerciseenumerate}
+        \item Give three examples of transitive sets.
+        \item If $A$ is a non-empty transitive set, then $\emptyset\in A$
+        \item $A$ is transitive if and only if $\bigcup A\subseteq A$.
+        \item If $A$ is transitive, then the successor $A\cup\{A\}$ is also transitive.
+        \item Let $\mathcal F$ be set, so that $B$ is transitive for every $B\in\mathcal F$. Then $\bigcup\mathcal F$ is transitive.
+        \item If $A$ is transitive, then $\bigcap A$ is also transitive.
+    \end{exerciseenumerate}
+\end{exercise}
+
+\begin{solution}
+    \begin{solutionenumerate}
+        \item The sets $\emptyset$, $\{\emptyset\}$ and $\{\emptyset,\{\emptyset\}\}$ are transitive.
+        \item Let $A$ be non-empty and transitive. By the axiom of foundation there exists a foundation $F\in A$ such that $x\notin F$ for every set $x\in A$. Assume that $F$ is non-empty, that means there exists an element $x\in F$. Because $A$ is transitive, we have $F\subseteq A$ and $x\in A$. But form that follows $x\notin F$, which is a contradiction. Therefore $F=\emptyset$ and hence $\emptyset\in A$.
+        \item \proofright Let $A$ be transitive. Let $x\in\bigcup A$, then there exists a set $B\in A$ with $x\in B$. Because $A$ is transitive, we have $B\subseteq A$ and hence $x\in A$. Thus $\bigcup A\subseteq A$.
+        
+        \proofleft Let $\bigcup A\subseteq A$. Let $x\in A$. We have to show that $x\subseteq A$ holds. Let $y\in x$, then $y\in\bigcup A$ because of $x\in A$. Thus $x\subseteq\bigcup A\subseteq A$ follows.
+        
+        \item Let $A$ be transitive and $x\in A\cup\{A\}$. Then $x\in A$ or $x\in \{A\}$. In the first case $x\subseteq A$ follows by the transitiviy of $A$, hence $x\subseteq A\subseteq A\cup\{A\}$. In the second case $x=A$ follows and thus $x\subseteq A\subseteq A\cup\{A\}$. In both cases we concluded $x\subseteq A\cup\{A\}$. Hence the successor $A\cup\{A\}$ is transitive.
+        
+        \item Let $x\in\bigcup\mathcal F$, then there exists a set $B\in\mathcal F$ with $x\in B$. Because $B$ is transitive, we have $x\subseteq B$. Now let $y\in x$, then $y\in B$ follows and thus $y\in \bigcup\mathcal F$. Hence $x\subseteq\bigcup\mathcal F$.
+        
+        \item Let $A$ be transitive. Furthermore let $y\in \bigcap A$. We have to show that $y\subseteq\bigcap A$ holds. Assume that $y$ is not a subset of $\bigcap A$. Then there exists a set $z\in y$ with $z\notin\bigcap A$. That means there exists a set $B\in A$ with $z\notin B$. Because $A$ is transitive, we have $B\subseteq A$. By definition of $\bigcap A$ we also have $y\in B$ and hence $y\in A$, and thus $y\subseteq A$ by the transitivity of $A$. So we conclude $z\in A$. But that means $y\in z$ by the definition of $\bigcap A$. Therefore $z\in y$ and $y\in z$ hold at the same time which is a contradiction by theorem \ref{theorem:sets:element_of_antisymmetric}.
+    \end{solutionenumerate}
+\end{solution}
