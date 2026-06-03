@@ -469,6 +469,9 @@ The preimage under $f$ satisfies the following properties:
         \begin{miniproof}
             Let $A\in X/R$, then there exists an $x\in X$ such that $A=[x]_R$, therefore $\pi_R(x)=A$. So $\pi_R$ is surjective. Now let $x,y\in X$, then $xRy$ holds if and only if $[x]_R=[y]_R$, which is equivalent to $\pi_R(x)=\pi_R(y)$.
         \end{miniproof}
+        \item\label{example:mappings:singleton_mapping} Let $X$ be a set, then the \emph{singleton mapping} defined by
+        \begin{align}s\colon X\to\powerset(X),\qquad x\mapsto\{x\}\end{align}
+        is an injection.
     \end{exampleenumerate}
 \end{examples}
 
@@ -1018,21 +1021,22 @@ This allows us in the future to easily show that two sets have the same cardinal
 
 \subsection{Axiom of Choice}
 
-The axiom of choice states that for every family of non-empty sets, there exists a mapping that assigns to each set in the family an element of that set. This axiom is independent of the other axioms of set theory, which means that it can neither be proven nor disproven from the other axioms. However, it is widely accepted and used in many areas of mathematics. Thorughout the book we will mention the axiom of choice explicitly whenever we use it. We formalize the axiom of choice in the following way:
+The \emph{Axiom of Choice} states that for every family of non-empty sets, there exists a mapping that assigns to each set in the family an element of that set. This axiom is independent of the other axioms of set theory, which means that it can neither be proven nor disproven from the other axioms. However, it is widely accepted and used in many areas of mathematics. Thorughout the book we will mention the Axiom of Choice explicitly whenever we use it. We formalize the Axiom of Choice in the following way:
 
 \begin{axiom}[Axiom of Choice]\label{axiom:mappings:choice}
     For every set $X$ and every family $\mathcal F\subseteq\powerset(X)$ of non-empty subsets of $X$, there exists a so called \emph{choice mapping} \begin{align}f\colon\mathcal F\to X\end{align}
-    so that $f(F)\in F$ holds for all $F\in\mathcal F$.
+    so that $f(F)\in F$ holds for all $F\in\mathcal F$. We write \axiomsymbol{AC} for the \emph{Axiom of Choice}.
 \end{axiom}
 
 \begin{remarks}
     \begin{remarkenumerate}
         \item Note that the Axiom of Choice is purely non-constructive; it guarantees the existence of a choice function but provides no explicit rule or algorithm for its definition. In the general case, we cannot explicitly determine which specific element $x \in F$ is selected as the image $f(F)$ for each $F \in \mathcal{F}$.
         \item Let $X$ be a set and $\mathcal{F} \subseteq \powerset(X)$ be a family of non-empty subsets of $X$. In proofs, the Axiom of Choice is typically invoked via the following formulation: \enquote{For every set $F \in \mathcal{F}$, we \emph{choose} an element $f(F) \in F$}. Formally, this selection corresponds to the existence of a choice function $f \colon \mathcal{F} \to X$ such that $f(F) \in F$ for every $F \in \mathcal{F}$.
+        \item Let $X$ be a set, then there exists a choice mapping $f\colon\powerset(X)\setminus\{\emptyset\}\to X$ which assings every non-empty subset $A\subseteq X$ to an element $f(A)\in A$.
     \end{remarkenumerate}
 \end{remarks}
 
-The following theorem demonstrates the use of the axiom of choice in the context of mappings:
+The following theorem demonstrates the use of the Axiom of Choice in the context of mappings:
 
 \begin{theorem}\label{theorem:mappings:choice_partition}
     Let $X$ and $Y$ be non-emptysets and $f\colon X\rightarrow Y$ a mapping.

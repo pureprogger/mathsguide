@@ -1,0 +1,19 @@
+\newlist{definitionenumerate}{enumerate}{1}
+\setlist[definitionenumerate]{label={(\arabic*)},ref=\thedefinition(\arabic*), align=left, labelwidth=!}
+
+\newlist{intheoremenumerate}{enumerate}{1}
+\setlist[intheoremenumerate]{label=\bfseries\sffamily(\roman*),ref=\thetheorem(\roman*), align=left, labelwidth=!}
+\newlist{proofenumerate}{enumerate}{1}
+\setlist[proofenumerate]{label=\bfseries\sffamily(\roman*):,wide,itemsep=-1ex,partopsep=0pt}
+
+\newlist{exampleenumerate}{enumerate}{1}
+\setlist[exampleenumerate]{label=\bfseries\sffamily(\alph*),ref=\theexamples(\alph*),before=\leavevmode, align=left, labelwidth=!,wide}
+
+\newlist{exerciseenumerate}{enumerate}{1}
+\setlist[exerciseenumerate]{label=\bfseries\sffamily(\arabic*),ref=\theexercise(\arabic*),before=\leavevmode, align=left, labelwidth=!,wide}
+\newlist{solutionenumerate}{enumerate}{1}
+\setlist[solutionenumerate]{label=\bfseries\sffamily(\arabic*),ref=\theexercise(\arabic*),before=\leavevmode, align=left, labelwidth=!,wide}
+
+
+\newlist{remarkenumerate}{enumerate}{1}
+\setlist[remarkenumerate]{label=\bfseries\sffamily(\alph*),ref=\theremarks(\alph*),before=\leavevmode, align=left, labelwidth=!, wide}

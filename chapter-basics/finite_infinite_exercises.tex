@@ -1,10 +1,35 @@
 \subsection{Exercises}
 
-\begin{exercise}\label{exercise:finite_infinite:dedekind_characterization_pigeonhole}
-    Prove the \enquote{$\Rightarrow$} direction of the Dedekind Characterization (theorem \ref{theorem:finite_infinite:dedekind_characterization}) without using the Cantor-Schröder-Bernstein theorem but the Pigeonhole Principle (theorem \ref{theorem:finite_infinite:pigeonhole_principle}) instead.
+\begin{exercise}
+    Let $X$ be an infinite set. Show the following statements without using \axiomsymbol{AC}:
+    \begin{intheoremenumerate}
+        \item Let $Y$ be a set with $X\subseteq Y$, then $Y$ is infinite.
+        \item Let $Y$ be a set and assume there exists an injection $f\colon X\to Y$. Then $Y$ is infinite.
+        \item $\powerset(X)$ is infinite.
+    \end{intheoremenumerate}
+\end{exercise}
+
+\begin{exercise}
+    Let $X$ be a Dedekind-infinite set. Show the following statements without using \axiomsymbol{AC}:
+    \begin{intheoremenumerate}
+        \item Let $Y$ be a set with $X\subseteq Y$, then $Y$ is Dedekind-infinite.
+        \item For every finite subset $A\subseteq X$ holds that $X\setminus A$ is Dedekind-infinite.
+        \item $\powerset(X)$ is Dedekind-infinite.
+    \end{intheoremenumerate}
+\end{exercise}
+
+\begin{exercise}\label{exercise:finite_infinite:injection_from_infinite}
+    Let $X$ and $Y$ be sets, $X$ infinite and $f\colon X\to Y$ an injection. Show that $Y$ is also infinite.
 \end{exercise}
 \begin{solution}
-    Let $X$ be finite. Assume, that there exists a proper subset $S\subset X$, so that there is an injection $f\colon X\to S$. Because $X$ is finite, there exists a bijection $g\colon X\to\setN_m$ for $m=|X|$. From theorem \ref{theorem:finite_infinite:subsets_finite} it follows that $S$ is also finite with $n=|S|<|X|=m$. So there exists also a bijection $h\colon S\to\setN_n$. Hence, the composition $h\circ f\circ g^{-1}\colon \setN_m\to\setN_n$ is an injection as a composition of injective mappings. But this contradicts the Pigeonhole Principle (theorem \ref{theorem:finite_infinite:pigeonhole_principle}) due to $m>n$.
+    By theorem \ref{theorem:finite_infinite:infinite_iff_injections} there exists an injection $g\colon\setN\to X$. Then $f\circ g\colon\setN\to Y$ is also an injection. Hence $Y$ is infinite by theorem \ref{theorem:finite_infinite:infinite_iff_injections}.
+\end{solution}
+
+\begin{exercise}
+    Let $X$ be a set. Show that if $X$ is infinite then $\powerset(X)$ is infinite.
+\end{exercise}
+\begin{solution}
+    The singleton mapping $s\colon X\to\powerset(X), x\mapsto\{x\}$ is an injection (see example \ref{example:mappings:singleton_mapping}). Therefore $\powerset(X)$ is infinite by exercise \ref{exercise:finite_infinite:injection_from_infinite}.
 \end{solution}
 
 \begin{exercise}\label{exercise:finite_infinite:pigeonhole_principle}

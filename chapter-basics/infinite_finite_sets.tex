@@ -212,17 +212,20 @@ The Uniqueness Theorem states, that the canonical $n$-element sets $\setN_n$ are
 \end{proof}
 
 \begin{theorem}
-    Let $X$ be a finite set and $a\notin X$, then $X\cup\{a\}$ is also finite with \begin{align}|X\cup\{a\}|=|X|+1.\end{align}
-        %\item\label{theorem:finite_infinite:less_one} Let $X$ be a finite set and $a\in X$, then $X\setminus\{a\}$ is also finite with \begin{align}|X\setminus\{a\}|=|X|-1.\end{align}
+    Let $X$ be a finite set, then the following statements hold:
+    \begin{intheoremenumerate}
+        \item\label{theorem:finite_infinite:less_one} Let $a\in X$, then $X\setminus\{a\}$ is also finite with \begin{align}|X\setminus\{a\}|=|X|-1.\end{align}
+        \item\label{theorem:finite_infinite:plus_one} Let $X$ be a finite set and $a\notin X$, then $X\cup\{a\}$ is also finite with \begin{align}|X\cup\{a\}|=|X|+1.\end{align}
+    \end{intheoremenumerate}
 \end{theorem}
 \begin{proof}
-        %\item Let $n\in\setNnn$ and $a\in\setN_n$. Note that $a<n$. We define the mapping
-           % \begin{align}f\colon \setN_n\setminus\{a\}\to\setN_{n-1},\qquad b\mapsto \begin%{cases}b, & b<a \\ b-1, & b>a\end{cases}\end{align}
-           % This mapping is well-defined and bijective (see exercise \ref%{exercise:finite_infinite:canonical_n_sets_bijection}), hence $\setN_n\setminus\{a\}%\sim\setN_{n-1}$.
-        %\item Let $X$ be a finite set and $a\in X$. Then there exists a bijection $f\colon X\to\setN_n$ with $n=|X|$. We have $f(a)\in\setN_n$, hence by the first part of this theorem $\setN_n\setminus\{f(a)\}\sim\setN_{n-1}$. The restriction $f'\colon X\setminus\{a\}\to \setN_n\setminus\{f(a)\}$ is a well-defined bijection, because $f$ is also a bijection. Hence $X\setminus\{a\}\sim \setN_n\setminus\{f(a)\}\sim \setN_{n-1}$, which implies that $X\setminus\{a\}$ is finite with $|X\setminus\{a\}|=n-1=|X|-1$.
-    Let $X$ be a finite set and $a\notin X$. Then there exists a bijection $f\colon X\to\setN_n$ with $n=|X|$. We define the mapping
-    \begin{align}g\colon X\cup\{a\}\to\setN_{n+1},\qquad x\mapsto \begin{cases}f(x), & x\in X \\ n, & x=a\end{cases}\end{align}
-    This mapping is well-defined and bijective. Then $X\cup\{a\}\sim\setN_{n+1}$, which implies that $X\cup\{a\}$ is finite with $|X\cup\{a\}|=n+1=|X|+1$.
+    \begin{proofenumerate}
+        \item Let $X$ be a finite set and $a\in X$. Then there exists a bijection $f\colon X\to\setN_n$ with $n=|X|$. We have $f(a)\in\setN_n$, hence by lemma \ref{lemma:finite_infinite:pigeonhole_principle} follows $\setN_n\setminus\{f(a)\}\sim\setN_{n-1}$. The restriction $f'\colon X\setminus\{a\}\to \setN_n\setminus\{f(a)\}$ is a well-defined bijection, because $f$ is also a bijection. Hence $X\setminus\{a\}\sim \setN_n\setminus\{f(a)\}\sim \setN_{n-1}$, which implies that $X\setminus\{a\}$ is finite with $|X\setminus\{a\}|=n-1=|X|-1$.
+        
+        \item Let $X$ be a finite set and $a\notin X$. Then there exists a bijection $f\colon X\to\setN_n$ with $n=|X|$. We define the mapping
+        \begin{align}g\colon X\cup\{a\}\to\setN_{n+1},\qquad x\mapsto \begin{cases}f(x), & x\in X \\ n, & x=a\end{cases}\end{align}
+        This mapping is well-defined and bijective. Then $X\cup\{a\}\sim\setN_{n+1}$, which implies that $X\cup\{a\}$ is finite with $|X\cup\{a\}|=n+1=|X|+1$.
+    \end{proofenumerate}
 \end{proof}
 
 \subsection{Subsets of finite sets}
@@ -327,11 +330,37 @@ The following theorem gives some properties of infinite sets:
     In summary, $S=\setN$ follows by the induction axiom, so the statement holds.
 \end{proof}
 
+\begin{theorem}\label{theorem:finite_infinite:injection_from_natural_numbers}
+    Let $X$ be a set and assume there exists an injection $f\colon\setN\to X$. Then $X$ is infinite.
+\end{theorem}
+\begin{proof}
+    By assumption, there exists an injection $f\colon\setN\to X$. Hence, for every $n\in\setN$ the restricted mapping $f\vert_{\setN_n}\colon\setN_n\to X$ is an injection. So $X$ is infinite by theorem \ref{theorem:finite_infinite:infinite_iff_injections}.
+\end{proof}
+
 \subsection{Dedekind-Infinite Sets}
+
+As mentioned before, when we constructed the natural numbers, we had to find a set that ensures the existence of an injection from the set to a proper subset of it. Such sets are called \emph{Dedekind-infinite} sets, and as exercise \ref{exercise:natural_numbers:dedekind_construction} shows, those sets are already sufficient to construct the natural numbers without the usage of the Axiom of Foundation. In this subsection we show that the terms Dedekind-infinite and infinite are equivalent in \axiomsymbol{ZC}.
 
 \begin{definition}[Dedekind-Infinite]
     A set $X$ is called \emph{Dedekind-infinite} if and only if there exists an injection onto a proper subset $S\subset X$.
 \end{definition}
+
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item Let $X$ be a set, then $X$ is Dedekind-infinite if and only if there exists a bijection $f\colon X\to S$ onto a proper subset $S\subset X$.
+        \begin{miniproof}
+            \proofright Let $X$ be Dedekind-infinite, then there exists an injection $f\colon X\to S$ onto a proper subset $S\subset X$. Then $\tilde f\colon X\to f(S)$ is a bijection, where $f(S)\subseteq S\subset X$ holds.
+
+            \proofleft Every bijection is also injective.
+        \end{miniproof}
+        \item Every Dedekind-infinite set is non-empty.
+        \begin{miniproof}
+            For the empty set $\emptyset$ there does not exist a proper subset. Hence, every Dedekind-infinite set must be non-empty.
+        \end{miniproof}
+    \end{remarkenumerate}
+\end{remarks}
+
+We already identified Dedekind-infinite sets in the previous section:
 
 \begin{examples}
     \begin{exampleenumerate}
@@ -346,7 +375,29 @@ The following theorem gives some properties of infinite sets:
     \end{exampleenumerate}
 \end{examples}
 
-\begin{theorem}
+The sufficient condition for infinite sets from theorem \ref{theorem:finite_infinite:injection_from_natural_numbers} is also sufficient for Dedekind-infinite sets:
+
+\begin{theorem}\label{theorem:finite_infinite:dedekind_infinite_setn_injection}
+    Let $X$ be a set. If there exists an injection $h\colon \setN\rightarrow X$, then $X$ is Dedekind-infinite.
+\end{theorem}
+
+\begin{proofsketch}
+    The goal is to find an injection or bijection that maps $X$ onto a proper subset of $X$. For that we define a mapping that shifts the indexes of the elements in $h(\setN)$ by one using the successor mapping $\sigma\colon\setN\to\setN\setminus\{0\}$. More precisely, we define a mapping from $X$ to $X\setminus\{h(0)\}$ by shifting every element in $h(\setN)$ by one, i.e. $x\mapsto h(n+1)$ if $x=h(n)$ for every $n\in\setN$ and mapping every element in $X\setminus h(\setN)$ to itself. We will verify that this mapping is well-defined and bijective and ensures that the image is a proper subset of $X$, because $h(0)$ is not in the image anymore.
+\end{proofsketch}
+
+\begin{proof}
+    Let $X$ be a set and $h\colon \setN\rightarrow X$ an injection. Then $\tilde h\colon\setN\to h(\setN)$ is bijective. We define the mapping
+    \begin{align}b\colon X\to X\setminus\{ h(0)\},\qquad x\mapsto\begin{cases} \tilde h(\tilde h^{-1}(x)+1), & x\in h(\setN)\\ x, & x\in X\setminus h(\setN)\end{cases}\end{align}
+    and verify that $b$ is well-defined and bijective using corollary \ref{corollary:mappings:bijective_union}.
+    Recall that $\sigma\colon \setN\to\setN\setminus\{0\}$ denotes the bijective successor mapping of the natural numbers. Then the composition $f=\tilde h\circ \sigma\circ\tilde h^{-1}\colon h(\setN)\to h(\setN)\setminus\{ h(0)\}$ is a well-defined bijection as composition of bijections and it holds that $f(x)=\tilde h(\tilde h^{-1}(x)+1)$ for all $x\in h(\setN)$. Also the identity mapping $g=\idmap_ {X\setminus h(\setN)}\colon (X\setminus h(\setN))\to (X\setminus h(\setN))$ is a bijection.
+
+    For the domains of $f$ and $g$ we have the relations $h(\setN)\cup(X\setminus h(\setN))=h(\setN)$ as well as $h(\setN)\cap(X\setminus h(\setN))=\emptyset$ and for the images \begin{align}f(h(\setN))\cup g(X\setminus h(\setN))=(h(\setN)\setminus\{h(0)\})\cup(X\setminus h(\setN))=h(\setN)\setminus\{0\}.\end{align}
+    In summary, $h$ is well-defined and bijective by corollary \ref{corollary:mappings:bijective_union}. Because $X\setminus\{h(0)\}$ is a proper subset of $X$, we conclude that $X$ is Dedekind-infinite.
+\end{proof}
+
+Note that for a set to be Dedekind-infinite, the existence of only one injection is sufficient, whereas for an infinite set, the existence of an infinite amount of injections is sufficient (see theorem \ref{theorem:finite_infinite:infinite_iff_injections}). The next theorem shows that Dedekind-infinite sets are indeed infinite:
+
+\begin{theorem}\label{theorem:finite_infinite:dedekind_infinite_is_infinite}
     Every Dedekind-infinite set is infinite.
 \end{theorem}
 \begin{proof}
@@ -354,24 +405,18 @@ The following theorem gives some properties of infinite sets:
     By assumption, there exists a proper subset $S\subset X$, so that there is an injection $f\colon X\to S$. By theorem \ref{theorem:finite_infinite:subsets_finite}, $S$ is also finite with $|S|<|X|$. But by the existence of the injection $f\colon X\to S$, also $|X|\leq |S|$ follows from theorem \ref{theorem:finite_infinite:size_comparison:injection}, which is a contradiction. So $X$ must be infinite.
 \end{proof}
 
-For the proof of the following theorem the axiom of choice is needed to construct an injection from $\setN$ to $X$ for an infinite set $X$:
+The converse of the previous theorem -- namely, that every infinite set is also Dedekind infinite -- can be shown using the Axiom of Choice (\axiomsymbol{AC}) . Using \axiomsymbol{AC}, we first obtain a stronger characterization of infinite sets than that given in Theorem \ref{theorem:finite_infinite:infinite_iff_injections}:
 
-\begin{theorem}
-    Let $X$ be a set. Then the following statements are equivalent:
-    \begin{intheoremenumerate}
-        \item $X$ is infinite.
-        \item There exists an injection $f\colon\setN\to X$.
-    \end{intheoremenumerate}
+\begin{theorem}\label{theorem:finite_infinite:infinite_setn_injection}
+    In \axiomsymbol{ZC}, if $X$ is infinite, then there exists an injection $f\colon\setN\to X$.
 \end{theorem}
 
+\begin{proofsketch}
+    The goal is to construct an injection $f\colon\setN\to X$. We use the fact that $X\setminus Y$ is always non-empty for every finite subset $Y\subseteq X$. Then we construct recursively a mapping $f\colon\setN\to X$ in the following way: We choose an arbitrary element $f(0)\in X$ and for every $n\in\setN$ we choose an element $f(n+1)\in X\setminus\{f(0),f(1),\ldots,f(n)\}$, which is possible by the previous argument. By this we ensure that $f$ is indeed an injection, because by construction $f(m)\neq f(n)$ holds for all $m,n\in\setN$ with $m<n$. The problem with this argument is, that we use a more general form of recursion, where $f(n+1)$ not only depends on $f(n)$ but also on all precceeding images $f(0),f(1),\ldots,f(n)$. The following formal proof shows that we can still use the recursion theorem \ref{theorem:natural_numbers:recursion_theorem} if we first define a sequence of sets $B(0),B(1),B(2),\ldots$ recursively, where $B(n+1)$ is a subset of $X$ that contains an element in $X\setminus B(n)$ choosen by a choice mapping from $\powerset(X)\setminus\{\emptyset\}$ to $X$.
+\end{proofsketch}
+
 \begin{proof}
-    \proofcase{ii}{i} By assumption, there exists an injection $f\colon\setN\to X$. Hence, for every $n\in\setN$ the restricted mapping $f\vert_{\setN_n}\colon\setN_n\to X$ is an injection. So $X$ is infinite by theorem \ref{theorem:finite_infinite:infinite_iff_injections}.
-
-    \proofcase{i}{ii} Let $X$ be infinite. We define the mapping
-    \begin{align}F\colon\setN\to\powerset(\powerset(X)),\qquad n\mapsto \setdef{A\subseteq X\given |A|=n}\subseteq\powerset(X).\end{align}
-    The image $F(\setN)$ is a family of non-empty subsets of $\powerset(X)$, because of theorem \ref{theorem:finite_infinite:infinite_iff_injections} for every $n\in\setN$ there exists an injection $f\colon\setN_n\to X$, so $|f(\setN_n)|=n$ and therefore $f(\setN_n)\in F(n)$.
-
-    \proofcase{i}{ii} Let $X$ be infinite. Because $\powerset(X)\setminus\{\emptyset\}$ is a family of non-empty subsets of $X$, by the Axiom of Choice there exists a choice mapping $\gamma \colon \powerset(X)\setminus\{\emptyset\} \to X$ such that $\gamma(A) \in A$ for every non-empty subset $A \subseteq X$.
+    Let $X$ be infinite. Because $\powerset(X)\setminus\{\emptyset\}$ is a family of non-empty subsets of $X$, by the Axiom of Choice there exists a choice mapping $\gamma \colon \powerset(X)\setminus\{\emptyset\} \to X$ such that $\gamma(A) \in A$ for every non-empty subset $A \subseteq X$.
 
     We set $F=\setdef{A\subseteq X\given \text{$A$ is finite}}$ for the set of all finite subsets of $X$. Then the transition mapping
     \begin{align}\alpha\colon F\to F,\qquad A\mapsto A\cup\{\gamma(X\setminus A)\}\end{align}
@@ -385,59 +430,39 @@ For the proof of the following theorem the axiom of choice is needed to construc
     We can now define the mapping
     \begin{align}f\colon \setN\to X,\qquad n\mapsto \gamma(X\setminus B(n)),\end{align}
     which is also well-defined because of $X\setminus B(n)\neq\emptyset$ by theorem \ref{theorem:finite_infinite:infinite_setminus} and $B(n)\in F$ for every $n\in\setN$.
+
+    We show that $f(m)\notin X\setminus B(n)$ for all $m,n\in\setN$ with $m<n$ by induction and consider the set
+    \begin{align}S=\setdef{n\in\setN\given \forall m\in\setN\colon m<n\Rightarrow f(m)\in B(n)}.\end{align}
     
-    We show that $f$ is indeed an injection by using induction and considering the set
-    \begin{align}S=\setdef{n\in\setN\given \forall m\in\setN\colon m<n\Rightarrow f(m)\neq f(n)}.\end{align}
+    \proofstep{$0\in S$} For this case nothing is to show. So $0\in S$.
 
-    \proofstep{$0\in S$} Because there is no $m\in\setN$ with $m<0$, we have $0\in S$.
+    \proofstep{$n\in S\Rightarrow n+1\in S$} Let $n\in S$, which means $f(m)\in B(n)$ for all $m\in\setN$ with $m<n$. Then we have
+    \begin{align}
+        B(n+1)=B(n)\cup\{\gamma(X\setminus B(n))\}=(B(n)\cup\{f(n)\})
+    \end{align}
+    That means $f(n)\in B(n+1)$ as well as $f(m)\in B(n+1)$ for all $m\in\setN$ with $m<n$. Hence $f(m)\in B(n+1)$ for all $m\in\setN$ with $m<n+1$. So $n+1\in S$.
 
-    \proofstep{$n\in S\Rightarrow n+1\in S$} Let $n\in S$, which means $f(m)\neq f(n)$ for all $m\in\setN$ with $m<n$. We have \begin{align}\begin{split}f(n+1)&=\gamma(X\setminus B(n+1))=\gamma(X\setminus \alpha(B(n)))\\&=\gamma(X\setminus (B(n)\cup\{\gamma(X\setminus B(n))\}))\\
-    &=\gamma(X\setminus (B(n)\cup\{f(n)\})).\end{split}\end{align}
-    Thus $f(n)\notin X\setminus(B(n)\cup\{f(n)\})$ holds and therefore $f(n)\neq \gamma(X\setminus (B(n)\cup\{f(n)\}))=f(n+1)$ follows. So we conclude $f(m)\neq f(n+1)$ for all $m\in\setN$ with $m<n+1$, which means $n+1\in S$.
-
-    In summary, $S=\setN$ follows by the induction axiom. Now let $n,m\in\setN$ with $m\neq n$. Without loss of generality, we can assume $m<n$. Then $f(m)\neq f(n)$ follows from $S=\setN$. Hence $f\colon\setN\to X$ is an injection.
+    In summary, $S=\setN$ follows by the induction axiom, so $f(m)\in B(n)$ holds for all $m,n\in\setN$ with $m<n$. That means $f(n)=\gamma(X\setminus B(n))\neq f(m)$ for all $m,n\in\setN$ with $m<n$. So $f$ is an injective mapping from $\setN$ to $X$.
 \end{proof}
 
-With the theorem shown, we can now characterize finite sets via the existence of injections onto proper subsets:
+\begin{corollary}[Characterization of Infinite Sets]\label{corollary:finite_infinite:natural_numbers_smallest_infinite}
+    Let $X$ be a set. In \axiomsymbol{ZC}, $X$ is infinite if and only there exists an injection $f\colon\setN\to X$.
+\end{corollary}
 
-\begin{theorem}[Dedekind Characterization]\label{theorem:finite_infinite:dedekind_characterization}
-    For a set $X$ the following statements are equivalent:
-    \begin{intheoremenumerate}
-        \item $X$ is finite.
-        \item For every proper subset $S\subset X$ there exists no injection $f\colon X\rightarrow S$.
-    \end{intheoremenumerate}
+With the theorem shown, we can now characterize infinite sets via the existence of injections onto proper subsets using the Axiom of Choice (\axiomsymbol{AC}) for the \enquote{$\Leftarrow$}-direction:
+
+\begin{theorem}\label{theorem:finite_infinite:infinite_is_dedekind_infinite}
+    In \axiomsymbol{ZC}, every infinite set $X$ is Dedekind-infinite.
 \end{theorem}
 
 \begin{proof}
-    \proofright\marginnote{This direction can also be proven with the Pingeonhole Principle (see exercise \ref{exercise:finite_infinite:dedekind_characterization_pigeonhole}).} Let $X$ be finite. We assume, that there exists a proper subset $S\subset X$, so that there is an injection $f\colon X\to S$. Because $X$ is finite, there exists a bijection $j\colon X\to\setN_n$ for $n=|X|$. Hence, the restricted mapping $j\vert_S\colon S\rightarrow\setN_n$ is also an injection. But then $g=j^{-1}\circ j\vert_S\colon S\to X$ is an injection as a composition of injective mappings. From the Cantor-Schröder-Bernstein theorem \ref{theorem:mappings:cantor_schroeder_bernstein} it follows that there exists a bijection $h\colon X\to S$, i.e. $X\sim S$ and hence $|X|=|S|$, which contradicts the fact that $S$ is a proper subset of $X$ (see theorem \ref{theorem:finite_infinite:proper_subset}).
-
-    \proofleft Let $X$ be a set, so that for every proper subset $S\subset X$ there exists no injection $f\colon X\rightarrow S$. Assume that $X$ is not finite, then there exists no $n\in\setN$ with $X\sim\setN_n$.
-    \begin{align}\alpha\colon\powerset(\powerset(X))\to\powerset(\powerset(X))\colon \mathcal A\mapsto \bigcup_{A\in\mathcal A}\setdef{S\subseteq X\given \exists x\in X\setminus A\colon S=A\cup\{x\}}.\end{align}
-    By the recursion theorem there exists a mapping $\mathcal X\colon\setN\rightarrow\powerset(\powerset(X))$ with
-    \begin{align}\mathcal X(0)=\{\emptyset\}\qquad\text{and}\qquad \mathcal X(n+1)=\alpha(\mathcal X(n))\end{align}
+    Let $X$ be infinite, then there exists an injection $f\colon\setN\to X$ by theorem \ref{corollary:finite_infinite:natural_numbers_smallest_infinite}. Then $f\colon\setN\setminus\{0\}\to X\setminus\{f(0)\}$ is also an injection, where $X\setminus\{f(0)\}$ is a proper subset of $X$. Hence $X$ is Dedekind-infinite.
 \end{proof}
 
+\begin{corollary}\label[Dedekind Characterization]{corollary:finite_infinite:dedekind_characterization}
+    In \axiomsymbol{ZC}, the terms Dedekind-infinite and infinite are equivalent.
+\end{corollary}
 
-\subsection{Exercises}
 
-\begin{exercise}\label{exercise:finite_infinite:canonical_n_sets_bijection}
-    Let $n\in\setNnn$ and $a\in\setN_n$, then the mapping \begin{align}f\colon \setN_n\setminus\{a\}\to\setN_{n-1},\qquad b\mapsto \begin{cases}b, & b<a \\ b-1, & b>a\end{cases}\end{align} is bijective.
-\end{exercise}
-
-\begin{solution}
-    Let $b,c\in\setN_n\setminus\{a\}$ with $f(b)=f(c)$, then we have the following cases:
-    \begin{itemize}
-        \item If $b<a$ and $c<a$, then $b=f(b)=f(c)=c$, hence $b=c$.
-        \item If $b>a$ and $c>a$, then $f(b)=b-1=f(c)=c-1$, hence $b=c$.
-        \item If $b<a$ and $c>a$, then $f(b)=b<b$ but $f(c)=c-1\geq a$, thus $f(b)\neq f(c)$. So this case is not possible.
-        \item If $b>a$ and $c<a$, then $f(b)=b-1\geq a$ and $f(c)=c<a$, thus $f(b)\neq f(c)$. So this case is also not possible.
-    \end{itemize}
-    Hence $f$ is injective. Let $d\in\setN_{n-1}$, then we have the following cases:
-    \begin{itemize}
-        \item If $d<a$, then $f(d)=d$.
-        \item If $d\geq a$, then $d+1>a$, thus $d+1\in\setN_n\setminus\{a\}$ and $f(d+1)=d$.
-    \end{itemize}
-    Hence $f$ is surjective and therefore bijective.
-\end{solution}
 
 \input{chapter-basics/finite_infinite_exercises.tex}

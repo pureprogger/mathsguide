@@ -1,0 +1,78 @@
+\newcommand\fn[1]{_{\text{#1}}}
+\newcommand\fni[1]{_{i,\text{#1}}}
+\newcommand\fnm[2]{_{\text{#1},#2}}
+\newcommand\rm[1]{\text{#1}}
+
+\newcommand\axiomsymbol[1]{{\sffamily\bfseries #1}}
+
+\renewcommand\vec{\boldsymbol}
+\newcommand\tvec[1]{\tilde{\boldsymbol #1}}
+\newcommand\dvec[1]{\frac{\rm d}{\rm dt}\boldsymbol{#1}}
+\newcommand\ddvec[1]{\frac{\rm d^2}{\rm dt^2}\boldsymbol{#1}}
+
+\DeclarePairedDelimiterX\setdef[1]\lbrace\rbrace{\def\given{\;\delimsize\vert\;}#1}
+
+\DeclareFontFamily{U}{MnSymbolC}{} \DeclareSymbolFont{MnSyC}{U}{MnSymbolC}{m}{n} \DeclareFontShape{U}{MnSymbolC}{m}{n}{ <-6> MnSymbolC5 <6-7> MnSymbolC6 <7-8> MnSymbolC7 <8-9> MnSymbolC8 <9-10> MnSymbolC9 <10-12> MnSymbolC10 <12-> MnSymbolC12}{}
+\DeclareMathSymbol{\powerset}{\mathord}{MnSyC}{180}
+
+\newcommand\setC{\mathbb{C}}
+\newcommand\setR{\mathbb{R}}
+\newcommand\setQ{\mathbb{Q}}
+\newcommand\setN{\mathbb{N}}
+\newcommand\setNp{\mathbb{N}^*}
+\newcommand\setNnn{\mathbb{N}^\times}
+\newcommand\setZ{\mathbb{Z}}
+\newcommand\setK{\mathbb{K}}
+\newcommand\mapset[2]{{#2}^{#1}}
+
+\newcommand\idmap{\rm{id}}
+\newcommand\rpart{\rm{Re}}
+\newcommand\ipart{\rm{Im}}
+
+\newcommand\transp{^\top}
+
+%\newcommand\closure[1]{\mskip.5\thinmuskip\overline{\mskip-.5\thinmuskip {#1} \mskip-.5\thinmuskip}\mskip.5\thinmuskip}
+\newcommand\rel{\tilde}
+\newcommand\relvec[1]{\rel{\vec #1}}
+
+\newcommand\seqq[1]{(#1_n)_{n\in\setN}}
+\newcommand\seq[2]{(#1)_{#2\in\setN}}
+\newcommand\ko[1]{_{#1}}
+\newcommand\dko[2]{_{#1#2}}
+\newcommand\ks[1]{'_{#1}}
+\newcommand\fnc[1]{_{\mathcal #1}}
+\newcommand\at[1]{(#1)}
+\newcommand\ui[1]{^{(#1)}}
+\newcommand\uir[1]{^{(\rm{#1})}}
+\newcommand\ges{\fn{ges}}
+\newcommand\gesi{\fni{ges}}
+\newcommand\ext{\fn{ext}}
+\newcommand\exti{\fni{ext}}
+\newcommand\cm{\fn{S}}
+\newcommand\ekin{E\fn{kin}}
+\newcommand\erot{E\fn{rot}}
+\newcommand\epot{E\fn{pot}}
+\newcommand\eint{E\fn{int}}
+\newcommand\etrans{E\fn{trans}}
+\newcommand\eigen{\fn{eigen}}
+\newcommand\bahn{\fn{bahn}}
+\newcommand\fnn[2]{_{\text{#1}#2}}
+\newcommand\proofcase[2]{\enquote{(#1) $\Rightarrow$ (#2)}:}
+\newcommand\proofright{\enquote{$\Rightarrow$}:\ }
+\newcommand\proofleft{\enquote{$\Leftarrow$}:\ }
+\newcommand\proofsubset{\enquote{$\subseteq$}:\ }
+\newcommand\proofsupset{\enquote{$\supseteq$}:\ }
+\newcommand\proofstep[1]{\enquote{#1}:\ }
+
+\newcommand\ddt{\frac{\rm d}{\rm dt}}
+
+\newcommand\fnx[1]{_{\text{#1},x}}
+\newcommand\fny[1]{_{\text{#1},y}}
+\newcommand\fnz[1]{_{\text{#1},z}}
+\newcommand\sgn{\rm{sgn}}
+\newcommand\diam{\rm{diam}}
+
+\newcommand\con{\fn{K}}
+\newcommand\ncon{\fn{NK}}
+\newcommand\coni{\fni{K}}
+\newcommand\nconi{\fni{NK}}

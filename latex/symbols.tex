@@ -1,0 +1,29 @@
+\newcommand\res{_{\rm{res}}}
+
+
+\newcommand\clop{\rm{cl}}
+\newcommand\intset{\rm{int}}
+\newcommand\fixset{\rm{fix}}
+\newcommand\quoset[2]{{#1}/{#2}}
+
+\newcommand\charmap{\chi}
+
+% Disjoint union
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+\DeclareRobustCommand{\cupdot}{\ensuremath{\mathrel{\dot{\cup}}}}
+%\renewcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\cdot}}
+%\renewcommand{\bigcupdot}{\charfusion[\mathop]{\bigcup}{\cdot}}
+
+% Relations
+\newcommand\coloniff{\mathrel{\vcentcolon\Leftrightarrow}}

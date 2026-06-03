@@ -2,7 +2,7 @@
 
 This chapter introduces the fundamental concepts of set theory. We will follow a stringent axiomatic approach rather than the \enquote{naive} approach, where the existence of sets with specific properties is often taken for granted. In our framework, the existence of every set must be deduced from a formal system of axioms. We will demonstrate how a surprisingly small set of axioms is sufficient to construct complex mathematical objects such as mappings, relations, and groups. In this context, every mathematical object is, fundamentally, a set.
 
-We introduce the axioms of \emph{Zermelo-Fraenkel} (ZF) set theory, a standard foundation for modern mathematics. Later we will extend the Zermelo-Fraenkel axioms with the \emph{axiom of choice} to form the ZFC set theory. We will not explore the meta-mathematical properties of these axioms -- such as their logical independence from one another -- but will instead focus on how they are used to construct sets with formal rigor.
+We introduce the axioms of \emph{Zermelo-Fraenkel} (ZF) set theory, a standard foundation for modern mathematics. Later we will extend the Zermelo-Fraenkel axioms with the \emph{axiom of choice} to form the ZC set theory. We will not explore the meta-mathematical properties of these axioms -- such as their logical independence from one another -- but will instead focus on how they are used to construct sets with formal rigor.
 
 The primary reason mathematicians moved away from the naive approach of set theory was the discovery of the so called \emph{Russell's Paradox}, which can be avoided by adopting a formal system of axioms that does not allow to construct sets, that are \enquote{too large}. We will demonstrate Russells's Paradox in this section.
 
@@ -19,20 +19,20 @@ The relation between sets is defined by the new predicate \enquote{$\in$}: Let $
 
 Usually we will denote sets with capital letters $A$, $B$, $C$ and elements of sets with small letters $a$, $b$, $c$, even though every element of a set is a set itself. As a shorthand, we write $A,B\in C$ if and only if $A\in C$ and $B\in C$ holds. We also write $A\in B,C$ if and only if $A\in B$ and $A\in C$ holds.
 
-The first axiom of set theory is the \emph{axiom of extensionality}. It defines under which condition two sets are equal. The intuitive way to define equality of sets is to say that two sets are equal if they have the same elements, or more formally:
+The first axiom of set theory is the \emph{Axiom of Extensionality}. It defines under which condition two sets are equal. The intuitive way to define equality of sets is to say that two sets are equal if they have the same elements, or more formally:
 
 \begin{axiom}[Extensionality]
     Two sets $A$ and $B$ are equal if for every set $x$ the statement $x\in A$ is equivalent to $x\in B$, or more formally:
     \begin{align}(\forall x\colon x\in A\Leftrightarrow x\in B)\Longrightarrow A=B.\end{align}
-    We call this axiom the \emph{axiom of extensionality}.
+    We call this axiom the \emph{Axiom of Extensionality}, shortly \axiomsymbol{EXT}.
 \end{axiom}
 
-The axiom of extensionality tells us that sets are uniquely determined by their elements and not by their defining properties. Note that the predicate \enquote{$=$} is already defined in the language of first-order logic. So the axiom of extensionality only axiomatizes how two sets are identified by their elements using the predicate \enquote{$\in$}.
+The Axiom of Extensionality tells us that sets are uniquely determined by their elements and not by their defining properties. Note that the predicate \enquote{$=$} is already defined in the language of first-order logic. So the Axiom of Extensionality only axiomatizes how two sets are identified by their elements using the predicate \enquote{$\in$}.
 
-Remember that the principle of substitution allows us to replace objects, in our case sets, with other equivalent objects to obtain equivalent statements. That means if two sets $A$ and $B$ are equal, i.e. $A=B$, then already $x\in A\Leftrightarrow x\in B$ follows for all sets $x$ by the principle of substitution. So sometimes the axiom of extensionality is also written in the form \begin{align}(\forall x\colon x\in A\Leftrightarrow x\in B)\iff A=B,\end{align}
+Remember that the principle of substitution allows us to replace objects, in our case sets, with other equivalent objects to obtain equivalent statements. That means if two sets $A$ and $B$ are equal, i.e. $A=B$, then already $x\in A\Leftrightarrow x\in B$ follows for all sets $x$ by the principle of substitution. So sometimes the Axiom of Extensionality is also written in the form \begin{align}(\forall x\colon x\in A\Leftrightarrow x\in B)\iff A=B,\end{align}
 even when the \enquote{$\Leftarrow$}-direction has not to be axiomatized.
 
-The following examples demonstrate the use of the axiom of extensionality to show the equivalence of two sets:
+The following examples demonstrate the use of the Axiom of Extensionality to show the equivalence of two sets:
 
 \begin{examples}
     \begin{exampleenumerate}
@@ -40,7 +40,7 @@ The following examples demonstrate the use of the axiom of extensionality to sho
         Or, to put it less formally: $x\in\{A,B,C\}$ holds if and only if $x$ is equal to $A$, $B$ or $C$, that means $\{A,B,C\}$ consists of the elements $A$, $B$ and $C$. We show that $\{A,B,C\}=\{A,C,B\}$ holds, that means the order of the elements does not matter.
         \begin{miniproof}
             Let $x$ be an arbitrary set, then we get by the commutativity of the disjunction the following chain of equivalences: \begin{align}\begin{split}x\in\{A,B,C\}&\iff x=A\lor x=B\lor x=C\\ &\iff x=A\lor x=C\lor x=B\iff x\in\{A,C,B\}.\end{split}\end{align}
-            Hence we have $x\in\{A,B,C\}\iff x\in\{A,C,B\}$. Because $x$ is an arbitrary set, we conclude $\{A,B,C\}=\{A,C,B\}$ by the axiom of extensionality.
+            Hence we have $x\in\{A,B,C\}\iff x\in\{A,C,B\}$. Because $x$ is an arbitrary set, we conclude $\{A,B,C\}=\{A,C,B\}$ by the Axiom of Extensionality.
         \end{miniproof}
         \item\label{example:sets:simple_example_b} For every set $A$ we define the singleton set $\{A\}$ by the property \begin{align}\forall x\colon x\in\{A\}\Leftrightarrow x=A.\end{align}
         Then $\{A\}=\{B\}$ holds if and only if $A=B$.
@@ -60,46 +60,53 @@ In the naive approch to set theory, we would define a set as a collection of ele
     Let $A$ be a set and $\varphi(x)$ be a property. Then $A$ is called an \emph{extension} of the property $\varphi(x)$ if and only if \begin{align}\forall x\colon x\in A\Leftrightarrow\varphi(x)\end{align}
 \end{definition}
 
-The axiom of extensionality guarantees that a set $A$, that is an extension of a property $\varphi(x)$, is uniquely determined, if it exists:
+The Axiom of Extensionality guarantees that a set $A$, that is an extension of a property $\varphi(x)$, is uniquely determined, if it exists:
 
 \begin{theorem}\label{theorem:sets:extension_unique}
     Let $A$ be a set and $\varphi(x)$ be a property, furthermore let $A$ be the extension of $\varphi(x)$. Then $A$ is the only extension of $\varphi(x)$, that means for every set $B$, that is an extension of $\varphi(x)$, already follows $A=B$.
 \end{theorem}
 
 \begin{proof}
-    We use the axiom of extensionality to show that $A=B$. Let $x$ be an arbitrary set. Because $A$ is an extension of $\varphi(x)$, we know that $x\in A\Leftrightarrow \varphi(x)$. But $B$ is also an extension of $\varphi(x)$, so we have $x\in B\Leftrightarrow \varphi(x)$. From those logical equivalences follows
+    We use the Axiom of Extensionality to show that $A=B$. Let $x$ be an arbitrary set. Because $A$ is an extension of $\varphi(x)$, we know that $x\in A\Leftrightarrow \varphi(x)$. But $B$ is also an extension of $\varphi(x)$, so we have $x\in B\Leftrightarrow \varphi(x)$. From those logical equivalences follows
     \begin{align}x\in A\Leftrightarrow\varphi(x)\Leftrightarrow x\in B\end{align}
-    and thus $x\in A\Leftrightarrow x\in B$. Because $x$ is an arbitrary set, $x\in A\Leftrightarrow x\in B$ holds for every set $x$. Hence $A=B$ by the axiom of extensionality.
+    and thus $x\in A\Leftrightarrow x\in B$ by the transitivity of the biconditional. Because $x$ is an arbitrary set, $x\in A\Leftrightarrow x\in B$ holds for every set $x$. Hence $A=B$ by the Axiom of Extensionality.
 \end{proof}
 
-The existence of an extension of a property $\varphi(x)$ has to be axiomatized for specific types of properties. The following axiom guarantees the existence of a set that contains no elements, hence we assume there exists a so-called empty set $\emptyset$ as an extension of the property $\varphi(x)\equiv x\notin \emptyset$:
+The existence of an extension of a property $\varphi(x)$ has to be axiomatized for specific types of properties. The following axiom guarantees the existence of a set that contains no elements:
 
-\begin{axiom}[Empty set]
-    There exists a set $\emptyset$ such that for all sets $x$, $x\in\emptyset$ does not hold, or formally: \begin{align}\forall x\colon x\notin\emptyset.\end{align} We call $\emptyset$ the \emph{empty set}.
+\begin{axiom}[Empty Set]
+    There exists a set $\emptyset$ such that $\emptyset$ is the extension of the property $\varphi(x)\equiv x\neq x$. We call this axiom the \emph{Axiom of Empty Set}, shortly \axiomsymbol{EMP}.
 \end{axiom}
 
 \begin{remarks}
     \begin{remarkenumerate}
-        \item The empty set is an extension of the property $\varphi(x)\equiv x\notin\emptyset$. Hence by theorem \ref{theorem:sets:extension_unique} the empty set is unique. More precisely, if $A$ is a set with $\forall x\colon x\notin A$ then $A=\emptyset$ holds.
+        \item Sometimes the empty set is also called the \emph{universal set} or the \emph{null set}. Therefore the Axiom of Empty Set is also shortly written as \axiomsymbol{NULL}.
+        \item The empty set is as an extension of the property $\varphi(x)\equiv x\neq x$ uniquely determined by theorem \ref{theorem:sets:extension_unique}.
+        \item The empty set is indeed empty, that means $x\notin\emptyset$ for all sets $x$.
+        \begin{miniproof}
+            Assume there exists a set $x\in\emptyset$, then $x\neq x$ holds by definition of $\emptyset$, which is not possible. Therefore $x\notin\emptyset$ holds for all sets $x$.
+        \end{miniproof}
         \item\label{remark:sets:non_empty_sets} Let $A$ be a set then $A\neq\emptyset$ holds if and only if there exists a set $x$ with $x\in A$. We call a set $A$ \emph{non-empty} if and only if $A\neq\emptyset$ holds.
     \end{remarkenumerate}
 \end{remarks}
 
-The axiom of extensionality and the axiom of the empty set do not ensure the existence of non-empty sets. We need to introduce the axiom of pairing to give a construction of non-empty sets.
+In section \ref{section:natural_numbers} we will introduce the Axiom of Infinity, which axiomatizes the existence of an infinite and especially non-empty set. Together with the Axiom of Sepecification introduced later in this section, we can construct the empty set from an infinite set. Therefore the Axiom of Empty Set will be unnecessary in the future.
+
+The Axiom of Extensionality and the Axiom of the Empty Set do not ensure the existence of non-empty sets. We need to introduce the Axiom of Pairing to give a construction of non-empty sets.
 
 \subsection{Axiom of Pairing}
 
-The axiom of pairing allows us to construct sets from given sets. In particular, it allows us to construct sets containing only one or two given elements.
+The Axiom of Pairing allows us to construct sets from given sets. In particular, it allows us to construct sets containing only one or two given elements.
 
 \begin{axiom}[Pairing]
     For every two sets $A$ and $B$, there exists a set $\{A,B\}$ such that for all sets $C$, $C\in\{A,B\}$ holds if and only if $C=A$ or $C=B$. More formally:
     \begin{align}\forall C\colon C\in\{A,B\}\Leftrightarrow C=A\lor C=B.\end{align}
-    We call $\{A,B\}$ the \emph{pair} of $A$ and $B$.
+    We call $\{A,B\}$ the \emph{pair} of $A$ and $B$. This axiom is called the \emph{Axiom of Pairing}, shortly \axiomsymbol{PAIR}.
 \end{axiom}
 
 \begin{remarks}
     \begin{remarkenumerate}
-        \item\label{remark:sets:pair_elements} The axiom of pairing guarantees for all sets $A$ and $B$ the existence of a set $\{A,B\}$ that contains $A$ and $B$ as elements, i.e. $A\in\{A,B\}$ and $B\in\{A,B\}$ holds.
+        \item\label{remark:sets:pair_elements} The Axiom of Pairing guarantees for all sets $A$ and $B$ the existence of a set $\{A,B\}$ that contains $A$ and $B$ as elements, i.e. $A\in\{A,B\}$ and $B\in\{A,B\}$ holds.
         \begin{miniproof}
             Let $A$ and $B$ be sets, then $A=A$ and thus $A=A\lor A=B$ holds, this means $A\in\{A,B\}$ by definition of $\{A,B\}$. Similarly $B\in\{A,B\}$ holds.
         \end{miniproof}
@@ -110,7 +117,7 @@ The axiom of pairing allows us to construct sets from given sets. In particular,
         \item\label{remark:sets:pair_unordered} The order of the sets in the notation $\{A,B\}$ does not matter. That means $\{A,B\}=\{B,A\}$ for all sets $A$ and $B$.
         \begin{miniproof}
             Let $A$, $B$ and $x$ be a set. Then we have by the commutativity of the disjunction \begin{align}x\in\{A,B\}\Leftrightarrow x=A\lor x=B\Leftrightarrow x=B\lor x=A\Leftrightarrow x\in\{B,A\}.\end{align}
-            Hence $\{A,B\}=\{B,A\}$ by the axiom of extensionality.
+            Hence $\{A,B\}=\{B,A\}$ by the Axiom of Extensionality.
         \end{miniproof}
         \item\label{remark:sets:pair_uniqueness} Let $A$ and $B$ be sets. The set $\{A,B\}$ is the only set with $\forall C\colon C\in\{A,B\}\Leftrightarrow C=A\lor C=B$ as a property. That means if $P$ is a set with $\forall C\colon C\in P\Leftrightarrow C=A\lor C=B$, then $P=\{A,B\}$ holds.
         \begin{miniproof}
@@ -127,13 +134,13 @@ The axiom of pairing allows us to construct sets from given sets. In particular,
         \end{miniproof}
         \item For every two sets $A$ and $B$ the set $\{A,\{A,B\}\}$ exists.
         \begin{miniproof}
-            The set $\{A,B\}$ exists by the axiom of pairing, and thus the set $\{A,\{A,B\}\}$ exists as the pair of $A$ and $\{A,B\}$.
+            The set $\{A,B\}$ exists by the Axiom of Pairing, and thus the set $\{A,\{A,B\}\}$ exists as the pair of $A$ and $\{A,B\}$.
         \end{miniproof}
         \item\label{example:sets:ordered-pairs} For any two sets $A$ and $B$ the set $\{\{A\},\{A,B\}\}$ exists.
         \begin{miniproof}
-            The set $\{A\}$ exists by example \ref{example:sets:singleton}, the set $\{A,B\}$ exists by the axiom of pairing, and thus the set $\{\{A\},\{A,B\}\}$ exists as the pair of $\{A\}$ and $\{A,B\}$.
+            The set $\{A\}$ exists by example \ref{example:sets:singleton}, the set $\{A,B\}$ exists by the Axiom of Pairing, and thus the set $\{\{A\},\{A,B\}\}$ exists as the pair of $\{A\}$ and $\{A,B\}$.
         \end{miniproof}
-        \item The previous examples and the existence of the empty set ensure the existence of the following sets: $\{\emptyset\}$, $\{\{\emptyset\}\}$, $\{\emptyset,\{\emptyset\}\}$ and much more sets. We also know that $\emptyset\neq\{\emptyset\}$ from remark \ref{remark:sets:pair_non_empty}, that means $\{\emptyset\}$ is a set distinct from the empty set. Thus the axiom of pairing allows us to construct new sets from the empty set.
+        \item The previous examples and the existence of the empty set ensure the existence of the following sets: $\{\emptyset\}$, $\{\{\emptyset\}\}$, $\{\emptyset,\{\emptyset\}\}$ and much more sets. We also know that $\emptyset\neq\{\emptyset\}$ from remark \ref{remark:sets:pair_non_empty}, that means $\{\emptyset\}$ is a set distinct from the empty set. Thus the Axiom of Pairing allows us to construct new sets from the empty set.
      \end{exampleenumerate}
 \end{examples}
 
@@ -176,7 +183,7 @@ The following definitions allow us to formalize if a set is a part of another se
 
 \begin{definition}
     Let $A$ and $B$ be sets. We call $A$ a \emph{subset} of $B$ if and only if for all sets $x$, $x\in A$ implies $x\in B$. In this case we write $A\subseteq B$. More formally:
-    \begin{align}A\subseteq B\iff\forall x\colon x\in A\Rightarrow x\in B.\end{align}
+    \begin{align}A\subseteq B\iff (\forall x\colon x\in A\Rightarrow x\in B).\end{align}
     If $A$ is a subset of $B$, but $A$ and $B$ are not equal, then we call $A$ a \emph{proper subset} of $B$ and write $A\subset B$ or $A\subsetneq B$. More formally:
     \begin{align}A\subset B\iff A\subseteq B\land A\neq B.\end{align}
     We call \enquote{$A\subseteq B$} the \emph{inclusion} of $A$ into $B$ and \enquote{$A\subset B$} the \emph{proper/strict inclusion} of $A$ into $B$.
@@ -202,10 +209,12 @@ Before we show some examples for inclusions, we show the following theorem:
 \begin{proof}
     \begin{proofenumerate}
         \item $A\subseteq A$ holds, because for all sets $x$, $x\in A$ implies $x\in A$. Furthermore $\emptyset\subseteq A$ holds, because there exists no set $x$ in $x\in\emptyset$ so that $x\in A$ does not hold.
-        \item Let $A$ and $B$ be sets. If $A=B$, then for all sets $x$, $x\in A$ holds if and only if $x\in B$ holds, and thus $A\subseteq B$ and $B\subseteq A$ hold. Conversely, if $A\subseteq B$ and $B\subseteq A$ hold, then for all sets $x$, $x\in A$ implies $x\in B$ and $x\in B$ implies $x\in A$, which is equivalent to $x\in A$ holds if and only if $x\in B$ holds, and thus $A=B$ holds by the axiom of extensionality.
+        \item Let $A$ and $B$ be sets. If $A=B$, then for all sets $x$, $x\in A$ holds if and only if $x\in B$ holds, and thus $A\subseteq B$ and $B\subseteq A$ hold. Conversely, if $A\subseteq B$ and $B\subseteq A$ hold, then for all sets $x$, $x\in A$ implies $x\in B$ and $x\in B$ implies $x\in A$, which is equivalent to $x\in A$ holds if and only if $x\in B$ holds, and thus $A=B$ holds by the Axiom of Extensionality.
         \item Let $A$, $B$ and $C$ be sets with $A\subseteq B$ and $B\subseteq C$. Then $A\subseteq C$ holds, because for all sets $x$, $x\in A$ implies $x\in B$ and $x\in B$ implies $x\in C$, from which it follows that $x\in A$ implies $x\in C$.
     \end{proofenumerate}
 \end{proof}
+
+Theorem \ref{theorem:sets:subset_equals} provides a two-step strategy for proving set equality. To show that $A = B$ holds for any two sets, we first establish the inclusion $A \subseteq B$ and then the reverse inclusion $B \subseteq A$. In our proofs, we will explicitly denote these steps with the labels \enquote{$\subseteq$} and \enquote{$\supseteq$}. For the first part (\enquote{$\subseteq$}), we choose an arbitrary element $x \in A$ and use a chain of implications to demonstrate that $x \in B$. The second part (\enquote{$\supseteq$}) is argued analogously, starting with an arbitrary $x \in B$ and showing that $x \in A$ holds.
 
 Another useful theorem is the sandwich theorem to identify sets:
 \begin{theorem}[Sandwich theorem]\label{theorem:sets:sandwich_theorem}
@@ -234,7 +243,7 @@ Another useful theorem is the sandwich theorem to identify sets:
     \end{exampleenumerate}
 \end{examples}
 
-With the axiom of extensionality, the axiom of empty set and the axiom of pairing we are only capable of constructing sets with no, one or two elements. For constructing sets with more than two elements we need further axioms.
+With the Axiom of Extensionality, the axiom of empty set and the Axiom of Pairing we are only capable of constructing sets with no, one or two elements. For constructing sets with more than two elements we need further axioms.
 
 \subsection{Powersets}
 
@@ -243,7 +252,7 @@ We already have defined what a subset is, but we are not able to construct a set
 \begin{axiom}[Powerset]
     For every set $A$, there exists a set $\powerset(A)$ such that for every set $B$, $B\in\powerset(A)$ holds if and only if $B\subseteq A$. More formally:
     \begin{align}\forall B\colon B\in\powerset(A)\Leftrightarrow B\subseteq A.\end{align}
-    We call $\powerset(A)$ the \emph{powerset} of $A$.
+    We call $\powerset(A)$ the \emph{powerset} of $A$. We write \axiomsymbol{POW} for the \emph{Axiom of Powerset}.
 \end{axiom}
 
 \begin{remarks}
@@ -290,9 +299,9 @@ We already have defined what a subset is, but we are not able to construct a set
 \subsection{Axiom of Specification}
 
 \begin{axiom}[Specification]
-    For every set $A$ and every property $\varphi(x)$, there exists a set $\setdef{x\in A\given\varphi(x)}$ such that for all sets $y$, $y\in\setdef{x\in A\given\varphi(x)}$ holds if and only if $y\in A$ and $\varphi(y)$ holds. More formally:
-    \begin{align}\forall y\colon y\in\setdef{x\in A\given\varphi(x)}\Leftrightarrow y\in A\land \varphi(y).\end{align}
-    We call $\setdef{x\in A\given\varphi(x)}$ the \emph{subset of $A$ defined by the property $\varphi$}.
+    For every set $A$ and every property $\varphi(x)$, there exists a set $\setdef{x\in A\given\varphi(x)}$ that is a subset of $A$ and satisfies $\varphi(x)$ for every element in $\setdef{x\in A\given\varphi(x)}$. More formally:
+    \begin{align}(\forall y\colon y\in\setdef{x\in A\given\varphi(x)})\iff y\in A\land \varphi(y).\end{align}
+    We call $\setdef{x\in A\given\varphi(x)}$ the \emph{subset of $A$ defined by the property $\varphi$} and write \axiomsymbol{SPEC} for the \emph{Axiom of Specification}.
 \end{axiom}
 
 The axiom of specification guarantees the existence of a set $\setdef{x\in A\given\varphi(x)}$ such that every element $x$ of that set is an element of $A$ and fulfills the property $\varphi(x)$. It is important, that the axiom of specification needs an already existing set $A$ as a base for the construction of a subset of $A$ using an arbitrary property $\varphi(x)$ as a filter. Thus the axiom of specification does not allow the construction of larger sets.
@@ -414,12 +423,12 @@ In this and in the next few subsections we will introduce so called set operatio
     \caption{Venn diagrams representing set operations of two sets $A$ and $B$. A point is an element of a set, if it lies in its circle. The marked areas represent the intersection $A\cap B$, the union $A\cup B$, the difference $A\setminus B$ and the symmetric difference $A\oplus B$. For example $A\cap B$ represents all points that lie in both circles.}\label{figure:sets:venn_diagram}
 \end{figure}
 
-However, one quickly realizes that the axioms already stated only allow for the construction of sets with at most two elements (axiom of pairing), sets of subsets (axiom of powersets), and subsets of sets with certain properties (axiom of specification). The following axiom is necessary to allow for the existence of union sets that can be larger than the sets being unioned:
+However, one quickly realizes that the axioms already stated only allow for the construction of sets with at most two elements (Axiom of Pairing), sets of subsets (axiom of powersets), and subsets of sets with certain properties (axiom of specification). The following axiom is necessary to allow for the existence of union sets that can be larger than the sets being unioned:
 
 \begin{axiom}[Union]
     For every set $A$, there exists a set $\bigcup A$ such that $x\in\bigcup A$ holds if and only if there exists a set $B\in A$ with $x\in B$. That means more formally:
     \begin{align}\forall x\colon x\in\bigcup A\Leftrightarrow\exists B\in A\colon x\in B.\end{align}
-    We call $\bigcup A$ the \emph{union} of $A$.
+    We call $\bigcup A$ the \emph{union} of $A$. The \emph{Axiom of Union} is denoted by \axiomsymbol{UNION}.
 \end{axiom}
 
 \begin{remarks}
@@ -435,7 +444,7 @@ However, one quickly realizes that the axioms already stated only allow for the 
 \end{remarks}
 
 \begin{definition}
-    Let $A$ and $B$ be sets. The axiom of pairing guarantees the existence of a set $\{A,B\}$. Then we write \begin{align}A\cup B\coloneq\bigcup \{A,B\}\end{align} and call $A\cup B$ the \emph{union} of $A$ and $B$.
+    Let $A$ and $B$ be sets. The Axiom of Pairing guarantees the existence of a set $\{A,B\}$. Then we write \begin{align}A\cup B\coloneq\bigcup \{A,B\}\end{align} and call $A\cup B$ the \emph{union} of $A$ and $B$.
 \end{definition}
 
 \begin{theorem}\label{theorem:sets:union_pair_properties}
@@ -459,10 +468,10 @@ However, one quickly realizes that the axioms already stated only allow for the 
         \iff& x\in A\lor x\in B\\
         \iff& x\in A\lor x\in B\iff x\in\setdef{x\given x\in A\lor x\in B}
         \end{split}\end{align}
-        Hence $x\in A\cup B$ if and only if $x\in\setdef{x\given x\in A\lor x\in B}$, which means $A\cup B=\setdef{x\given x\in A\lor x\in B}$ by the axiom of extensionality.
+        Hence $x\in A\cup B$ if and only if $x\in\setdef{x\given x\in A\lor x\in B}$, which means $A\cup B=\setdef{x\given x\in A\lor x\in B}$ by the Axiom of Extensionality.
         \item Let $x\in A$, then $x\in A\lor x\in B$. That means $x\in A\cup B$ by (i). Thus $A\subseteq A\cup B$. Similarly $B\subseteq A\cup B$.
-        \item Let $x$ be a set, then $x\in A\cup A$ is equivalent to $x\in A\lor x\in A$ by (i), which is equivalent to $x\in A$. Thus $A\cup A=A$ by the axiom of extensionality.
-        \item Let $x$ be a set, then $x\in A\cup\emptyset$ is equivalent to $x\in A\lor x\in\emptyset$ by (i). Beacause $x\in\emptyset$ is not possible, this is equivalent to $x\in A$. Thus $A\cup\emptyset=A$ by the axiom of extensionality.
+        \item Let $x$ be a set, then $x\in A\cup A$ is equivalent to $x\in A\lor x\in A$ by (i), which is equivalent to $x\in A$. Thus $A\cup A=A$ by the Axiom of Extensionality.
+        \item Let $x$ be a set, then $x\in A\cup\emptyset$ is equivalent to $x\in A\lor x\in\emptyset$ by (i). Beacause $x\in\emptyset$ is not possible, this is equivalent to $x\in A$. Thus $A\cup\emptyset=A$ by the Axiom of Extensionality.
         \item We have $A\cup B=\setdef{x\given x\in A\lor x\in B}=\setdef{x\given x\in B\lor x\in A}=B\cup A$. Thus $A\cup B=B\cup A$.
         \item From the associativity of the disjunction and (i) follows \begin{align}\begin{split}(A\cup B)\cup C&=\setdef{x\given x\in A\cup B\lor x\in C}\\&=\setdef{x\given (x\in A\lor x\in B)\lor x\in C}\\&=\setdef{x\given x\in A\lor (x\in B\lor x\in C)}\\&=\setdef{x\given x\in A\lor x\in B\cup C}=A\cup (B\cup C).\end{split}\end{align}
         \item \proofright Let $A\subseteq B$. We already know that $B\subseteq A\cup B$ by (ii). Let $x\in A\cup B$, then $x\in A$ or $x\in B$. Because of $A\subseteq B$, in both cases $x\in B$ follows. Thus $B\subseteq A\cup B\subseteq B$ and thus $A\cup B=B$ by theorem \ref{theorem:sets:subset_equals}. \proofleft Let $A\cup B=B$. Because of $A\subseteq A\cup B$ by (ii) already $A\subseteq B$ follows.
@@ -545,11 +554,11 @@ Theorem \ref{theorem:sets:union_disjunction} shows that the union $A\cup B$ of t
         \iff& \forall C\colon (C=A\land x\in C)\lor (C=B\land x\in C)\\
         \iff& x\in A\land x\in B\iff x\in\setdef{x\given x\in A\land x\in B}
         \end{split}\end{align}
-        Hence $A\cap B=\setdef{x\given x\in A\land x\in B}$ by the axiom of extensionality.
+        Hence $A\cap B=\setdef{x\given x\in A\land x\in B}$ by the Axiom of Extensionality.
         \item Let $x\in A\cap B$, then $x\in A$ and $x\in B$ by (i), hence $A\cap B\subseteq A$ and $A\cap B\subseteq B$.
         \item We have $A\cap A=\setdef{x\given x\in A\land x\in A}=\setdef{x\given x\in A}=A$ by (i).
         \item Assume $A\cap\emptyset$ is non-empty. Then there exists an element $x\in A\cap\emptyset$, so $x\in A$ and $x\in\emptyset$ by (i), which is not possible, because $\emptyset$ does not contain any element. Thus $A\cap\emptyset=\emptyset$.
-        \item $x\in A\cap B$ is equivalent to $x\in A$ and $x\in B$ and equivalent to $x\in B$ and $x\in A$ and thus equivalent to $x\in A\cap B$. Hence $A\cap B=B\cap A$ by the axiom of extensionality.
+        \item $x\in A\cap B$ is equivalent to $x\in A$ and $x\in B$ and equivalent to $x\in B$ and $x\in A$ and thus equivalent to $x\in A\cap B$. Hence $A\cap B=B\cap A$ by the Axiom of Extensionality.
         \item From the associativity of the conjunction and (i) follows \begin{align}\begin{split}(A\cap B)\cap C&=\setdef{x\given x\in A\cap B\land x\in C}\\&=\setdef{x\given (x\in A\land x\in B)\land x\in C}\\&=\setdef{x\given x\in A\land (x\in B\land x\in C)}\\&=\setdef{x\given x\in A\land x\in B\cap C}=A\cap (B\cap C).\end{split}\end{align}
         \item \proofright Let $A\subseteq B$. We already know that $A\cap B\subseteq A$ by remark \ref{remark:sets:intersection_subset}. Thus we have to show that $A\subseteq A\cap B$ holds. Let $x\in A$, then also $x\in B$ holds due to $A\subseteq B$. Hence $x\in A\cap B$. Thus $A\cap B=A$ follows from theorem \ref{theorem:sets:subset_equals}.
         \proofleft Let $A\cap B=A$. Furthermore let $x\in A$, then $x\in A\cap B$ and therefore $x\in B$ by (i). Thus $A\subseteq B$.
@@ -936,7 +945,7 @@ The following properties are fullfilled by the complement:
             \iff& (x\in A\lor x\in B)\land (x\in A\lor x\in C)\\
             \iff& x\in A\cup B\land x\in A\cup C\\
             \iff& x\in (A\cup B)\cap (A\cup C).\end{split}\end{align}
-        Hence $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$ by the axiom of extensionality.
+        Hence $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$ by the Axiom of Extensionality.
         \item The identity $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$ follows in an analogous way.
     \end{proofenumerate}
 \end{proof}
@@ -959,7 +968,7 @@ The following theorem shows that not only the distributive laws of logic but als
         \iff& x\in A\land (x\notin B\land x\notin C)\\
         \iff& (x\in A\land x\notin B)\land (x\in A\land x\notin C)\\
         \iff& x\in B^\complement\cap C^\complement.\end{split}\end{align}
-        Hence $(B\cup C)^\complement=B^\complement\cap C^\complement$ by the axiom of extensionality.
+        Hence $(B\cup C)^\complement=B^\complement\cap C^\complement$ by the Axiom of Extensionality.
         \item Using (i) and theorem \ref{theorem:sets:double_complement} yiels \begin{align}(B\cap C)^\complement=((B^\complement)^\complement\cap (C^\complement)^\complement)^\complement=((B^\complement\cup C^\complement)^\complement)^\complement=B^\complement\cup C^\complement.\end{align}
         Hence $(B\cap C)^\complement=B^\complement\cup C^\complement$.
     \end{proofenumerate}
@@ -967,26 +976,34 @@ The following theorem shows that not only the distributive laws of logic but als
 
 \subsection{Axiom of Foundation}
 
-In the last subsection we introduce the axiom of foundation, which guarantees many important properties of sets: For example that no set can be an element of itself. The axiom of foundation also ensures that pairs of sets are always sets distinct from their elements, that means if $A$ and $B$ are sets, we can only show $A\neq \{A,B\}$ and $B\neq \{A,B\}$ by the axiom of foundation.
+In the last subsection we introduce the Axiom of Foundation, which guarantees many important properties of sets: For example that no set can be an element of itself. The Axiom of Foundation also ensures that pairs of sets are always sets distinct from their elements, that means if $A$ and $B$ are sets, we can only show $A\neq \{A,B\}$ and $B\neq \{A,B\}$ by the Axiom of Foundation.
 
 \begin{axiom}[Foundation]
     For every non-empty set $S$ there exists a set $F\in S$ such that there exists no set $x$ that is contained in $S$ and $F$ simultaneously. Or more formally:
     \begin{align}\forall S\colon S\neq\emptyset\Rightarrow \exists F\in S\ \forall x\in S\colon x\notin F.\end{align}
-    A set $F\in S$ with the property $\forall x\in S\colon x\notin F$ is called a \emph{foundation} of $S$.
+    A set $F\in S$ with the property $\forall x\in S\colon x\notin F$ is called a \emph{foundation} of $S$. We denote the \emph{Axiom of Foundation} by \axiomsymbol{FND}.
 \end{axiom}
 
-\begin{theorem}\label{theorem:sets:set_not_in_set}
+\begin{remarks}
+    \begin{remarkenumerate}
+        \item 
+    \end{remarkenumerate}
+\end{remarks}
+
+The neccessity of the Axiom of Foundation is not obvious. But the following theorems show some useful implications of the Axiom of Foundation:
+
+\begin{theorem}[No Self-Membership]\label{theorem:sets:set_not_in_set}
     For every set $A$ holds $A\notin A$. That means no set can contain itself.
 \end{theorem}
 \begin{proof}
-    Let $A$ be a set. By the axiom of pairing the singleton set $S=\{A\}$ exists (see \ref{example:sets:singleton}). Because $A\in S$ by remark \ref{remark:sets:pair_elements}, the set $S$ is non-empty. Thus by the axiom of foundation there exists a foundation $F\in S$ such that $x\notin F$ for every set $x\in S$. Because of $A\in S$ we have $A\notin F$. But from $F\in S=\{A\}$ we conclude that $F=A$ by example \ref{example:sets:singleton}. Thus $A\notin A$.
+    Let $A$ be a set. By the Axiom of Pairing the singleton set $S=\{A\}$ exists (see \ref{example:sets:singleton}). Because $A\in S$ by remark \ref{remark:sets:pair_elements}, the set $S$ is non-empty. Thus by the Axiom of Foundation there exists a foundation $F\in S$ such that $x\notin F$ for every set $x\in S$. Because of $A\in S$ we have $A\notin F$. But from $F\in S=\{A\}$ we conclude that $F=A$ by example \ref{example:sets:singleton}. Thus $A\notin A$.
 \end{proof}
 
-\begin{theorem}\label{theorem:sets:element_of_antisymmetric}
+\begin{theorem}[No Mutual Cycles]\label{theorem:sets:element_of_antisymmetric}
     Let $A$ and $B$ be sets. Then $A\in B$ and $B\in A$ cannot hold at the same time.
 \end{theorem}
 \begin{proof}
-    Let $A$ and $B$ be sets. By the axiom of pairing the pair $\{A,B\}$ exists. Because $A\in \{A,B\}$ (and $B\in \{A,B\}$) by remark \ref{remark:sets:pair_elements}, the set $\{A,B\}$ is non-empty. Thus by the axiom of foundation there exists a foundation $F\in \{A,B\}$ such that $x\notin F$ for every set $x\in \{A,B\}$. From $F\in\{A,B\}$ follows $F=A$ or $F=B$ (see remark \ref{remark:sets:pair_elements}). For the case $F=A$ we conclude that $B\notin A$ because of $B\in\{A,B\}$. For the case $F=B$ we conclude that $A\notin B$ because of $A\in\{A,B\}$. Hence $A\in B$ and $B\in A$ cannot hold at the same time.
+    Let $A$ and $B$ be sets. By the Axiom of Pairing the pair $\{A,B\}$ exists. Because $A\in \{A,B\}$ (and $B\in \{A,B\}$) by remark \ref{remark:sets:pair_elements}, the set $\{A,B\}$ is non-empty. Thus by the Axiom of Foundation there exists a foundation $F\in \{A,B\}$ such that $x\notin F$ for every set $x\in \{A,B\}$. From $F\in\{A,B\}$ follows $F=A$ or $F=B$ (see remark \ref{remark:sets:pair_elements}). For the case $F=A$ we conclude that $B\notin A$ because of $B\in\{A,B\}$. For the case $F=B$ we conclude that $A\notin B$ because of $A\in\{A,B\}$. Hence $A\in B$ and $B\in A$ cannot hold at the same time.
 \end{proof}
 
 \begin{theorem}
@@ -1003,8 +1020,8 @@ In the next sections we well introduce further axioms to gurantee the existence 
 
 In naive set theory, the axiom of comprehension states that for every property $\varphi(x)$ there exists a set $\setdef{x\given \varphi(x)}$ such that for all sets $y$, $y\in\setdef{x\given \varphi(x)}$ holds if and only if $\varphi(y)$ is fullfilled. In comparison to the axiom of specification, the axiom of comprehension is more general and does not require a base set $A$, from which elements are selected by a property $\varphi(x)$.
 
-Even when the axiom of comprehension seems intuitive and valid, it leads to a paradox. For example, the axiom of comprehension allows us to define the set of all sets. Because by the axiom of foundation, every set is not an element of itself, we could define the set of all sets by \begin{align}R=\setdef{x\given x\notin x},\end{align}
-where the existence is provided by the axiom of comprehension with the property $\varphi(x)\equiv x\notin x$. By the axiom of foundation, $R\notin R$ holds, but this leads to $R\in R$ by definition of $R$, a contradiction. Therefore the statement $R\in R$ is neither true nor false -- the axiom of comprehension is inconsistent. The paradox is called \emph{Russell's Paradox}. Even without the axiom of foundation, $R\in R$ leads to $R\notin R$ by definition of $R$, which is also a contradiction. If we define $S=\setdef{x\given \text{$x$ is a set}}$, then we would be able to construct $R$ as a subset of $S$ by the axiom of specification, which also leads to a contradiction.
+Even when the axiom of comprehension seems intuitive and valid, it leads to a paradox. For example, the axiom of comprehension allows us to define the set of all sets. Because by the Axiom of Foundation, every set is not an element of itself, we could define the set of all sets by \begin{align}R=\setdef{x\given x\notin x},\end{align}
+where the existence is provided by the axiom of comprehension with the property $\varphi(x)\equiv x\notin x$. By the Axiom of Foundation, $R\notin R$ holds, but this leads to $R\in R$ by definition of $R$, a contradiction. Therefore the statement $R\in R$ is neither true nor false -- the axiom of comprehension is inconsistent. The paradox is called \emph{Russell's Paradox}. Even without the Axiom of Foundation, $R\in R$ leads to $R\notin R$ by definition of $R$, which is also a contradiction. If we define $S=\setdef{x\given \text{$x$ is a set}}$, then we would be able to construct $R$ as a subset of $S$ by the axiom of specification, which also leads to a contradiction.
 
 One solution to the Russell's Paradox is to use the axiom of specification instead of the axiom of comprehension. The consequence is, that the set of all sets does not exist in the Zermelo-Fraenkel set theory. Another solution is the introduction of the \emph{Neumann-Bernays-Gödel} set theory (NBG), which reformulates the ZF set theory in such a way, that sets are a special kind of so called \emph{classes}. In this theory, the objects $R$ and $S$ are identified as \emph{proper classes}, that are not sets, but their elements are sets.
 
@@ -1082,14 +1099,14 @@ One solution to the Russell's Paradox is to use the axiom of specification inste
     Let $A$ be a set. Then $A\cup\{A\}$ is called the \emph{successor} of $A$. Show that $A\neq A\cup\{A\}$.
 \end{exercise}
 \begin{solution}
-    Let $A$ be a set. Then $A\in\{A\}$ and hence $A\in A\cup\{A\}$. Because of $A\notin A$ by theorem \ref{theorem:sets:set_not_in_set} we have $A\neq A\cup\{A\}$ by the axiom of extensionality.
+    Let $A$ be a set. Then $A\in\{A\}$ and hence $A\in A\cup\{A\}$. Because of $A\notin A$ by theorem \ref{theorem:sets:set_not_in_set} we have $A\neq A\cup\{A\}$ by the Axiom of Extensionality.
 \end{solution}
 
 \begin{exercise}[No circular chains]
     Let $A$, $B$ and $C$ be sets with $A\in B$ and $B\in C$. Then $C\notin A$.
 \end{exercise}
 \begin{solution}
-    Consider the set $S=\bigcup\{\{A\},\{B,C\}\}$. Then $x\in S$ if and only if $x=A$ or $x=B$ or $x=C$. Moreover $S$ is non-empty, so by the axiom of foundation there exists a set $F\in S$ with $x\notin F$ for every $x\in S$. By assumption, $F$ can not be $B$ and $C$. Therefore $F=A$ and hence $C\notin A$ because of $C\in S$.
+    Consider the set $S=\bigcup\{\{A\},\{B,C\}\}$. Then $x\in S$ if and only if $x=A$ or $x=B$ or $x=C$. Moreover $S$ is non-empty, so by the Axiom of Foundation there exists a set $F\in S$ with $x\notin F$ for every $x\in S$. By assumption, $F$ can not be $B$ and $C$. Therefore $F=A$ and hence $C\notin A$ because of $C\in S$.
 \end{solution}
 
 \begin{exercise}[Transitive sets]
@@ -1107,7 +1124,7 @@ One solution to the Russell's Paradox is to use the axiom of specification inste
 \begin{solution}
     \begin{solutionenumerate}
         \item The sets $\emptyset$, $\{\emptyset\}$ and $\{\emptyset,\{\emptyset\}\}$ are transitive.
-        \item Let $A$ be non-empty and transitive. By the axiom of foundation there exists a foundation $F\in A$ such that $x\notin F$ for every set $x\in A$. Assume that $F$ is non-empty, that means there exists an element $x\in F$. Because $A$ is transitive, we have $F\subseteq A$ and $x\in A$. But form that follows $x\notin F$, which is a contradiction. Therefore $F=\emptyset$ and hence $\emptyset\in A$.
+        \item Let $A$ be non-empty and transitive. By the Axiom of Foundation there exists a foundation $F\in A$ such that $x\notin F$ for every set $x\in A$. Assume that $F$ is non-empty, that means there exists an element $x\in F$. Because $A$ is transitive, we have $F\subseteq A$ and $x\in A$. But form that follows $x\notin F$, which is a contradiction. Therefore $F=\emptyset$ and hence $\emptyset\in A$.
         \item \proofright Let $A$ be transitive. Let $x\in\bigcup A$, then there exists a set $B\in A$ with $x\in B$. Because $A$ is transitive, we have $B\subseteq A$ and hence $x\in A$. Thus $\bigcup A\subseteq A$.
         
         \proofleft Let $\bigcup A\subseteq A$. Let $x\in A$. We have to show that $x\subseteq A$ holds. Let $y\in x$, then $y\in\bigcup A$ because of $x\in A$. Thus $x\subseteq\bigcup A\subseteq A$ follows.

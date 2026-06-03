@@ -1,0 +1,53 @@
+\usepackage{tikz}
+\usepackage{pgf,pgfplots,pgfplotstable}
+\pgfplotsset{compat=1.14}
+
+\usetikzlibrary{3d,calc}
+\usetikzlibrary{patterns}
+\usetikzlibrary{arrows.meta,bending}
+\usetikzlibrary{positioning}
+
+
+
+\definecolor{tukblue}{RGB}{0,88,141}
+\definecolor{tukbrightblue}{RGB}{0,132,212}
+\definecolor{tukred}{RGB}{191,21,21}
+\definecolor{tukbrightred}{RGB}{225,29,29}
+\definecolor{tukgray}{RGB}{228,232,235}
+
+
+
+\def\drawcssparrow(#1){
+    \draw[fill=white] (#1) circle (4pt);
+	\fill (#1) circle (2pt);
+}
+\def\drawcscross(#1){
+	\draw[fill=white] (#1) circle (4pt);
+	\draw (#1) ++ (45:-4pt) -- (45:4pt);
+	\draw (#1) ++ (-45:-4pt) -- (-45:4pt);
+}
+
+
+
+\newcommand\drawcs[3] {
+	\draw[very thick,-latex] (0,0) -- (1,0) node[below]{$\vec e_#1$};
+	\draw[very thick,-latex] (0,0) -- (0,1) node[left]{$\vec e_#2$};
+	\draw[fill=white] (0,0) circle (4pt) node[below left]{$\vec e_#3$};
+	\fill (0,0) circle (2pt);
+	%\node at (-0.4,0.3) {$\rm K$};
+}
+\newcommand\drawcsin[3] {
+	\draw[very thick,-latex] (0,0) -- (1,0) node[below]{$\vec e_#1$};
+	\draw[very thick,-latex] (0,0) -- (0,1) node[left]{$\vec e_#2$};
+	\draw[fill=white] (0,0) circle (4pt) node[below left]{$\vec e_#3$};
+	\draw (45:-4pt) -- (45:4pt);
+	\draw (-45:-4pt) -- (-45:4pt);
+	%\node at (-0.4,0.3) {$\rm K$};
+}
+
+\newcommand\drawcm{
+\fill (0,0) circle (2pt);
+\fill[white] (0,0) -- ++ (-1.6pt,0) arc (180:270:1.6pt) -- ++ (0,1.6pt*2) arc (90:0:1.6pt) --cycle;
+}
+
+\newcommand\drawangle[3]{\draw[gray,shorten <=1pt,shorten >=1pt] ($#1!.4cm!#2$) -- ++ ($#1!.4cm!#3-#1$) -- ($#1!.4cm!#3$);}

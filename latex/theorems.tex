@@ -1,0 +1,42 @@
+\theoremstyle{change}
+\theorembodyfont{\normalfont}
+\theoremheaderfont{\bfseries\sffamily}
+\theoremseparator{.}
+\theoremsymbol{}
+\theoremprework{}
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{theorem}[lemma]{Theorem}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{corollary}[lemma]{Corollary}
+\newtheorem{wiederholung}[lemma]{Wiederholung}
+\newtheorem{axiom}[lemma]{Axiom}
+
+% Theorem with enumerations:
+\theorembodyfont{\normalfont\needspace{1cm}}
+\newtheorem{examples}[lemma]{Examples}
+\newtheorem{remarks}[lemma]{Remarks}
+
+% Exercises:
+\theoremheaderfont{\bfseries\sffamily}
+\newtheorem{exercise}{Exercise}[section]
+
+
+% Proofs:
+\theoremstyle{nonumberplain}
+\theoremsymbol{\ensuremath{\square}}
+\theoremheaderfont{\bfseries\sffamily}
+\theorembodyfont{\normalfont}
+\theoremseparator{.}
+\newtheorem{proof}{Proof}
+\theoremheaderfont{\itshape}
+\newtheorem{proofsketch}{Proof Sketch}
+
+\theoremstyle{nonumberplain}
+\theorembodyfont{\small\normalfont\parskip=0pt}
+\theoremsymbol{\ensuremath{\square}}
+\theoremheaderfont{\bfseries\sffamily}
+\theoremseparator{.}
+\newtheorem{miniproof}{Proof}
+\newtheorem{solution}{Solution}

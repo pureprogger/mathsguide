@@ -11,7 +11,7 @@
     bottom=2.5cm,
     top=2.5cm,
     footskip=2em,
-    marginparwidth=3cm,  % Sets the width of the sidenote box
+    marginparwidth=3cm,
     marginparsep=0.5cm,
 ]{geometry}
 
@@ -20,8 +20,6 @@
 
 \usepackage[automark]{scrlayer-scrpage}
 \pagestyle{scrheadings}
-%\ohead{\headmark}
-%\ofoot[\pagemark]{\pagemark}
 
 \usepackage{csquotes}
 \usepackage[backend=bibtex,style=authoryear]{biblatex}
@@ -39,7 +37,6 @@
 \usepackage[onehalfspacing]{setspace}
 
 \usepackage{enumitem}
-
 \usepackage{tcolorbox}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -48,8 +45,6 @@
 \usepackage[thmmarks,amsmath]{ntheorem}
 \usepackage{cleveref}
 \usepackage{nicematrix}
-%\usepackage{booktabs}
-
 \usepackage{marginnote}
 \renewcommand*{\marginfont}{\footnotesize\itshape\color{gray}}
 \reversemarginpar
@@ -57,6 +52,8 @@
 % Schriftart:
 \usepackage{libertine}
 \usepackage{libertinust1math}
+%\usepackage{lmodern}
+
 
 \usepackage[font=footnotesize,labelfont=bf,format=plain,figurename=Fig.]{caption}
 
@@ -75,8 +72,6 @@
 
 \renewcommand{\em}{\bfseries}
 
-
-
 \begin{document}
 
 \maketitle
@@ -93,8 +88,4 @@
 \input{chapter-basics/infinite_finite_sets.tex}
 \input{chapter-basics/groups.tex}
 
-
 \end{document}
-
-%Funktionalanalysis:
-%https://www3.math.tu-berlin.de/Vorlesungen/SS09/FA1/Doc/Funkana1-SS06-08.06.09.pdf
